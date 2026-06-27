@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>The Event Space — Bermuda</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+  <!-- ── NAV ──────────────────────────────────────────────────────── -->
+  <nav class="nav">
+    <div class="nav__brand">
+      <span class="nav__brand-name">The Event Space</span>
+      <span class="nav__brand-sub">Bermuda</span>
+    </div>
+    <div class="nav__links">
+      <a href="#about">About</a>
+      <a href="#spaces">Our Rooms</a>
+      <a href="#occasions">Events</a>
+      <a href="#gallery">Gallery</a>
+      <a href="#contact">Contact</a>
+    </div>
+    <a class="nav__book" href="#contact">Book Now</a>
+    <button class="nav__hamburger" aria-label="Open menu">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+
+  <!-- Mobile Menu -->
+  <div class="mobile-menu">
+    <a href="#about">About</a>
+    <a href="#spaces">The Space</a>
+    <a href="#occasions">Events</a>
+    <a href="#gallery">Gallery</a>
+    <a href="#contact">Contact</a>
+    <a href="#contact" class="mobile-menu__book">Book Now</a>
+  </div>
+
+  <!-- ── HERO ──────────────────────────────────────────────────────── -->
+  <section class="hero">
+    <video id="hero-vid" class="hero__video" autoplay muted loop playsinline>
+      <source src="images/hero-video.mp4" type="video/mp4">
+    </video>
+    <div class="hero__overlay"></div>
+
+    <div class="hero__label">
+      <div class="hero__label-tag">Boutique Venue</div>
+      <div class="hero__label-location">Hamilton, Bermuda</div>
+    </div>
+
+    <div class="hero__content">
+      <div class="hero__eyebrow">
+        <div class="hero__eyebrow-line"></div>
+        Est. in Bermuda
+      </div>
+      <h1 class="hero-h1">One Space.</h1>
+      <h1 class="hero-h1 hero__headline--shimmer">Endless</h1>
+      <h1 class="hero-h1 hero__headline--light">Possibilities.</h1>
+    </div>
+
+    <div class="hero__ctas">
+      <p class="hero__description">A stylish boutique venue in the heart of Bermuda — where your vision becomes an unforgettable reality.</p>
+      <div class="hero__cta-group">
+        <a href="#contact" class="btn btn--hero-primary">Plan Your Event</a>
+        <a href="#spaces" class="btn btn--hero-ghost">Explore →</a>
+      </div>
+    </div>
+
+    <div class="hero__scroll">
+      <div class="hero__scroll-line"></div>
+    </div>
+  </section>
+
+  <!-- ── STATS BAND ─────────────────────────────────────────────────── -->
+  <div class="stats">
+    <div class="stats__grid">
+      <div class="stats__item">
+        <div class="stats__number">1</div>
+        <div class="stats__label">Boutique Space</div>
+      </div>
+      <div class="stats__item">
+        <div class="stats__number">8<sup>+</sup></div>
+        <div class="stats__label">Event Types</div>
+      </div>
+      <div class="stats__item">
+        <div class="stats__number--italic">Flexible</div>
+        <div class="stats__label">Packages</div>
+      </div>
+      <div class="stats__item">
+        <div class="stats__number--italic">Bermuda's<br>Own</div>
+        <div class="stats__label">Boutique Venue</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── ABOUT ──────────────────────────────────────────────────────── -->
+  <section id="about" class="section section--white">
+    <div class="section__inner">
+      <div class="about__grid">
+        <div>
+          <div class="eyebrow">
+            <div class="eyebrow__line"></div>
+            <span class="eyebrow__text">The Event Space BDA</span>
+          </div>
+          <h2 class="section-h2" style="color:#0A0A0A;margin-bottom:32px;">
+            We Are The Space.<br>You Are The<br><span style="font-style:italic;color:#C9A84C;">Possibility.</span>
+          </h2>
+          <p class="about__body">A stylish boutique venue in the heart of Bermuda, designed to bring your vision to life. Whatever you're celebrating, we provide the perfect setting — you bring the magic.</p>
+          <p class="about__body about__body--last">From intimate baby showers to corporate meetings and milestone birthdays, we offer flexible packages that create unforgettable experiences.</p>
+          <div class="about__actions">
+            <a href="#contact" class="btn btn--dark">Start Planning</a>
+            <a href="#spaces" class="btn--text">View the Space →</a>
+          </div>
+        </div>
+        <div class="about__image-col">
+          <div class="about__photo-wrap">
+            <img src="images/event-baby-shower.png" class="about__photo" alt="Event styling at The Event Space">
+            <div class="about__photo-overlay"></div>
+          </div>
+          <div class="about__quote">
+            <p class="about__quote-text">"One Space.<br>Endless<br>Possibilities."</p>
+          </div>
+          <div class="about__corner"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── DIVIDER ────────────────────────────────────────────────────── -->
+  <div class="divider"><div class="divider__line"></div></div>
+
+  <!-- ── THE SPACE ──────────────────────────────────────────────────── -->
+  <section id="spaces" class="section section--warm">
+    <div class="section__inner">
+      <div class="spaces__header">
+        <div>
+          <div class="eyebrow">
+            <div class="eyebrow__line"></div>
+            <span class="eyebrow__text">The Space</span>
+          </div>
+          <h2 class="section-h2" style="color:#0A0A0A;">
+            One Venue.<br><span style="font-style:italic;">Infinite</span><br>Transformations.
+          </h2>
+        </div>
+        <div style="padding-top:80px;">
+          <p class="spaces__intro">Our boutique space transforms completely to match your vision — from elegant ceremonial settings to vibrant neon parties to polished corporate environments.</p>
+        </div>
+      </div>
+
+      <div class="spaces__grid">
+        <!-- Card I -->
+        <article class="card">
+          <div class="card__image-wrap">
+            <img src="images/event-wedding1.png" class="card__image" alt="Wedding &amp; Ceremony Setup">
+            <div class="card__image-overlay"></div>
+            <div class="card__badge"><span class="card__badge-text">Ceremony</span></div>
+          </div>
+          <div class="card__body">
+            <div class="card__rule"></div>
+            <p class="card__label">I. Ceremony &amp; Reception</p>
+            <h3 class="card__title">Elegant, Romantic &amp; Unforgettable</h3>
+            <p class="card__desc">Lush florals, chiavari chairs, and custom neon signs create the perfect romantic atmosphere for your wedding, bridal shower, or anniversary.</p>
+            <div class="card__tags">
+              <span class="tag">Weddings</span>
+              <span class="tag">Bridal Showers</span>
+              <span class="tag">Anniversaries</span>
+            </div>
+          </div>
+        </article>
+
+        <!-- Card II -->
+        <article class="card">
+          <div class="card__image-wrap">
+            <img src="images/event-glow1.png" class="card__image" alt="Glow Party Setup">
+            <div class="card__image-overlay"></div>
+            <div class="card__badge"><span class="card__badge-text">Party</span></div>
+          </div>
+          <div class="card__body">
+            <div class="card__rule"></div>
+            <p class="card__label">II. Party &amp; Celebration</p>
+            <h3 class="card__title">Energetic, Vibrant &amp; Spectacular</h3>
+            <p class="card__desc">From neon glow parties to glamorous birthday bashes — custom lighting, neon signs, and bespoke décor that brings the energy to life.</p>
+            <div class="card__tags">
+              <span class="tag">Birthdays</span>
+              <span class="tag">Baby Showers</span>
+              <span class="tag">Glow Parties</span>
+            </div>
+          </div>
+        </article>
+
+        <!-- Card III -->
+        <article class="card">
+          <div class="card__image-wrap">
+            <img src="images/event-seminar.png" class="card__image" alt="Corporate Setup">
+            <div class="card__image-overlay"></div>
+            <div class="card__badge"><span class="card__badge-text">Corporate</span></div>
+          </div>
+          <div class="card__body">
+            <div class="card__rule"></div>
+            <p class="card__label">III. Corporate &amp; Professional</p>
+            <h3 class="card__title">Polished, Professional &amp; Purposeful</h3>
+            <p class="card__desc">Full projection, boardroom or theatre seating, and professional-grade AV for presentations, workshops, and executive events.</p>
+            <div class="card__tags">
+              <span class="tag">Seminars</span>
+              <span class="tag">Workshops</span>
+              <span class="tag">Networking</span>
+            </div>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── OCCASIONS ─────────────────────────────────────────────────── -->
+  <section id="occasions" class="section section--white">
+    <div class="section__inner">
+      <div class="occasions__header">
+        <div>
+          <div class="eyebrow">
+            <div class="eyebrow__line"></div>
+            <span class="eyebrow__text">Occasions</span>
+          </div>
+          <h2 class="section-h2" style="color:#0A0A0A;">
+            Every Celebration,<br><span style="font-style:italic;">Perfected.</span>
+          </h2>
+        </div>
+        <a href="#contact" class="btn btn--occasions">Book Your Event</a>
+      </div>
+
+      <div class="occasions__grid">
+        <div class="occasion-cell">
+          <div class="occasion-cell__number">01</div>
+          <div class="occasion-cell__rule"></div>
+          <h3 class="occasion-cell__title">Birthdays</h3>
+          <p class="occasion-cell__desc">Milestone celebrations made extraordinary.</p>
+        </div>
+        <div class="occasion-cell">
+          <div class="occasion-cell__number">02</div>
+          <div class="occasion-cell__rule"></div>
+          <h3 class="occasion-cell__title">Baby Showers</h3>
+          <p class="occasion-cell__desc">Welcoming new arrivals in beautiful style.</p>
+        </div>
+        <div class="occasion-cell">
+          <div class="occasion-cell__number">03</div>
+          <div class="occasion-cell__rule"></div>
+          <h3 class="occasion-cell__title">Bridal Showers</h3>
+          <p class="occasion-cell__desc">The perfect pre-wedding celebration.</p>
+        </div>
+        <div class="occasion-cell">
+          <div class="occasion-cell__number">04</div>
+          <div class="occasion-cell__rule"></div>
+          <h3 class="occasion-cell__title">Corporate Meetings</h3>
+          <p class="occasion-cell__desc">Professional AV and flexible layouts.</p>
+        </div>
+        <div class="occasion-cell">
+          <div class="occasion-cell__number">05</div>
+          <div class="occasion-cell__rule"></div>
+          <h3 class="occasion-cell__title">Networking</h3>
+          <p class="occasion-cell__desc">Bermuda's professional community connects here.</p>
+        </div>
+        <div class="occasion-cell">
+          <div class="occasion-cell__number">06</div>
+          <div class="occasion-cell__rule"></div>
+          <h3 class="occasion-cell__title">Workshops</h3>
+          <p class="occasion-cell__desc">Creative classes and seminars, expertly hosted.</p>
+        </div>
+        <div class="occasion-cell">
+          <div class="occasion-cell__number">07</div>
+          <div class="occasion-cell__rule"></div>
+          <h3 class="occasion-cell__title">Private Dinners</h3>
+          <p class="occasion-cell__desc">Intimate dining with bespoke menus.</p>
+        </div>
+        <div class="occasion-cell occasion-cell--cta">
+          <div class="occasion-cell__number">+</div>
+          <div>
+            <div class="occasion-cell__rule"></div>
+            <h3 class="occasion-cell__title">Something Else?</h3>
+            <p class="occasion-cell__desc">Have a unique idea? Let's talk.</p>
+            <a href="#contact" class="occasion-cell__cta-link">Get in Touch →</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── GALLERY ────────────────────────────────────────────────────── -->
+  <section id="gallery" class="section section--warm">
+    <div class="section__inner">
+      <div class="gallery__header">
+        <div class="gallery__eyebrow">
+          <div class="eyebrow__line"></div>
+          <span class="eyebrow__text">Gallery</span>
+          <div class="eyebrow__line"></div>
+        </div>
+        <h2 class="section-h2" style="color:#0A0A0A;">
+          Glimpses of the <span style="font-style:italic;">Extraordinary</span>
+        </h2>
+      </div>
+
+      <div class="gallery__grid">
+        <div class="gallery-cell gallery-cell--large">
+          <img src="images/event-wedding1.png" class="gallery-cell__img" alt="Wedding at The Event Space">
+          <div class="gallery-cell__overlay"></div>
+          <div class="gallery-cell__caption">
+            <div class="gallery-cell__rule"></div>
+            <div class="gallery-cell__tag">Wedding</div>
+            <div class="gallery-cell__title">Wedding Ceremony</div>
+          </div>
+        </div>
+        <div class="gallery-cell">
+          <img src="images/event-baby-shower.png" class="gallery-cell__img" alt="Baby Shower">
+          <div class="gallery-cell__overlay"></div>
+          <div class="gallery-cell__caption">Baby Shower</div>
+        </div>
+        <div class="gallery-cell">
+          <img src="images/event-glow1.png" class="gallery-cell__img" alt="Glow Party">
+          <div class="gallery-cell__overlay"></div>
+          <div class="gallery-cell__caption">Glow Party</div>
+        </div>
+        <div class="gallery-cell">
+          <img src="images/event-seminar.png" class="gallery-cell__img" alt="Corporate Seminar">
+          <div class="gallery-cell__overlay"></div>
+          <div class="gallery-cell__caption">Corporate Seminar</div>
+        </div>
+        <div class="gallery-cell">
+          <img src="images/event-glow2.png" class="gallery-cell__img" alt="Celebration Night">
+          <div class="gallery-cell__overlay"></div>
+          <div class="gallery-cell__caption">Celebration Night</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── CONTACT ───────────────────────────────────────────────────── -->
+  <section id="contact" class="section section--white">
+    <div class="section__inner">
+      <div class="contact__grid">
+        <div>
+          <div class="eyebrow">
+            <div class="eyebrow__line"></div>
+            <span class="eyebrow__text">Get In Touch</span>
+          </div>
+          <h2 class="section-h2" style="color:#0A0A0A;margin-bottom:28px;">
+            Begin Planning<br>Your <span style="font-style:italic;color:#C9A84C;">Event</span>
+          </h2>
+          <p class="contact__body">Our team is ready to help you create an unforgettable experience. Reach out to discuss your event, date, and the possibilities we can bring to life together.</p>
+          <div class="contact__info">
+            <div class="contact__info-item">
+              <div class="contact__dot"></div>
+              <div>
+                <div class="contact__info-label">Location</div>
+                <div class="contact__info-value">Hamilton, Bermuda</div>
+              </div>
+            </div>
+            <div class="contact__info-item">
+              <div class="contact__dot"></div>
+              <div>
+                <div class="contact__info-label">Email</div>
+                <div class="contact__info-value">info@eventspacebda.com</div>
+              </div>
+            </div>
+            <div class="contact__info-item">
+              <div class="contact__dot"></div>
+              <div>
+                <div class="contact__info-label">Website</div>
+                <div class="contact__info-value">eventspacebda.com</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="contact__form">
+          <h3 class="contact__form-title">Send an Enquiry</h3>
+          <form class="form">
+            <div class="form__row">
+              <div class="form__field">
+                <label class="form__label">First Name</label>
+                <input type="text" class="form__input" placeholder="First name">
+              </div>
+              <div class="form__field">
+                <label class="form__label">Last Name</label>
+                <input type="text" class="form__input" placeholder="Last name">
+              </div>
+            </div>
+            <div class="form__field">
+              <label class="form__label">Email Address</label>
+              <input type="email" class="form__input" placeholder="your@email.com">
+            </div>
+            <div class="form__field">
+              <label class="form__label">Event Type</label>
+              <select class="form__select">
+                <option>Select an occasion…</option>
+                <option>Birthday Celebration</option>
+                <option>Baby Shower</option>
+                <option>Bridal Shower</option>
+                <option>Corporate Meeting</option>
+                <option>Networking Event</option>
+                <option>Workshop / Seminar</option>
+                <option>Private Dinner</option>
+                <option>Other</option>
+              </select>
+            </div>
+            <div class="form__field">
+              <label class="form__label">Preferred Date</label>
+              <input type="date" class="form__input">
+            </div>
+            <div class="form__field">
+              <label class="form__label">Your Vision</label>
+              <textarea class="form__textarea" rows="4" placeholder="Tell us about your event idea…"></textarea>
+            </div>
+            <button type="submit" class="btn btn--submit">Send Enquiry</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── FOOTER ─────────────────────────────────────────────────────── -->
+  <footer class="footer">
+    <div class="footer__inner">
+      <div class="footer__grid">
+        <div>
+          <div class="footer__brand-name">The Event Space</div>
+          <div class="footer__brand-sub">Bermuda</div>
+          <p class="footer__tagline">One space. Endless possibilities. Bermuda's boutique event venue.</p>
+        </div>
+        <div>
+          <div class="footer__col-label">The Space</div>
+          <div class="footer__col-links">
+            <a href="#spaces" class="footer__link">The Grand Room</a>
+            <a href="#spaces" class="footer__link">The Studio</a>
+            <a href="#spaces" class="footer__link">3D Planner</a>
+            <a href="#spaces" class="footer__link">Designer Catalog</a>
+          </div>
+        </div>
+        <div>
+          <div class="footer__col-label">Events</div>
+          <div class="footer__col-links">
+            <a href="#occasions" class="footer__link">Birthdays</a>
+            <a href="#occasions" class="footer__link">Baby &amp; Bridal Showers</a>
+            <a href="#occasions" class="footer__link">Corporate</a>
+            <a href="#occasions" class="footer__link">Workshops</a>
+          </div>
+        </div>
+        <div>
+          <div class="footer__col-label">Contact</div>
+          <div class="footer__col-links">
+            <span class="footer__link">Hamilton, Bermuda</span>
+            <span class="footer__link">info@eventspacebda.com</span>
+          </div>
+        </div>
+      </div>
+      <div class="footer__bottom">
+        <span class="footer__copy">© 2025 The Event Space BDA. All rights reserved.</span>
+        <span class="footer__motto">We Are The Space. You Are The Possibility.</span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+</body>
+</html>

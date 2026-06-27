@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" width="800" height="600">
+  <defs>
+    <linearGradient id="g2nad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#f2eeea"/>
+      <stop offset="50%" stop-color="#e0d8cc"/>
+      <stop offset="100%" stop-color="#ccc0b0"/>
+    </linearGradient>
+  </defs>
+  <rect width="800" height="600" fill="url(#g2nad)"/>
+  <circle cx="165" cy="145" r="32" fill="#806040" opacity="0.050"/><circle cx="165" cy="145" r="18" fill="none" stroke="#806040" stroke-width="0.8" opacity="0.16"/><circle cx="325" cy="145" r="40" fill="#806040" opacity="0.075"/><circle cx="325" cy="145" r="22" fill="none" stroke="#806040" stroke-width="0.8" opacity="0.16"/><circle cx="485" cy="145" r="48" fill="#806040" opacity="0.100"/><circle cx="485" cy="145" r="26" fill="none" stroke="#806040" stroke-width="0.8" opacity="0.16"/><circle cx="645" cy="145" r="32" fill="#806040" opacity="0.125"/><circle cx="645" cy="145" r="18" fill="none" stroke="#806040" stroke-width="0.8" opacity="0.16"/><circle cx="165" cy="255" r="40" fill="#806040" opacity="0.075"/><circle cx="165" cy="255" r="22" fill="none" stroke="#806040" stroke-width="0.8" opacity="0.16"/><circle cx="325" cy="255" r="48" fill="#806040" opacity="0.100"/><circle cx="325" cy="255" r="26" fill="none" stroke="#806040" stroke-width="0.8" opacity="0.16"/><circle cx="485" cy="255" r="32" fill="#806040" opacity="0.125"/><circle cx="485" cy="255" r="18" fill="none" stroke="#806040" stroke-width="0.8" opacity="0.16"/><circle cx="645" cy="255" r="40" fill="#806040" opacity="0.050"/><circle cx="645" cy="255" r="22" fill="none" stroke="#806040" stroke-width="0.8" opacity="0.16"/><circle cx="165" cy="365" r="48" fill="#806040" opacity="0.100"/><circle cx="165" cy="365" r="26" fill="none" stroke="#806040" stroke-width="0.8" opacity="0.16"/><circle cx="325" cy="365" r="32" fill="#806040" opacity="0.125"/><circle cx="325" cy="365" r="18" fill="none" stroke="#806040" stroke-width="0.8" opacity="0.16"/><circle cx="485" cy="365" r="40" fill="#806040" opacity="0.050"/><circle cx="485" cy="365" r="22" fill="none" stroke="#806040" stroke-width="0.8" opacity="0.16"/><circle cx="645" cy="365" r="48" fill="#806040" opacity="0.075"/><circle cx="645" cy="365" r="26" fill="none" stroke="#806040" stroke-width="0.8" opacity="0.16"/>
+  <circle cx="400" cy="268" r="95" fill="none" stroke="#806040" stroke-width="1.4" opacity="0.2"/>
+  <circle cx="400" cy="268" r="62" fill="#806040" opacity="0.10"/>
+  <circle cx="400" cy="268" r="30" fill="#b09070" opacity="0.2"/>
+  <text x="400" y="468" font-family="Georgia,serif" font-size="28" fill="#4a2a0a" text-anchor="middle" font-style="italic">Nadia Osei</text>
+  <text x="400" y="502" font-family="Arial,sans-serif" font-size="10" font-weight="700" fill="#6a4a20" text-anchor="middle" letter-spacing="3">MINIMALIST · EARTHY</text>
+  <text x="400" y="528" font-family="Arial,sans-serif" font-size="9" fill="#806040" text-anchor="middle" letter-spacing="2">TABLE CENTREPIECE · PHOTO 2 OF 4</text>
+  <rect x="2" y="2" width="796" height="596" fill="none" stroke="#806040" stroke-width="1" opacity="0.13"/>
+</svg>

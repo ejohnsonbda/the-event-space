@@ -1,0 +1,84 @@
+{
+  "designers": [
+    {
+      "id": "amara-johnson",
+      "name": "Amara Johnson",
+      "initials": "A",
+      "style": "Romantic · Floral",
+      "bio": "Soft blush palettes, cascading florals, candlelight, and gold accents define Amara's signature look. Specialises in weddings and bridal showers.",
+      "availability": "Available",
+      "color": "rose",
+      "tags": ["Weddings", "Bridal Showers", "Anniversaries"],
+      "photos": [
+        "designers/amara-johnson/1.svg",
+        "designers/amara-johnson/2.svg",
+        "designers/amara-johnson/3.svg",
+        "designers/amara-johnson/4.svg"
+      ]
+    },
+    {
+      "id": "celeste-burrows",
+      "name": "Celeste Burrows",
+      "initials": "C",
+      "style": "Tropical · Botanical",
+      "bio": "Drawing on Bermuda's lush landscape, Celeste creates immersive tropical environments with bold botanicals, tropical palettes, and natural textures.",
+      "availability": "Available",
+      "color": "green",
+      "tags": ["Baby Showers", "Garden Parties", "Birthdays"],
+      "photos": [
+        "designers/celeste-burrows/1.svg",
+        "designers/celeste-burrows/2.svg",
+        "designers/celeste-burrows/3.svg",
+        "designers/celeste-burrows/4.svg"
+      ]
+    },
+    {
+      "id": "sofia-vidal",
+      "name": "Sofia Vidal",
+      "initials": "S",
+      "style": "Glam · Crystal · Gold",
+      "bio": "Pure glamour — crystal chandeliers, mirror surfaces, gold metallic accents and statement centrepieces. Sofia transforms spaces into elegant evening affairs.",
+      "availability": "Available",
+      "color": "purple",
+      "tags": ["Galas", "Award Nights", "Milestone Birthdays"],
+      "photos": [
+        "designers/sofia-vidal/1.svg",
+        "designers/sofia-vidal/2.svg",
+        "designers/sofia-vidal/3.svg",
+        "designers/sofia-vidal/4.svg"
+      ]
+    },
+    {
+      "id": "james-pemberton",
+      "name": "James Pemberton",
+      "initials": "J",
+      "style": "Corporate · Sleek",
+      "bio": "Clean lines, corporate brand alignment, and elevated professional staging. James brings boardroom precision to every event — from seminars to product launches.",
+      "availability": "On Request",
+      "color": "slate",
+      "tags": ["Seminars", "Networking", "Launches"],
+      "photos": [
+        "designers/james-pemberton/1.svg",
+        "designers/james-pemberton/2.svg",
+        "designers/james-pemberton/3.svg",
+        "designers/james-pemberton/4.svg"
+      ]
+    },
+    {
+      "id": "nadia-osei",
+      "name": "Nadia Osei",
+      "initials": "N",
+      "style": "Minimalist · Earthy",
+      "bio": "A master of restraint. Nadia works with neutral palettes, raw textures, and intentional negative space to create spaces that feel effortlessly refined.",
+      "availability": "Available",
+      "color": "sand",
+      "tags": ["Private Dinners", "Workshops", "Intimate Events"],
+      "photos": [
+        "designers/nadia-osei/1.svg",
+        "designers/nadia-osei/2.svg",
+        "designers/nadia-osei/3.svg",
+        "designers/nadia-osei/4.svg"
+      ]
+    }
+  ]
+}

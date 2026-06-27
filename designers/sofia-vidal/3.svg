@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" width="800" height="600">
+  <defs>
+    <linearGradient id="g3sof" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#eee9f4"/>
+      <stop offset="50%" stop-color="#d5cfe0"/>
+      <stop offset="100%" stop-color="#c0b8d4"/>
+    </linearGradient>
+  </defs>
+  <rect width="800" height="600" fill="url(#g3sof)"/>
+  <line x1="400" y1="270" x2="700" y2="270" stroke="#503880" stroke-width="0.6" opacity="0.13"/><line x1="400" y1="270" x2="660" y2="410" stroke="#503880" stroke-width="0.6" opacity="0.13"/><line x1="400" y1="270" x2="550" y2="512" stroke="#503880" stroke-width="0.6" opacity="0.13"/><line x1="400" y1="270" x2="400" y2="550" stroke="#503880" stroke-width="0.6" opacity="0.13"/><line x1="400" y1="270" x2="250" y2="512" stroke="#503880" stroke-width="0.6" opacity="0.13"/><line x1="400" y1="270" x2="140" y2="410" stroke="#503880" stroke-width="0.6" opacity="0.13"/><line x1="400" y1="270" x2="100" y2="270" stroke="#503880" stroke-width="0.6" opacity="0.13"/><line x1="400" y1="270" x2="140" y2="130" stroke="#503880" stroke-width="0.6" opacity="0.13"/><line x1="400" y1="270" x2="250" y2="28" stroke="#503880" stroke-width="0.6" opacity="0.13"/><line x1="400" y1="270" x2="400" y2="-10" stroke="#503880" stroke-width="0.6" opacity="0.13"/><line x1="400" y1="270" x2="550" y2="28" stroke="#503880" stroke-width="0.6" opacity="0.13"/><line x1="400" y1="270" x2="660" y2="130" stroke="#503880" stroke-width="0.6" opacity="0.13"/><circle cx="150" cy="120" r="4" fill="#503880" opacity="0.18"/><circle cx="618" cy="90" r="5" fill="#503880" opacity="0.18"/><circle cx="100" cy="300" r="3" fill="#503880" opacity="0.18"/><circle cx="700" cy="350" r="4" fill="#503880" opacity="0.18"/><circle cx="195" cy="450" r="5" fill="#503880" opacity="0.18"/><circle cx="580" cy="415" r="3" fill="#503880" opacity="0.18"/><circle cx="318" cy="100" r="3" fill="#503880" opacity="0.18"/><circle cx="478" cy="130" r="4" fill="#503880" opacity="0.18"/><circle cx="130" cy="418" r="3" fill="#503880" opacity="0.18"/><circle cx="658" cy="238" r="4" fill="#503880" opacity="0.18"/><circle cx="350" cy="398" r="5" fill="#503880" opacity="0.18"/><circle cx="448" cy="378" r="3" fill="#503880" opacity="0.18"/><circle cx="248" cy="198" r="4" fill="#503880" opacity="0.18"/><circle cx="548" cy="198" r="3" fill="#503880" opacity="0.18"/><circle cx="178" cy="338" r="5" fill="#503880" opacity="0.18"/><circle cx="618" cy="308" r="3" fill="#503880" opacity="0.18"/><circle cx="398" cy="148" r="4" fill="#503880" opacity="0.18"/><circle cx="298" cy="348" r="3" fill="#503880" opacity="0.18"/><circle cx="498" cy="298" r="4" fill="#503880" opacity="0.18"/><circle cx="100" cy="178" r="3" fill="#503880" opacity="0.18"/>
+  <circle cx="400" cy="270" r="100" fill="none" stroke="#503880" stroke-width="1" opacity="0.16"/>
+  <circle cx="400" cy="270" r="56" fill="#503880" opacity="0.09"/>
+  <circle cx="400" cy="270" r="26" fill="#8070a8" opacity="0.22"/>
+  <text x="400" y="468" font-family="Georgia,serif" font-size="28" fill="#300858" text-anchor="middle" font-style="italic">Sofia Vidal</text>
+  <text x="400" y="502" font-family="Arial,sans-serif" font-size="10" font-weight="700" fill="#5a2a9a" text-anchor="middle" letter-spacing="3">GLAM · CRYSTAL · GOLD</text>
+  <text x="400" y="528" font-family="Arial,sans-serif" font-size="9" fill="#503880" text-anchor="middle" letter-spacing="2">DECORATION DETAIL · PHOTO 3 OF 4</text>
+  <rect x="2" y="2" width="796" height="596" fill="none" stroke="#503880" stroke-width="1" opacity="0.13"/>
+</svg>

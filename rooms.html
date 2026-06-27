@@ -20,9 +20,9 @@
     .rooms-hero__h1--shimmer { font-style: italic; background: linear-gradient(110deg, #7a5c10 0%, #C9A84C 25%, #F0D060 50%, #C9A84C 75%, #7a5c10 100%); background-size: 250% auto; -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; animation: shimmerGold 5s linear infinite; }
     .rooms-hero__body { font-size: 16px; line-height: 1.8; color: #6B6B6B; margin-top: 32px; margin-bottom: 44px; max-width: 420px; }
     .rooms-hero__ctas { display: flex; gap: 14px; flex-wrap: wrap; }
-    .btn--rooms-primary { padding: 15px 36px; background: #0A0A0A; color: #FFFFFF; font-size: 10px; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; border-radius: 2px; transition: background 0.2s, color 0.2s; }
+    .btn--rooms-primary { padding: 15px 36px; background: #0A0A0A; color: #FFFFFF; font-size: 10px; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; border-radius: 2px; transition: background 0.2s, color 0.2s; display: inline-block; }
     .btn--rooms-primary:hover { background: #C9A84C; color: #0A0A0A; }
-    .btn--rooms-ghost { padding: 15px 36px; border: 1px solid #D4D4D4; color: #0A0A0A; font-size: 10px; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; border-radius: 2px; transition: border-color 0.2s; }
+    .btn--rooms-ghost { padding: 15px 36px; border: 1px solid #D4D4D4; color: #0A0A0A; font-size: 10px; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; border-radius: 2px; transition: border-color 0.2s; display: inline-block; }
     .btn--rooms-ghost:hover { border-color: #0A0A0A; }
     .rooms-hero__cards { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
     .room-card-dark { background: #0A0A0A; padding: 32px 26px; border-radius: 3px; position: relative; overflow: hidden; }
@@ -65,7 +65,6 @@
     .specs-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; margin-bottom: 32px; border: 1px solid #F0F0F0; }
     .spec-cell { padding: 18px 16px; background: #FFFFFF; text-align: center; }
     .spec-cell + .spec-cell { border-left: 1px solid #F0F0F0; }
-    .spec-cell:last-child { border-right: none; }
     .spec-cell__num { font-family: 'Cormorant Garamond', serif; font-size: 30px; font-weight: 400; color: #C9A84C; line-height: 1; margin-bottom: 5px; }
     .spec-cell__label { font-size: 9px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: #B0B0B0; }
     .room-features { display: flex; flex-direction: column; gap: 10px; margin-bottom: 32px; }
@@ -108,25 +107,28 @@
     .designer-card__avatar-wrap--slate { background: linear-gradient(145deg, #e8ecf0 0%, #ccd4dc 40%, #b0bcc8 100%); }
     .designer-card__avatar-wrap--sand { background: linear-gradient(145deg, #f0ede8 0%, #e0d8cc 40%, #ccc0b0 100%); }
     .designer-card__avatar { width: 88px; height: 88px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-family: 'Cormorant Garamond', serif; font-size: 36px; font-weight: 400; color: #FFFFFF; }
-    .designer-card__avatar--rose { background: linear-gradient(145deg, #e8a090, #c97070); box-shadow: 0 8px 24px rgba(180,80,80,0.3); }
-    .designer-card__avatar--green { background: linear-gradient(145deg, #608060, #3a5a3a); box-shadow: 0 8px 24px rgba(60,100,60,0.3); }
+    .designer-card__avatar--rose   { background: linear-gradient(145deg, #e8a090, #c97070); box-shadow: 0 8px 24px rgba(180,80,80,0.3); }
+    .designer-card__avatar--green  { background: linear-gradient(145deg, #608060, #3a5a3a); box-shadow: 0 8px 24px rgba(60,100,60,0.3); }
     .designer-card__avatar--purple { background: linear-gradient(145deg, #8070a8, #503880); box-shadow: 0 8px 24px rgba(80,50,130,0.3); }
-    .designer-card__avatar--slate { background: linear-gradient(145deg, #506878, #304858); box-shadow: 0 8px 24px rgba(40,60,80,0.3); }
-    .designer-card__avatar--sand { background: linear-gradient(145deg, #b09070, #806040); box-shadow: 0 8px 24px rgba(100,70,30,0.3); }
+    .designer-card__avatar--slate  { background: linear-gradient(145deg, #506878, #304858); box-shadow: 0 8px 24px rgba(40,60,80,0.3); }
+    .designer-card__avatar--sand   { background: linear-gradient(145deg, #b09070, #806040); box-shadow: 0 8px 24px rgba(100,70,30,0.3); }
     .designer-card__status { position: absolute; top: 16px; right: 16px; padding: 4px 12px; background: rgba(255,255,255,0.9); border-radius: 2px; font-size: 9px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; }
-    .designer-card__status--avail { color: #2A7A4A; }
+    .designer-card__status--avail   { color: #2A7A4A; }
     .designer-card__status--request { color: #8A7A00; }
     .designer-card__body { padding: 28px 26px; }
     .designer-card__style { font-size: 9px; font-weight: 700; letter-spacing: 0.22em; text-transform: uppercase; color: #C9A84C; margin-bottom: 6px; }
     .designer-card__name { font-family: 'Cormorant Garamond', serif; font-size: 26px; font-weight: 500; color: #0A0A0A; margin-bottom: 10px; line-height: 1.2; }
     .designer-card__bio { font-size: 13px; line-height: 1.7; color: #7A7A7A; margin-bottom: 20px; }
-    .designer-card__tags { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 24px; }
+    .designer-card__tags { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 20px; }
     .designer-tag { padding: 4px 11px; border-radius: 2px; font-size: 10px; font-weight: 600; }
-    .designer-tag--rose { background: #FFF0F0; color: #9A3030; }
-    .designer-tag--green { background: #F0F5F0; color: #2A5A2A; }
+    .designer-tag--rose   { background: #FFF0F0; color: #9A3030; }
+    .designer-tag--green  { background: #F0F5F0; color: #2A5A2A; }
     .designer-tag--purple { background: #F5F0FF; color: #5A2A9A; }
-    .designer-tag--slate { background: #F0F2F5; color: #2A3A5A; }
-    .designer-tag--sand { background: #F5F2EE; color: #6A4A20; }
+    .designer-tag--slate  { background: #F0F2F5; color: #2A3A5A; }
+    .designer-tag--sand   { background: #F5F2EE; color: #6A4A20; }
+    .designer-card__actions { display: flex; flex-direction: column; gap: 8px; }
+    .btn--portfolio { display: block; width: 100%; text-align: center; padding: 10px; border: 1px solid #E0E0E0; color: #5A5A5A; background: none; font-size: 10px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; border-radius: 2px; cursor: pointer; transition: border-color 0.2s, color 0.2s; font-family: 'Plus Jakarta Sans', sans-serif; }
+    .btn--portfolio:hover { border-color: #C9A84C; color: #C9A84C; }
     .btn--designer { display: block; text-align: center; padding: 12px; background: #0A0A0A; color: #FFFFFF; font-size: 10px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; border-radius: 2px; transition: background 0.2s, color 0.2s; }
     .btn--designer:hover { background: #C9A84C; color: #0A0A0A; }
     .designer-cta-card { background: #C9A84C; overflow: hidden; display: flex; flex-direction: column; justify-content: space-between; padding: 36px 30px; position: relative; }
@@ -139,6 +141,28 @@
     .btn--designer-cta { display: block; text-align: center; padding: 14px; background: #0A0A0A; color: #FFFFFF; font-size: 10px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; border-radius: 2px; transition: opacity 0.2s; }
     .btn--designer-cta:hover { opacity: 0.8; }
 
+    /* ── Portfolio lightbox ── */
+    .portfolio-modal { position: fixed; inset: 0; z-index: 2000; display: flex; align-items: center; justify-content: center; opacity: 0; transition: opacity 0.25s; pointer-events: none; }
+    .portfolio-modal.open { opacity: 1; pointer-events: all; }
+    .portfolio-modal__overlay { position: absolute; inset: 0; background: rgba(0,0,0,0.88); }
+    .portfolio-modal__panel { position: relative; z-index: 1; background: #0A0A0A; width: min(860px, 94vw); max-height: 94vh; overflow: hidden; border-radius: 3px; display: flex; flex-direction: column; }
+    .portfolio-modal__header { display: flex; align-items: center; justify-content: space-between; padding: 20px 28px; border-bottom: 1px solid rgba(255,255,255,0.06); flex-shrink: 0; }
+    .portfolio-modal__style { font-size: 9px; font-weight: 700; letter-spacing: 0.22em; text-transform: uppercase; color: #C9A84C; margin-bottom: 4px; }
+    .portfolio-modal__name { font-family: 'Cormorant Garamond', serif; font-size: 22px; font-weight: 500; color: #FFFFFF; }
+    .portfolio-modal__close { background: none; border: 1px solid rgba(255,255,255,0.15); color: rgba(255,255,255,0.6); width: 34px; height: 34px; border-radius: 2px; cursor: pointer; font-size: 14px; display: flex; align-items: center; justify-content: center; transition: border-color 0.2s, color 0.2s; flex-shrink: 0; }
+    .portfolio-modal__close:hover { border-color: #C9A84C; color: #C9A84C; }
+    .portfolio-modal__main { position: relative; display: flex; align-items: center; justify-content: center; background: #050505; min-height: 0; flex: 1; overflow: hidden; }
+    .portfolio-modal__img { max-width: 100%; max-height: 460px; width: 100%; object-fit: contain; display: block; }
+    .portfolio-modal__nav { position: absolute; top: 50%; transform: translateY(-50%); background: rgba(0,0,0,0.5); border: 1px solid rgba(255,255,255,0.1); color: #FFFFFF; width: 42px; height: 42px; border-radius: 2px; cursor: pointer; font-size: 22px; display: flex; align-items: center; justify-content: center; transition: background 0.2s, border-color 0.2s; line-height: 1; }
+    .portfolio-modal__nav:hover { background: rgba(201,168,76,0.25); border-color: #C9A84C; }
+    .portfolio-modal__nav--prev { left: 14px; }
+    .portfolio-modal__nav--next { right: 14px; }
+    .portfolio-modal__thumbs { display: grid; grid-template-columns: repeat(4, 1fr); gap: 4px; padding: 12px 16px; background: #0A0A0A; border-top: 1px solid rgba(255,255,255,0.06); flex-shrink: 0; }
+    .portfolio-modal__thumb { aspect-ratio: 4/3; object-fit: cover; cursor: pointer; opacity: 0.45; border: 2px solid transparent; border-radius: 2px; transition: opacity 0.2s, border-color 0.2s; width: 100%; }
+    .portfolio-modal__thumb.active { opacity: 1; border-color: #C9A84C; }
+    .portfolio-modal__thumb:hover:not(.active) { opacity: 0.75; }
+    .portfolio-modal__counter { position: absolute; bottom: 12px; left: 50%; transform: translateX(-50%); font-size: 10px; font-weight: 600; letter-spacing: 0.12em; color: rgba(255,255,255,0.4); pointer-events: none; }
+
     /* ── CTA band ── */
     .cta-band { background: #0A0A0A; padding: 72px 64px; }
     .cta-band__inner { max-width: 1200px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; gap: 48px; flex-wrap: wrap; }
@@ -146,12 +170,12 @@
     .cta-band__h2 em { font-style: italic; color: #C9A84C; }
     .cta-band__sub { font-size: 15px; color: #4A4A4A; line-height: 1.7; }
     .cta-band__btns { display: flex; gap: 14px; flex-shrink: 0; flex-wrap: wrap; }
-    .btn--cta-gold { padding: 17px 44px; background: linear-gradient(135deg, #7a5c10 0%, #C9A84C 45%, #E8C96A 75%, #C9A84C 100%); color: #0A0A0A; font-size: 11px; font-weight: 800; letter-spacing: 0.22em; text-transform: uppercase; border-radius: 2px; box-shadow: 0 8px 36px rgba(201,168,76,0.28); transition: opacity 0.2s; }
+    .btn--cta-gold { padding: 17px 44px; background: linear-gradient(135deg, #7a5c10 0%, #C9A84C 45%, #E8C96A 75%, #C9A84C 100%); color: #0A0A0A; font-size: 11px; font-weight: 800; letter-spacing: 0.22em; text-transform: uppercase; border-radius: 2px; box-shadow: 0 8px 36px rgba(201,168,76,0.28); transition: opacity 0.2s; display: inline-block; }
     .btn--cta-gold:hover { opacity: 0.85; }
-    .btn--cta-outline { padding: 17px 44px; border: 1px solid rgba(201,168,76,0.3); color: #C9A84C; font-size: 11px; font-weight: 700; letter-spacing: 0.22em; text-transform: uppercase; border-radius: 2px; transition: border-color 0.2s; }
+    .btn--cta-outline { padding: 17px 44px; border: 1px solid rgba(201,168,76,0.3); color: #C9A84C; font-size: 11px; font-weight: 700; letter-spacing: 0.22em; text-transform: uppercase; border-radius: 2px; transition: border-color 0.2s; display: inline-block; }
     .btn--cta-outline:hover { border-color: #C9A84C; }
 
-    /* ── Rooms footer (simplified) ── */
+    /* ── Rooms footer ── */
     .rooms-footer { background: #050505; border-top: 1px solid rgba(255,255,255,0.04); padding: 40px 64px; }
     .rooms-footer__inner { max-width: 1200px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px; }
     .rooms-footer__brand-name { font-family: 'Cormorant Garamond', serif; font-size: 16px; font-weight: 600; color: #FFFFFF; letter-spacing: 0.13em; text-transform: uppercase; margin-bottom: 2px; }
@@ -180,6 +204,7 @@
       .planner-wrap { height: 480px; }
       .rooms-hero__cards { grid-template-columns: 1fr; }
       .cta-band__btns { flex-direction: column; }
+      .portfolio-modal__img { max-height: 300px; }
     }
   </style>
 </head>
@@ -284,18 +309,9 @@
           <div class="room-panel__body">
             <p class="room-panel__desc">Our largest and most versatile space — featuring soaring ceilings, elegant French doors on the 26′ wall, and four oversized windows flooding the room with natural light. Ideal for weddings, galas, large corporate events, and every occasion that deserves a grand stage.</p>
             <div class="specs-grid">
-              <div class="spec-cell">
-                <div class="spec-cell__num">80</div>
-                <div class="spec-cell__label">Max Guests</div>
-              </div>
-              <div class="spec-cell">
-                <div class="spec-cell__num">936</div>
-                <div class="spec-cell__label">Square Feet</div>
-              </div>
-              <div class="spec-cell">
-                <div class="spec-cell__num">6</div>
-                <div class="spec-cell__label">Layout Presets</div>
-              </div>
+              <div class="spec-cell"><div class="spec-cell__num">80</div><div class="spec-cell__label">Max Guests</div></div>
+              <div class="spec-cell"><div class="spec-cell__num">936</div><div class="spec-cell__label">Square Feet</div></div>
+              <div class="spec-cell"><div class="spec-cell__num">6</div><div class="spec-cell__label">Layout Presets</div></div>
             </div>
             <div class="room-features">
               <div class="room-feature"><div class="room-feature__dot"></div>French doors on the 26′ wall — dramatic grand entrance</div>
@@ -326,18 +342,9 @@
           <div class="room-panel__body">
             <p class="room-panel__desc">An intimate and chic studio space perfect for smaller celebrations, workshops, and private dining. Featuring a standard door on the far-right of the 10′ wall and three beautiful windows. Every detail feels considered — this is the room for occasions where closeness matters.</p>
             <div class="specs-grid">
-              <div class="spec-cell">
-                <div class="spec-cell__num">30</div>
-                <div class="spec-cell__label">Max Guests</div>
-              </div>
-              <div class="spec-cell">
-                <div class="spec-cell__num">330</div>
-                <div class="spec-cell__label">Square Feet</div>
-              </div>
-              <div class="spec-cell">
-                <div class="spec-cell__num">3</div>
-                <div class="spec-cell__label">Windows</div>
-              </div>
+              <div class="spec-cell"><div class="spec-cell__num">30</div><div class="spec-cell__label">Max Guests</div></div>
+              <div class="spec-cell"><div class="spec-cell__num">330</div><div class="spec-cell__label">Square Feet</div></div>
+              <div class="spec-cell"><div class="spec-cell__num">3</div><div class="spec-cell__label">Windows</div></div>
             </div>
             <div class="room-features">
               <div class="room-feature"><div class="room-feature__dot"></div>Standard door on far-right of the 10′ wall</div>
@@ -420,121 +427,13 @@
           <h2 class="designers-section__h2">Our Curated<br><span style="font-style:italic;">Design Team</span></h2>
         </div>
         <div style="max-width:360px;">
-          <p style="font-size:15px;line-height:1.8;color:#6B6B6B;">Each designer brings a distinct aesthetic to life. Browse their styles below and request your favourite — we'll connect you for a complimentary consultation.</p>
+          <p style="font-size:15px;line-height:1.8;color:#6B6B6B;">Each designer brings a distinct aesthetic to life. Browse their styles and portfolio below — request your favourite for a complimentary consultation.</p>
         </div>
       </div>
 
-      <div class="designers-grid">
+      <!-- Populated from designers/designers.json -->
+      <div id="designers-grid" class="designers-grid"></div>
 
-        <!-- Amara Johnson -->
-        <div class="designer-card">
-          <div class="designer-card__avatar-wrap designer-card__avatar-wrap--rose">
-            <div class="designer-card__avatar designer-card__avatar--rose">A</div>
-            <div class="designer-card__status designer-card__status--avail">Available</div>
-          </div>
-          <div class="designer-card__body">
-            <div class="designer-card__style">Romantic · Floral</div>
-            <h3 class="designer-card__name">Amara Johnson</h3>
-            <p class="designer-card__bio">Soft blush palettes, cascading florals, candlelight, and gold accents define Amara's signature look. Specialises in weddings and bridal showers.</p>
-            <div class="designer-card__tags">
-              <span class="designer-tag designer-tag--rose">Weddings</span>
-              <span class="designer-tag designer-tag--rose">Bridal Showers</span>
-              <span class="designer-tag designer-tag--rose">Anniversaries</span>
-            </div>
-            <a href="index.html#contact" class="btn--designer">Request Amara</a>
-          </div>
-        </div>
-
-        <!-- Celeste Burrows -->
-        <div class="designer-card">
-          <div class="designer-card__avatar-wrap designer-card__avatar-wrap--green">
-            <div class="designer-card__avatar designer-card__avatar--green">C</div>
-            <div class="designer-card__status designer-card__status--avail">Available</div>
-          </div>
-          <div class="designer-card__body">
-            <div class="designer-card__style">Tropical · Botanical</div>
-            <h3 class="designer-card__name">Celeste Burrows</h3>
-            <p class="designer-card__bio">Drawing on Bermuda's lush landscape, Celeste creates immersive tropical environments with bold botanicals, tropical palettes, and natural textures.</p>
-            <div class="designer-card__tags">
-              <span class="designer-tag designer-tag--green">Baby Showers</span>
-              <span class="designer-tag designer-tag--green">Garden Parties</span>
-              <span class="designer-tag designer-tag--green">Birthdays</span>
-            </div>
-            <a href="index.html#contact" class="btn--designer">Request Celeste</a>
-          </div>
-        </div>
-
-        <!-- Sofia Vidal -->
-        <div class="designer-card">
-          <div class="designer-card__avatar-wrap designer-card__avatar-wrap--purple">
-            <div class="designer-card__avatar designer-card__avatar--purple">S</div>
-            <div class="designer-card__status designer-card__status--avail">Available</div>
-          </div>
-          <div class="designer-card__body">
-            <div class="designer-card__style">Glam · Crystal · Gold</div>
-            <h3 class="designer-card__name">Sofia Vidal</h3>
-            <p class="designer-card__bio">Pure glamour — crystal chandeliers, mirror surfaces, gold metallic accents and statement centrepieces. Sofia transforms spaces into elegant evening affairs.</p>
-            <div class="designer-card__tags">
-              <span class="designer-tag designer-tag--purple">Galas</span>
-              <span class="designer-tag designer-tag--purple">Award Nights</span>
-              <span class="designer-tag designer-tag--purple">Milestone Birthdays</span>
-            </div>
-            <a href="index.html#contact" class="btn--designer">Request Sofia</a>
-          </div>
-        </div>
-
-        <!-- James Pemberton -->
-        <div class="designer-card">
-          <div class="designer-card__avatar-wrap designer-card__avatar-wrap--slate">
-            <div class="designer-card__avatar designer-card__avatar--slate">J</div>
-            <div class="designer-card__status designer-card__status--request">On Request</div>
-          </div>
-          <div class="designer-card__body">
-            <div class="designer-card__style">Corporate · Sleek</div>
-            <h3 class="designer-card__name">James Pemberton</h3>
-            <p class="designer-card__bio">Clean lines, corporate brand alignment, and elevated professional staging. James brings boardroom precision to every event — from seminars to product launches.</p>
-            <div class="designer-card__tags">
-              <span class="designer-tag designer-tag--slate">Seminars</span>
-              <span class="designer-tag designer-tag--slate">Networking</span>
-              <span class="designer-tag designer-tag--slate">Launches</span>
-            </div>
-            <a href="index.html#contact" class="btn--designer">Request James</a>
-          </div>
-        </div>
-
-        <!-- Nadia Osei -->
-        <div class="designer-card">
-          <div class="designer-card__avatar-wrap designer-card__avatar-wrap--sand">
-            <div class="designer-card__avatar designer-card__avatar--sand">N</div>
-            <div class="designer-card__status designer-card__status--avail">Available</div>
-          </div>
-          <div class="designer-card__body">
-            <div class="designer-card__style">Minimalist · Earthy</div>
-            <h3 class="designer-card__name">Nadia Osei</h3>
-            <p class="designer-card__bio">A master of restraint. Nadia works with neutral palettes, raw textures, and intentional negative space to create spaces that feel effortlessly refined.</p>
-            <div class="designer-card__tags">
-              <span class="designer-tag designer-tag--sand">Private Dinners</span>
-              <span class="designer-tag designer-tag--sand">Workshops</span>
-              <span class="designer-tag designer-tag--sand">Intimate Events</span>
-            </div>
-            <a href="index.html#contact" class="btn--designer">Request Nadia</a>
-          </div>
-        </div>
-
-        <!-- Bring Your Own Designer -->
-        <div class="designer-cta-card">
-          <div class="designer-cta-card__circle1"></div>
-          <div class="designer-cta-card__circle2"></div>
-          <div style="position:relative;">
-            <div class="designer-cta-card__plus">+</div>
-            <div class="designer-cta-card__line"></div>
-            <h3 class="designer-cta-card__h3">Have Your Own Designer?</h3>
-            <p class="designer-cta-card__body">Bring your own decorator or stylist — we work with all external vendors. Just let us know and we'll coordinate the details.</p>
-          </div>
-          <a href="index.html#contact" class="btn--designer-cta">Get in Touch →</a>
-        </div>
-
-      </div>
     </div>
   </section>
 
@@ -566,7 +465,135 @@
 
   <script src="js/main.js"></script>
   <script>
+    const COLOR_CONFIG = {
+      rose:   { wrap: 'designer-card__avatar-wrap--rose',   avatar: 'designer-card__avatar--rose',   tag: 'designer-tag--rose'   },
+      green:  { wrap: 'designer-card__avatar-wrap--green',  avatar: 'designer-card__avatar--green',  tag: 'designer-tag--green'  },
+      purple: { wrap: 'designer-card__avatar-wrap--purple', avatar: 'designer-card__avatar--purple', tag: 'designer-tag--purple' },
+      slate:  { wrap: 'designer-card__avatar-wrap--slate',  avatar: 'designer-card__avatar--slate',  tag: 'designer-tag--slate'  },
+      sand:   { wrap: 'designer-card__avatar-wrap--sand',   avatar: 'designer-card__avatar--sand',   tag: 'designer-tag--sand'   },
+    };
+
+    async function loadDesigners() {
+      const grid = document.getElementById('designers-grid');
+      let designers = [];
+
+      try {
+        const res = await fetch('designers/designers.json');
+        const data = await res.json();
+        designers = data.designers;
+      } catch (e) {
+        return;
+      }
+
+      designers.forEach(d => {
+        const c = COLOR_CONFIG[d.color] || COLOR_CONFIG.rose;
+        const isAvail = d.availability === 'Available';
+        const firstName = d.name.split(' ')[0];
+        const card = document.createElement('div');
+        card.className = 'designer-card';
+        card.innerHTML = `
+          <div class="designer-card__avatar-wrap ${c.wrap}">
+            <div class="designer-card__avatar ${c.avatar}">${d.initials}</div>
+            <div class="designer-card__status ${isAvail ? 'designer-card__status--avail' : 'designer-card__status--request'}">${d.availability}</div>
+          </div>
+          <div class="designer-card__body">
+            <div class="designer-card__style">${d.style}</div>
+            <h3 class="designer-card__name">${d.name}</h3>
+            <p class="designer-card__bio">${d.bio}</p>
+            <div class="designer-card__tags">
+              ${d.tags.map(t => `<span class="designer-tag ${c.tag}">${t}</span>`).join('')}
+            </div>
+            <div class="designer-card__actions">
+              <button class="btn--portfolio">View Portfolio</button>
+              <a href="index.html#contact" class="btn--designer">Request ${firstName}</a>
+            </div>
+          </div>
+        `;
+        card.querySelector('.btn--portfolio').addEventListener('click', () => openPortfolio(d));
+        grid.appendChild(card);
+      });
+
+      // Static "Bring Your Own Designer" CTA tile
+      const ctaCard = document.createElement('div');
+      ctaCard.className = 'designer-cta-card';
+      ctaCard.innerHTML = `
+        <div class="designer-cta-card__circle1"></div>
+        <div class="designer-cta-card__circle2"></div>
+        <div style="position:relative;">
+          <div class="designer-cta-card__plus">+</div>
+          <div class="designer-cta-card__line"></div>
+          <h3 class="designer-cta-card__h3">Have Your Own Designer?</h3>
+          <p class="designer-cta-card__body">Bring your own decorator or stylist — we work with all external vendors. Just let us know and we'll coordinate the details.</p>
+        </div>
+        <a href="index.html#contact" class="btn--designer-cta">Get in Touch →</a>
+      `;
+      grid.appendChild(ctaCard);
+    }
+
+    function openPortfolio(designer) {
+      let current = 0;
+      const photos = designer.photos;
+
+      const modal = document.createElement('div');
+      modal.className = 'portfolio-modal';
+      modal.innerHTML = `
+        <div class="portfolio-modal__overlay"></div>
+        <div class="portfolio-modal__panel">
+          <div class="portfolio-modal__header">
+            <div>
+              <div class="portfolio-modal__style">${designer.style}</div>
+              <div class="portfolio-modal__name">${designer.name}</div>
+            </div>
+            <button class="portfolio-modal__close" aria-label="Close portfolio">✕</button>
+          </div>
+          <div class="portfolio-modal__main">
+            <button class="portfolio-modal__nav portfolio-modal__nav--prev" aria-label="Previous photo">‹</button>
+            <img class="portfolio-modal__img" src="${photos[0]}" alt="${designer.name} portfolio photo 1">
+            <button class="portfolio-modal__nav portfolio-modal__nav--next" aria-label="Next photo">›</button>
+            <div class="portfolio-modal__counter">1 / ${photos.length}</div>
+          </div>
+          <div class="portfolio-modal__thumbs">
+            ${photos.map((p, i) => `<img class="portfolio-modal__thumb${i === 0 ? ' active' : ''}" src="${p}" alt="${designer.name} photo ${i + 1}" data-index="${i}">`).join('')}
+          </div>
+        </div>
+      `;
+      document.body.appendChild(modal);
+
+      const img = modal.querySelector('.portfolio-modal__img');
+      const counter = modal.querySelector('.portfolio-modal__counter');
+      const thumbs = modal.querySelectorAll('.portfolio-modal__thumb');
+
+      function show(idx) {
+        current = (idx + photos.length) % photos.length;
+        img.src = photos[current];
+        img.alt = `${designer.name} portfolio photo ${current + 1}`;
+        counter.textContent = `${current + 1} / ${photos.length}`;
+        thumbs.forEach((t, i) => t.classList.toggle('active', i === current));
+      }
+
+      modal.querySelector('.portfolio-modal__nav--prev').addEventListener('click', () => show(current - 1));
+      modal.querySelector('.portfolio-modal__nav--next').addEventListener('click', () => show(current + 1));
+      thumbs.forEach(t => t.addEventListener('click', () => show(+t.dataset.index)));
+
+      function closeModal() {
+        modal.remove();
+        document.removeEventListener('keydown', onKey);
+      }
+      modal.querySelector('.portfolio-modal__close').addEventListener('click', closeModal);
+      modal.querySelector('.portfolio-modal__overlay').addEventListener('click', closeModal);
+
+      function onKey(e) {
+        if (e.key === 'Escape') closeModal();
+        if (e.key === 'ArrowLeft') show(current - 1);
+        if (e.key === 'ArrowRight') show(current + 1);
+      }
+      document.addEventListener('keydown', onKey);
+
+      requestAnimationFrame(() => modal.classList.add('open'));
+    }
+
     document.addEventListener('DOMContentLoaded', () => {
+      // Fullscreen toggle for 3D planner
       const fsBtn = document.getElementById('planner-fs-btn');
       const wrap = document.getElementById('planner-wrap');
       const iconExpand = document.getElementById('fs-icon-expand');
@@ -587,6 +614,8 @@
         iconCompress.style.display = isFs ? 'block' : 'none';
         fsLabel.textContent = isFs ? 'Exit Full Screen' : 'Full Screen';
       });
+
+      loadDesigners();
     });
   </script>
 </body>

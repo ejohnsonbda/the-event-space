@@ -1,0 +1,97 @@
+/* ==========================================================================
+   UI UX Pro Max — Color tokens
+   Dark-first developer-tool brand. Deep navy surfaces, an electric blue
+   primary (#2666F3) and a warm orange accent (#F97316) that meet in the
+   signature blue→orange "spectrum" gradient of the wordmark.
+   ========================================================================== */
+:root {
+  /* ---- Base navy ramp (surfaces, borders) ------------------------------ */
+  --navy-950: #060912;
+  --navy-900: #0a0e1a;   /* page background */
+  --navy-870: #0d1322;
+  --navy-850: #0f1626;   /* raised section */
+  --navy-820: #121a2e;   /* card */
+  --navy-780: #16203a;   /* card hover / inset */
+  --navy-740: #1c2742;   /* elevated, popovers */
+  --navy-680: #26324f;   /* strong border */
+  --navy-560: #3a4868;   /* hairline on light glows */
+  --navy-460: #51618a;
+
+  /* ---- Blue (primary) -------------------------------------------------- */
+  --blue-50:  #eaf1ff;
+  --blue-200: #b9d0ff;
+  --blue-300: #7ea6ff;
+  --blue-400: #4d86ff;
+  --blue-500: #2666f3;   /* PRIMARY */
+  --blue-600: #1a52d6;
+  --blue-700: #1641a8;
+
+  /* ---- Orange (accent) ------------------------------------------------- */
+  --orange-200: #ffd5b0;
+  --orange-300: #ffb27a;
+  --orange-400: #fb923c;
+  --orange-500: #f97316;  /* ACCENT */
+  --orange-600: #e25c08;
+
+  /* ---- Indigo bridge (spectrum middle) --------------------------------- */
+  --indigo-500: #6d5cf0;
+
+  /* ---- Neutrals / text on dark ----------------------------------------- */
+  --white:     #ffffff;
+  --slate-100: #e7ecf6;
+  --slate-200: #c7d0e2;
+  --slate-300: #a3aecb;
+  --slate-400: #7884a3;
+  --slate-500: #586079;
+  --slate-550: #515d79;
+  --slate-600: #3c4860;
+
+  /* ---- Semantic status ------------------------------------------------- */
+  --green-500:  #2ecf8f;
+  --amber-500:  #f5b231;
+  --red-500:    #f4495d;
+  --cyan-500:   #36c6e0;
+
+  /* ===== Semantic aliases ============================================== */
+  /* Surfaces */
+  --bg-base:      var(--navy-900);
+  --bg-raised:    var(--navy-850);
+  --surface-card: var(--navy-820);
+  --surface-card-hover: var(--navy-780);
+  --surface-inset:  var(--navy-870);
+  --surface-elevated: var(--navy-740);
+  --surface-code:   #070b15;
+
+  /* Text */
+  --text-strong: var(--white);
+  --text-body:   var(--slate-200);
+  --text-muted:  var(--slate-400);
+  --text-faint:  var(--slate-550);
+  --text-on-primary: var(--white);
+  --text-on-accent:  #1a0e02;
+
+  /* Borders */
+  --border-subtle:  rgba(255,255,255,0.06);
+  --border-default: rgba(255,255,255,0.10);
+  --border-strong:  var(--navy-680);
+
+  /* Brand */
+  --brand-primary:       var(--blue-500);
+  --brand-primary-hover: var(--blue-400);
+  --brand-primary-press: var(--blue-600);
+  --brand-accent:        var(--orange-500);
+  --brand-accent-hover:  var(--orange-400);
+  --ring: var(--blue-500);
+
+  /* Status semantic */
+  --success: var(--green-500);
+  --warning: var(--amber-500);
+  --danger:  var(--red-500);
+  --info:    var(--cyan-500);
+
+  /* Spectrum gradients (the brand signature) */
+  --gradient-spectrum: linear-gradient(100deg, var(--blue-500) 0%, var(--indigo-500) 48%, var(--orange-500) 100%);
+  --gradient-spectrum-soft: linear-gradient(100deg, var(--blue-400) 0%, var(--orange-400) 100%);
+  --glow-blue:   radial-gradient(60% 60% at 30% 40%, rgba(38,102,243,0.28) 0%, rgba(38,102,243,0) 70%); /* @kind color */
+  --glow-orange: radial-gradient(60% 60% at 75% 65%, rgba(249,115,22,0.22) 0%, rgba(249,115,22,0) 70%); /* @kind color */
+}

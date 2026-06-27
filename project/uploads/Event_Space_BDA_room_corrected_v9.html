@@ -1,0 +1,1978 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Event Space BDA – Room-Corrected 3D Planner v7</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        /* ─── Light Theme ─── */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background: #f8f9fa;
+            color: #1a1a1a;
+            height: 100vh;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+        .app {
+            display: flex;
+            height: 100vh;
+            width: 100vw;
+            overflow: hidden;
+        }
+
+        /* ─── Sidebar (Light) ─── */
+        .sidebar {
+            width: 380px;
+            min-width: 380px;
+            background: #ffffff;
+            padding: 1.5rem 1.2rem 2rem;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 1.2rem;
+            border-right: 1px solid #e0e0e0;
+            z-index: 10;
+            height: 100vh;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+        .sidebar::-webkit-scrollbar {
+            width: 4px;
+        }
+        .sidebar::-webkit-scrollbar-track {
+            background: #f0f0f0;
+        }
+        .sidebar::-webkit-scrollbar-thumb {
+            background: #C9A84C;
+            border-radius: 2px;
+        }
+
+        .logo {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 2rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            padding-bottom: 0.8rem;
+            border-bottom: 1px solid #e0e0e0;
+            color: #1a1a1a;
+            letter-spacing: -0.02em;
+        }
+        .logo span {
+            font-size: 1.6rem;
+        }
+
+        .section-title {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 0.32em;
+            color: #888888;
+            font-weight: 700;
+            margin-top: 0.2rem;
+        }
+
+        .room-selector {
+            display: flex;
+            gap: 0.5rem;
+            background: #f0f0f0;
+            border-radius: 3px;
+            padding: 0.3rem;
+            border: 1px solid #e0e0e0;
+        }
+        .room-selector button {
+            flex: 1;
+            padding: 0.5rem 0.8rem;
+            border: none;
+            border-radius: 2px;
+            font-weight: 600;
+            font-size: 0.8rem;
+            cursor: pointer;
+            background: transparent;
+            color: #666666;
+            transition: 0.2s;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            letter-spacing: 0.02em;
+        }
+        .room-selector button.active {
+            background: #1a1a1a;
+            color: #ffffff;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+        }
+        .room-selector button:hover:not(.active) {
+            color: #1a1a1a;
+        }
+
+        .view-selector {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0.5rem;
+            background: #f0f0f0;
+            border-radius: 3px;
+            padding: 0.3rem;
+            border: 1px solid #e0e0e0;
+        }
+        .view-selector button {
+            padding: 0.55rem 0.8rem;
+            border: none;
+            border-radius: 2px;
+            font-weight: 700;
+            font-size: 0.78rem;
+            cursor: pointer;
+            background: transparent;
+            color: #666666;
+            transition: 0.2s;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            letter-spacing: 0.04em;
+        }
+        .view-selector button.active {
+            background: #1a1a1a;
+            color: #ffffff;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+        }
+        .view-selector button:hover:not(.active) {
+            color: #1a1a1a;
+            background: #fff8e7;
+        }
+
+        .room-info {
+            display: flex;
+            gap: 0.8rem;
+            font-size: 0.7rem;
+            color: #666666;
+            background: #f8f9fa;
+            padding: 0.5rem 0.8rem;
+            border-radius: 2px;
+            flex-wrap: wrap;
+            border: 1px solid #e0e0e0;
+        }
+        .room-info span strong {
+            color: #1a1a1a;
+            font-weight: 600;
+        }
+
+        /* ─── Presets ─── */
+        .preset-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 0.4rem;
+        }
+        .preset-btn {
+            padding: 0.4rem 0.2rem;
+            background: #f8f9fa;
+            border: 1px solid #e0e0e0;
+            border-radius: 2px;
+            color: #666666;
+            font-size: 0.65rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.2s;
+            text-align: center;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            letter-spacing: 0.04em;
+        }
+        .preset-btn:hover {
+            border-color: #C9A84C;
+            background: #fff8e7;
+            color: #1a1a1a;
+        }
+        .preset-btn.active {
+            border-color: #C9A84C;
+            background: #fff8e7;
+            color: #C9A84C;
+        }
+        .preset-btn.disabled {
+            opacity: 0.45;
+            background: #f2f2f2;
+            border-color: #d8d8d8;
+            color: #999999;
+            cursor: not-allowed;
+        }
+        .preset-btn.disabled:hover {
+            background: #f2f2f2;
+            border-color: #d8d8d8;
+            color: #999999;
+        }
+
+        /* ─── Palette & Quick Add ─── */
+        .palette {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 0.5rem;
+            background: #f8f9fa;
+            padding: 0.6rem 0.8rem;
+            border-radius: 3px;
+            border: 1px solid #e0e0e0;
+        }
+        .palette-item {
+            min-height: 86px;
+            aspect-ratio: 1 / 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 0.35rem;
+            padding: 0.45rem 0.3rem;
+            background: #ffffff;
+            border-radius: 3px;
+            border: 1px solid #e0e0e0;
+            font-size: 0.62rem;
+            line-height: 1.18;
+            color: #666666;
+            cursor: grab;
+            transition: 0.2s;
+            user-select: none;
+            text-align: center;
+            font-weight: 700;
+        }
+        .palette-item:hover {
+            border-color: #C9A84C;
+            color: #1a1a1a;
+            background: #fff8e7;
+            transform: translateY(-1px);
+        }
+        .palette-item .dot {
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            display: inline-block;
+            flex: 0 0 auto;
+        }
+        .palette-title {
+            display: block;
+        }
+        .dot.round { background: #60a5fa; }
+        .dot.rect { background: #34d399; }
+        .dot.round4 { background: #38bdf8; }
+        .dot.rect6 { background: #22c55e; }
+        .dot.cocktail { background: #fb923c; }
+        .dot.podium { background: #111111; border: 2px solid #C9A84C; }
+        .dot.bar { background: #8b5e3c; border: 2px solid #d4af37; }
+        .dot.dj { background: #374151; border: 2px solid #9ca3af; }
+
+
+        .accordion {
+            background: #f8f9fa;
+            border: 1px solid #e0e0e0;
+            border-radius: 3px;
+            overflow: hidden;
+        }
+        .accordion summary {
+            list-style: none;
+            cursor: pointer;
+            padding: 0.65rem 0.8rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 0.75rem;
+            font-size: 0.72rem;
+            font-weight: 800;
+            color: #1a1a1a;
+            text-transform: uppercase;
+            letter-spacing: 0.14em;
+            user-select: none;
+        }
+        .accordion summary::-webkit-details-marker {
+            display: none;
+        }
+        .accordion summary::after {
+            content: '+';
+            width: 24px;
+            height: 24px;
+            border-radius: 3px;
+            background: #ffffff;
+            border: 1px solid #e0e0e0;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            color: #C9A84C;
+            font-size: 1rem;
+            line-height: 1;
+            flex: 0 0 auto;
+        }
+        .accordion[open] summary {
+            border-bottom: 1px solid #e0e0e0;
+            background: #fff8e7;
+        }
+        .accordion[open] summary::after {
+            content: '−';
+            background: #1a1a1a;
+            border-color: #1a1a1a;
+            color: #C9A84C;
+        }
+        .accordion-hint {
+            margin-left: auto;
+            font-size: 0.52rem;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            color: #888888;
+            text-transform: none;
+        }
+        .size-list {
+            padding: 0.6rem 0.8rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.35rem;
+        }
+        .size-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 0.75rem;
+            font-size: 0.68rem;
+            color: #666666;
+            border-bottom: 1px solid #ececec;
+            padding-bottom: 0.28rem;
+        }
+        .size-row:last-of-type {
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+        .size-row strong {
+            color: #1a1a1a;
+            font-weight: 700;
+        }
+        .size-row span:last-child {
+            color: #1a1a1a;
+            font-weight: 700;
+            white-space: nowrap;
+        }
+        .size-note {
+            margin-top: 0.25rem;
+            padding-top: 0.4rem;
+            border-top: 1px dashed #e0e0e0;
+            font-size: 0.58rem;
+            color: #888888;
+            line-height: 1.35;
+        }
+
+        .quick-add {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            background: #f8f9fa;
+            padding: 0.6rem 0.8rem;
+            border-radius: 3px;
+            border: 1px solid #e0e0e0;
+        }
+
+        .accordion .quick-add {
+            border: none;
+            border-radius: 0;
+            background: #f8f9fa;
+        }
+        .quick-accordion .quick-add {
+            padding: 0.7rem 0.8rem;
+        }
+        .quick-row {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .quick-row label {
+            font-size: 0.68rem;
+            color: #666666;
+            min-width: 92px;
+            font-weight: 700;
+        }
+        .quick-row input[type="number"] {
+            width: 48px;
+            padding: 0.2rem 0.3rem;
+            background: #ffffff;
+            border: 1px solid #e0e0e0;
+            border-radius: 2px;
+            color: #1a1a1a;
+            font-size: 0.8rem;
+            text-align: center;
+            outline: none;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+        .quick-row input[type="number"]:focus {
+            border-color: #C9A84C;
+        }
+        .quick-row button {
+            padding: 0.2rem 0.8rem;
+            background: #1a1a1a;
+            border: none;
+            border-radius: 2px;
+            color: #ffffff;
+            font-weight: 700;
+            font-size: 0.7rem;
+            cursor: pointer;
+            transition: 0.2s;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            letter-spacing: 0.04em;
+        }
+        .quick-row button:hover {
+            background: #C9A84C;
+            color: #1a1a1a;
+        }
+
+        /* ─── Stats ─── */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 0.4rem;
+            background: #f8f9fa;
+            border-radius: 3px;
+            padding: 0.6rem 0.8rem;
+            border: 1px solid #e0e0e0;
+        }
+        .stats-grid .stat-item {
+            display: flex;
+            flex-direction: column;
+        }
+        .stats-grid .stat-item .stat-label {
+            font-size: 0.5rem;
+            text-transform: uppercase;
+            letter-spacing: 0.2em;
+            color: #888888;
+        }
+        .stats-grid .stat-item .stat-value {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: #1a1a1a;
+            font-family: 'Cormorant Garamond', serif;
+        }
+        .stats-grid .stat-item .stat-value .accent { color: #C9A84C; }
+        .stats-grid .stat-item .stat-value .green { color: #34d399; }
+        .stats-grid .stat-item .stat-value .orange { color: #fb923c; }
+        .stats-grid .stat-item .stat-value .pink { color: #f472b6; }
+
+        .warning {
+            background: #fff0f0;
+            border: 1px solid #ffcdcd;
+            border-radius: 2px;
+            padding: 0.5rem 0.8rem;
+            font-size: 0.7rem;
+            color: #d63031;
+            display: none;
+        }
+        .warning.show {
+            display: block;
+        }
+
+        .btn {
+            width: 100%;
+            padding: 0.6rem;
+            border: none;
+            border-radius: 2px;
+            font-weight: 700;
+            font-size: 0.75rem;
+            cursor: pointer;
+            transition: 0.2s;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+        }
+        .btn-primary {
+            background: linear-gradient(135deg, #7a5c10 0%, #C9A84C 45%, #E8C96A 75%, #C9A84C 100%);
+            color: #080808;
+            box-shadow: 0 4px 24px rgba(201,168,76,0.3);
+        }
+        .btn-primary:hover {
+            transform: scale(0.98);
+            box-shadow: 0 6px 32px rgba(201,168,76,0.45);
+        }
+        .btn-danger {
+            background: #d63031;
+            color: #ffffff;
+            border: 1px solid #b91c1c;
+            box-shadow: 0 6px 18px rgba(214, 48, 49, 0.18);
+        }
+        .btn-danger:hover {
+            background: #b91c1c;
+            color: #ffffff;
+            transform: scale(0.98);
+        }
+        .btn-secondary {
+            background: #f0f0f0;
+            color: #333333;
+            border: 1px solid #e0e0e0;
+        }
+        .btn-secondary:hover {
+            background: #e0e0e0;
+            color: #1a1a1a;
+        }
+        .action-row {
+            display: flex;
+            gap: 0.5rem;
+        }
+        .action-row .btn {
+            flex: 1;
+        }
+
+        /* ─── Viewport ─── */
+        .viewport {
+            flex: 1;
+            height: 100vh;
+            background: #f0f4f8;
+            position: relative;
+            overflow: hidden;
+        }
+        .viewport canvas {
+            display: block;
+            width: 100% !important;
+            height: 100% !important;
+        }
+
+        .viewport-hint {
+            position: absolute;
+            bottom: 1.5rem;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(8px);
+            padding: 0.3rem 1.2rem;
+            border-radius: 20px;
+            font-size: 0.65rem;
+            color: #888888;
+            border: 1px solid #e0e0e0;
+            pointer-events: none;
+            white-space: nowrap;
+            font-weight: 400;
+        }
+        .viewport-hint strong {
+            color: #1a1a1a;
+        }
+
+        /* ─── Responsive ─── */
+        @media (max-width: 820px) {
+            .app { flex-direction: column; }
+            .sidebar {
+                width: 100%;
+                min-width: unset;
+                height: 50vh;
+                border-right: none;
+                border-bottom: 1px solid #e0e0e0;
+                padding: 1rem;
+                gap: 0.8rem;
+            }
+            .viewport { height: 50vh; flex: none; }
+            .preset-grid { grid-template-columns: 1fr 1fr 1fr; }
+        }
+        @media (max-width: 480px) {
+            .sidebar { padding: 0.8rem; height: 45vh; }
+            .viewport { height: 55vh; }
+            .preset-grid { grid-template-columns: 1fr 1fr; }
+            .palette { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+            .palette-item { min-height: 78px; }
+            .stats-grid { grid-template-columns: 1fr 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="app">
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <div class="logo">
+                <span>🪑</span> Event Space BDA
+            </div>
+
+            <!-- Room Selector -->
+            <div>
+                <div class="section-title">Room</div>
+                <div class="room-selector" id="roomSelector">
+                    <button class="active" data-room="large">🏛️ Large 36′×26′</button>
+                    <button data-room="small">🏠 Small 33′×10′</button>
+                </div>
+                <div class="room-info" id="roomInfo">
+                    <span>📐 <strong id="roomArea">936</strong> ft²</span>
+                    <span>⬆️ <strong id="roomWidth">26</strong>′</span>
+                    <span>➡️ <strong id="roomLength">36</strong>′</span>
+                </div>
+            </div>
+
+            <!-- Edit View Mode -->
+            <div>
+                <div class="section-title">Edit View</div>
+                <div class="view-selector" id="viewSelector">
+                    <button class="active" data-view="3d">3D Edit</button>
+                    <button data-view="2d">2D Floor Plan</button>
+                </div>
+                <div style="font-size:0.6rem;color:#888;margin-top:0.3rem;">2D gives a straight overhead layout view. 3D gives the angled room view.</div>
+            </div>
+
+            <!-- Presets -->
+            <div>
+                <div class="section-title">Preset Layouts</div>
+                <div class="preset-grid" id="presetGrid">
+                    <button class="preset-btn" data-preset="dinner">🍽️ Dinner</button>
+                    <button class="preset-btn" data-preset="banquet">🥂 Banquet</button>
+                    <button class="preset-btn" data-preset="classroom">📚 Classroom</button>
+                    <button class="preset-btn" data-preset="theater">🎭 Theater</button>
+                    <button class="preset-btn" data-preset="ushape">🔄 U‑Shape</button>
+                    <button class="preset-btn" data-preset="cocktail">🍸 Cocktail</button>
+                </div>
+                <div style="font-size:0.6rem;color:#888;margin-top:0.3rem;">Unavailable presets are greyed out and blocked when they do not fit the selected room.</div>
+            </div>
+
+            <!-- Drag Palette -->
+            <div>
+                <div class="section-title">Drag to add</div>
+                <div class="palette" id="palette">
+                    <div class="palette-item" data-type="round" title="6′ Round Table"><span class="dot round"></span><span class="palette-title">6′ Round<br>Table</span></div>
+                    <div class="palette-item" data-type="rect" title="8′ × 3′ Rectangular Table"><span class="dot rect"></span><span class="palette-title">8′×3′ Rect<br>Table</span></div>
+                    <div class="palette-item" data-type="round4" title="4′ Round Table"><span class="dot round4"></span><span class="palette-title">4′ Round<br>Table</span></div>
+                    <div class="palette-item" data-type="rect6" title="6′ × 3′ Rectangular Table"><span class="dot rect6"></span><span class="palette-title">6′×3′ Rect<br>Table</span></div>
+                    <div class="palette-item" data-type="cocktail" title="2.5′ Cocktail Table"><span class="dot cocktail"></span><span class="palette-title">2.5′ Cocktail<br>Table</span></div>
+                    <div class="palette-item" data-type="podium" title="3′ × 2′ Podium"><span class="dot podium"></span><span class="palette-title">3′×2′<br>Podium</span></div>
+                    <div class="palette-item" data-type="bar" title="8′ × 2.5′ Bar"><span class="dot bar"></span><span class="palette-title">8′×2.5′<br>Bar</span></div>
+                    <div class="palette-item" data-type="dj" title="6′ × 2.5′ DJ Booth"><span class="dot dj"></span><span class="palette-title">6′×2.5′<br>DJ Booth</span></div>
+                </div>
+            </div>
+
+
+            <!-- Furniture Sizes Accordion -->
+            <div>
+                <details class="accordion furniture-accordion">
+                    <summary><span>Furniture Sizes</span><span class="accordion-hint">click to open</span></summary>
+                    <div class="size-list">
+                        <div class="size-row"><strong>6′ Round Table</strong><span>6′ diameter</span></div>
+                        <div class="size-row"><strong>8′×3′ Rect Table</strong><span>8′ × 3′</span></div>
+                        <div class="size-row"><strong>4′ Round Table</strong><span>4′ diameter</span></div>
+                        <div class="size-row"><strong>6′×3′ Rect Table</strong><span>6′ × 3′</span></div>
+                        <div class="size-row"><strong>2.5′ Cocktail Table</strong><span>2.5′ diameter</span></div>
+                        <div class="size-row"><strong>3′×2′ Podium</strong><span>3′ × 2′</span></div>
+                        <div class="size-row"><strong>8′×2.5′ Bar</strong><span>8′ × 2.5′</span></div>
+                        <div class="size-row"><strong>6′×2.5′ DJ Booth</strong><span>6′ × 2.5′</span></div>
+                        <div class="size-note">Sizes are shown in feet and match the 3D objects added to the room.</div>
+                    </div>
+                </details>
+            </div>
+
+            <!-- Quick Add Accordion -->
+            <div>
+                <details class="accordion quick-accordion">
+                    <summary><span>Quick Add</span><span class="accordion-hint">click to open</span></summary>
+                    <div class="quick-add">
+                        <div class="quick-row"><label>6′ Round</label><input type="number" id="qRound" value="0" min="0" max="30"/><button data-type="round">Add</button></div>
+                        <div class="quick-row"><label>8′×3′ Rect</label><input type="number" id="qRect" value="0" min="0" max="30"/><button data-type="rect">Add</button></div>
+                        <div class="quick-row"><label>4′ Round</label><input type="number" id="qRound4" value="0" min="0" max="30"/><button data-type="round4">Add</button></div>
+                        <div class="quick-row"><label>6′×3′ Rect</label><input type="number" id="qRect6" value="0" min="0" max="30"/><button data-type="rect6">Add</button></div>
+                        <div class="quick-row"><label>2.5′ Cocktail</label><input type="number" id="qCocktail" value="0" min="0" max="30"/><button data-type="cocktail">Add</button></div>
+                        <div class="quick-row"><label>3′×2′ Podium</label><input type="number" id="qPodium" value="0" min="0" max="5"/><button data-type="podium">Add</button></div>
+                        <div class="quick-row"><label>8′×2.5′ Bar</label><input type="number" id="qBar" value="0" min="0" max="10"/><button data-type="bar">Add</button></div>
+                        <div class="quick-row"><label>6′×2.5′ DJ Booth</label><input type="number" id="qDj" value="0" min="0" max="10"/><button data-type="dj">Add</button></div>
+                    </div>
+                </details>
+            </div>
+
+            <!-- Rotation Control -->
+            <div>
+                <div class="section-title">Selected Table</div>
+                <div style="display:flex;gap:0.5rem;">
+                    <button class="btn btn-secondary" id="rotateBtn" style="flex:2;">↻ Rotate 15°</button>
+                    <button class="btn btn-danger" id="deleteSelectedBtn" style="flex:1;">🗑️</button>
+                </div>
+                <div style="font-size:0.6rem;color:#888888;margin-top:0.3rem;">Click a table to select · Scroll wheel to rotate · Delete key removes selected</div>
+            </div>
+
+            <!-- Stats -->
+            <div>
+                <div class="section-title">Capacity</div>
+                <div class="stats-grid">
+                    <div class="stat-item"><span class="stat-label">Tables</span><span class="stat-value"><span class="accent" id="totalTables">0</span></span></div>
+                    <div class="stat-item"><span class="stat-label">Podium</span><span class="stat-value"><span class="pink" id="statPodium">0</span></span></div>
+                    <div class="stat-item"><span class="stat-label">Cocktail</span><span class="stat-value"><span class="orange" id="statCocktail">0</span></span></div>
+                </div>
+            </div>
+
+            <!-- Warning -->
+            <div class="warning" id="warning">⚠️ <span id="warningText"></span></div>
+
+            <!-- Actions -->
+            <div class="action-row">
+                <button class="btn btn-primary" id="resetBtn">↺ Reset Preset</button>
+                <button class="btn btn-danger" id="clearBtn">🗑️ Clear All</button>
+            </div>
+        </div>
+
+        <!-- 3D Viewport -->
+        <div class="viewport" id="viewport">
+            <div class="viewport-hint" id="viewportHint">🖱️ <strong>Drag</strong> to orbit · <strong>Scroll</strong> to zoom · Click table to select · <strong>Mouse wheel</strong> rotates · <strong>Delete</strong> removes selected</div>
+        </div>
+    </div>
+
+    <!-- ─── THREE.JS ─── -->
+    <script type="importmap">
+        {
+            "imports": {
+                "three": "https://cdn.jsdelivr.net/npm/three@0.163.0/build/three.module.js",
+                "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.163.0/examples/jsm/"
+            }
+        }
+    </script>
+
+    <script type="module">
+        // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+        //  IMPORTS
+        // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+        import * as THREE from 'three';
+        import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+
+        // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+        //  STATE
+        // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+        const ROOMS = {
+            large: { w: 26, l: 36, label: 'Large', area: 936 },
+            small: { w: 10, l: 33, label: 'Small', area: 330 }
+        };
+
+        const TABLE_TYPES = {
+            // Original table options restored
+            round: { label: '6′ Round Table', width: 6, depth: 6, seats: 0, color: 0x60a5fa, shape: 'circle' },
+            rect: { label: '8′ × 3′ Rect Table', width: 8, depth: 3, seats: 0, color: 0x34d399, shape: 'rect' },
+            // New added table options
+            round4: { label: '4′ Round Table', width: 4, depth: 4, seats: 0, color: 0x38bdf8, shape: 'circle' },
+            rect6: { label: '6′ × 3′ Rect Table', width: 6, depth: 3, seats: 0, color: 0x22c55e, shape: 'rect' },
+            cocktail: { label: '2.5′ Cocktail', width: 2.5, depth: 2.5, seats: 0, color: 0xfb923c, shape: 'circle' },
+            podium: { label: '3′ × 2′ Podium', width: 3, depth: 2, seats: 0, color: 0x111111, shape: 'rect' },
+            bar: { label: '8′ × 2.5′ Bar', width: 8, depth: 2.5, seats: 0, color: 0x8b5e3c, shape: 'rect' },
+            dj: { label: '6′ × 2.5′ DJ Booth', width: 6, depth: 2.5, seats: 0, color: 0x374151, shape: 'rect' },
+        };
+
+        let currentRoom = 'large';
+        let selectedPreset = null;
+        let tablesData = [];
+        let nextId = 1;
+        let selectedId = null;
+        let editMode = '3d';
+
+        // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+        //  THREE.JS SETUP
+        // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+        const viewport = document.getElementById('viewport');
+        const scene = new THREE.Scene();
+        scene.background = new THREE.Color(0xf0f4f8);
+
+        const camera = new THREE.PerspectiveCamera(40, viewport.clientWidth / viewport.clientHeight, 0.1, 200);
+        camera.position.set(28, 22, 32);
+        camera.lookAt(0, 0, 0);
+
+        const renderer = new THREE.WebGLRenderer({ antialias: true });
+        renderer.setSize(viewport.clientWidth, viewport.clientHeight);
+        renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+        renderer.shadowMap.enabled = true;
+        renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+        renderer.toneMapping = THREE.ACESFilmicToneMapping;
+        renderer.toneMappingExposure = 1.2;
+        viewport.prepend(renderer.domElement);
+
+        const controls = new OrbitControls(camera, renderer.domElement);
+        controls.enableDamping = true;
+        controls.dampingFactor = 0.08;
+        controls.minDistance = 5;
+        controls.maxDistance = 80;
+        controls.target.set(0, 1, 0);
+        controls.update();
+
+        function setViewportHintForMode(mode) {
+            const hint = document.getElementById('viewportHint');
+            if (!hint) return;
+            if (mode === '2d') {
+                hint.innerHTML = '🧭 <strong>2D mode</strong> · Drag items to move · <strong>Scroll</strong> to zoom · Click item to select · <strong>Delete</strong> removes selected';
+            } else {
+                hint.innerHTML = '🖱️ <strong>3D mode</strong> · Drag to orbit · <strong>Scroll</strong> to zoom · Click item to select · <strong>Mouse wheel</strong> rotates · <strong>Delete</strong> removes selected';
+            }
+        }
+
+        function applyEditMode(mode) {
+            editMode = mode;
+            document.querySelectorAll('#viewSelector button').forEach(btn => {
+                btn.classList.toggle('active', btn.dataset.view === mode);
+            });
+
+            const room = ROOMS[currentRoom];
+            const dist = Math.max(room.l, room.w) * 1.3 + 8;
+
+            if (mode === '2d') {
+                camera.up.set(0, 0, -1);
+                camera.position.set(0, Math.max(room.l, room.w) * 2.15, 0.001);
+                camera.lookAt(0, 0, 0);
+                controls.target.set(0, 0, 0);
+                controls.enableRotate = false;
+                controls.enablePan = true;
+                controls.screenSpacePanning = true;
+                controls.minDistance = 8;
+                controls.maxDistance = 95;
+            } else {
+                camera.up.set(0, 1, 0);
+                camera.position.set(dist * 0.7, dist * 0.6, dist * 0.7);
+                camera.lookAt(0, 1, 0);
+                controls.target.set(0, 1, 0);
+                controls.enableRotate = true;
+                controls.enablePan = true;
+                controls.screenSpacePanning = false;
+                controls.minDistance = 5;
+                controls.maxDistance = 80;
+            }
+
+            setViewportHintForMode(mode);
+            controls.update();
+        }
+
+        // ─── Lights ─────────────────────────────────────
+        const ambient = new THREE.AmbientLight(0xffffff, 0.8);
+        scene.add(ambient);
+
+        const mainLight = new THREE.DirectionalLight(0xffffff, 1.2);
+        mainLight.position.set(15, 20, 15);
+        mainLight.castShadow = true;
+        mainLight.shadow.mapSize.width = 2048;
+        mainLight.shadow.mapSize.height = 2048;
+        mainLight.shadow.camera.near = 0.5;
+        mainLight.shadow.camera.far = 80;
+        mainLight.shadow.camera.left = -40;
+        mainLight.shadow.camera.right = 40;
+        mainLight.shadow.camera.top = 40;
+        mainLight.shadow.camera.bottom = -40;
+        scene.add(mainLight);
+
+        const fill = new THREE.DirectionalLight(0x8888ff, 0.3);
+        fill.position.set(-20, 10, -20);
+        scene.add(fill);
+
+        // ─── Groups ──────────────────────────────────────
+        let roomGroup = new THREE.Group();
+        let furnitureGroup = new THREE.Group();
+        scene.add(roomGroup);
+        scene.add(furnitureGroup);
+
+        // ─── Ground & Grid ───────────────────────────────
+        const gridHelper = new THREE.GridHelper(60, 30, 0xcccccc, 0xeeeeee);
+        gridHelper.position.y = 0.01;
+        scene.add(gridHelper);
+
+        // ─── Raycaster & Interaction ──────────────────────
+        const raycaster = new THREE.Raycaster();
+        const pointer = new THREE.Vector2();
+        let isDraggingPalette = false;
+        let ghostDiv = null;
+        let dragType = null;
+        let isDraggingTable = false;
+        let dragTableId = null;
+        let dragOffset = new THREE.Vector3();
+
+        // ─── Selection highlight ──────────────────────────
+        let selectedOutline = null;
+
+        // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+        //  BUILD ROOM (LIGHT THEME + WINDOWS + DOORS)
+        // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+        function buildRoom(roomKey) {
+            while (roomGroup.children.length) {
+                const c = roomGroup.children[0];
+                c.geometry?.dispose();
+                if (Array.isArray(c.material)) c.material.forEach(m => m.dispose());
+                else c.material?.dispose();
+                roomGroup.remove(c);
+            }
+
+            const room = ROOMS[roomKey];
+            const w = room.w;
+            const l = room.l;
+            const floorY = 0;
+
+            // ── Floor ──
+            const floorGeo = new THREE.PlaneGeometry(l, w);
+            const floorMat = new THREE.MeshStandardMaterial({
+                color: 0xffffff,
+                roughness: 0.9,
+                metalness: 0.0,
+                transparent: true,
+                opacity: 0.95,
+            });
+            const floor = new THREE.Mesh(floorGeo, floorMat);
+            floor.rotation.x = -Math.PI / 2;
+            floor.position.set(0, floorY, 0);
+            floor.receiveShadow = true;
+            roomGroup.add(floor);
+
+            // ── Walls (Light Gray) ──
+            const wallMat = new THREE.MeshStandardMaterial({
+                color: 0xe2e8f0,
+                transparent: true,
+                opacity: 0.45,
+                roughness: 0.6,
+                side: THREE.DoubleSide,
+            });
+            const wallHeight = 10;
+            const wallThick = 0.5;
+            const walls = [
+                { x: 0, z: -w / 2, sx: l, sz: wallThick },
+                { x: 0, z: w / 2, sx: l, sz: wallThick },
+                { x: -l / 2, z: 0, sx: wallThick, sz: w },
+                { x: l / 2, z: 0, sx: wallThick, sz: w },
+            ];
+            walls.forEach(({ x, z, sx, sz }) => {
+                const geo = new THREE.BoxGeometry(sx, wallHeight, sz);
+                const mesh = new THREE.Mesh(geo, wallMat);
+                mesh.position.set(x, wallHeight / 2, z);
+                mesh.castShadow = true;
+                mesh.receiveShadow = true;
+                roomGroup.add(mesh);
+            });
+
+            // ── Wall Edges ──
+            const edgeMat = new THREE.LineBasicMaterial({ color: 0xcccccc, transparent: true, opacity: 0.3 });
+            const corners = [
+                [-l / 2, -w / 2],
+                [l / 2, -w / 2],
+                [l / 2, w / 2],
+                [-l / 2, w / 2],
+                [-l / 2, -w / 2]
+            ];
+            const pts = corners.map(([x, z]) => new THREE.Vector3(x, wallHeight + 0.02, z));
+            const edgeGeo = new THREE.BufferGeometry().setFromPoints(pts);
+            const edgeLine = new THREE.Line(edgeGeo, edgeMat);
+            roomGroup.add(edgeLine);
+
+            // ── Room Label ──
+            const canvas = document.createElement('canvas');
+            canvas.width = 400;
+            canvas.height = 60;
+            const ctx = canvas.getContext('2d');
+            ctx.fillStyle = 'rgba(255,255,255,0.85)';
+            ctx.roundRect(0, 0, 400, 60, 20);
+            ctx.fill();
+            ctx.strokeStyle = '#e0e0e0';
+            ctx.lineWidth = 1;
+            ctx.roundRect(0, 0, 400, 60, 20);
+            ctx.stroke();
+            ctx.font = 'bold 24px "Cormorant Garamond", serif';
+            ctx.fillStyle = '#1a1a1a';
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            ctx.fillText(`${room.label}  ${l}′×${w}′`, 200, 32);
+
+            const texture = new THREE.CanvasTexture(canvas);
+            const spriteMat = new THREE.SpriteMaterial({ map: texture, depthTest: false, transparent: true });
+            const sprite = new THREE.Sprite(spriteMat);
+            sprite.scale.set(12, 2, 1);
+            sprite.position.set(0, wallHeight + 1.5, 0);
+            roomGroup.add(sprite);
+
+            // ── Room-specific doors ──
+            if (roomKey === 'large') {
+                addFrenchDoorsOnShortWall(l, w);
+            } else {
+                addStandardDoorOnShortWall(l, w);
+            }
+
+            // ── Windows (29″W × 72″H) on the right side only ──
+            addWindowsRightSideOnly(l, w, roomKey);
+
+            applyEditMode(editMode);
+        }
+
+        // ─── Canvas roundRect polyfill ──────────────────────
+        if (!CanvasRenderingContext2D.prototype.roundRect) {
+            CanvasRenderingContext2D.prototype.roundRect = function(x, y, w, h, r) {
+                if (r > w / 2) r = w / 2;
+                if (r > h / 2) r = h / 2;
+                this.beginPath();
+                this.moveTo(x + r, y);
+                this.lineTo(x + w - r, y);
+                this.quadraticCurveTo(x + w, y, x + w, y + r);
+                this.lineTo(x + w, y + h - r);
+                this.quadraticCurveTo(x + w, y + h, x + w - r, y + h);
+                this.lineTo(x + r, y + h);
+                this.quadraticCurveTo(x, y + h, x, y + h - r);
+                this.lineTo(x, y + r);
+                this.quadraticCurveTo(x, y, x + r, y);
+                this.closePath();
+                return this;
+            };
+        }
+
+        // ─── Add French Doors on Large Room Short 26′ Wall ───────
+        function addFrenchDoorsOnShortWall(l, w) {
+            // Floor uses X = room length and Z = room width.
+            // A 26′ wall is a short wall, so it sits at X = ±l/2 and spans the 26′ Z direction.
+            const x = l / 2 - 0.28;
+            const z = 0;
+            
+            const frameMat = new THREE.MeshStandardMaterial({ color: 0xffffff, roughness: 0.4, metalness: 0.1 });
+            const glassMat = new THREE.MeshStandardMaterial({
+                color: 0x88ccff,
+                transparent: true,
+                opacity: 0.38,
+                roughness: 0.1,
+                metalness: 0.15,
+                side: THREE.DoubleSide
+            });
+            const handleMat = new THREE.MeshStandardMaterial({ color: 0xC9A84C, metalness: 0.8, roughness: 0.2 });
+
+            const doorWidth = 3;
+            const doorHeight = 8;
+            const gap = 0.12;
+            const totalWidth = doorWidth * 2 + gap;
+            const bar = 0.12;
+            const group = new THREE.Group();
+
+            // Outer and center frame bars. Local X becomes wall width after rotation.
+            [
+                { x: -totalWidth / 2, y: doorHeight / 2, sx: bar, sy: doorHeight + 0.35 },
+                { x:  totalWidth / 2, y: doorHeight / 2, sx: bar, sy: doorHeight + 0.35 },
+                { x: 0, y: doorHeight + 0.15, sx: totalWidth + 0.35, sy: bar },
+                { x: 0, y: 0.06, sx: totalWidth + 0.35, sy: bar },
+                { x: 0, y: doorHeight / 2, sx: bar, sy: doorHeight },
+            ].forEach(p => {
+                const part = new THREE.Mesh(new THREE.BoxGeometry(p.sx, p.sy, 0.18), frameMat);
+                part.position.set(p.x, p.y, 0.06);
+                part.castShadow = true;
+                group.add(part);
+            });
+
+            function doorLeaf(cx) {
+                const leaf = new THREE.Group();
+                const glass = new THREE.Mesh(new THREE.BoxGeometry(doorWidth - 0.35, doorHeight - 0.45, 0.08), glassMat);
+                glass.position.set(cx, doorHeight / 2, 0.02);
+                leaf.add(glass);
+
+                const parts = [
+                    { x: cx - doorWidth / 2 + bar, y: doorHeight / 2, sx: bar, sy: doorHeight - 0.2 },
+                    { x: cx + doorWidth / 2 - bar, y: doorHeight / 2, sx: bar, sy: doorHeight - 0.2 },
+                    { x: cx, y: 0.22, sx: doorWidth - 0.1, sy: bar },
+                    { x: cx, y: doorHeight - 0.22, sx: doorWidth - 0.1, sy: bar },
+                    { x: cx, y: doorHeight * 0.53, sx: doorWidth - 0.25, sy: bar },
+                ];
+                parts.forEach(p => {
+                    const part = new THREE.Mesh(new THREE.BoxGeometry(p.sx, p.sy, 0.14), frameMat);
+                    part.position.set(p.x, p.y, 0.1);
+                    leaf.add(part);
+                });
+                return leaf;
+            }
+
+            group.add(doorLeaf(-doorWidth / 2 - gap / 2));
+            group.add(doorLeaf(doorWidth / 2 + gap / 2));
+
+            const handleGeo = new THREE.SphereGeometry(0.11, 12, 12);
+            const handle1 = new THREE.Mesh(handleGeo, handleMat);
+            handle1.position.set(-0.28, doorHeight / 2, 0.24);
+            group.add(handle1);
+            const handle2 = new THREE.Mesh(handleGeo, handleMat);
+            handle2.position.set(0.28, doorHeight / 2, 0.24);
+            group.add(handle2);
+
+            const label = makeLabelSprite('French Doors — 26′ wall', 0xffffff, '#1a1a1a');
+            label.position.set(0, doorHeight + 0.9, 0.2);
+            group.add(label);
+
+            group.rotation.y = -Math.PI / 2;
+            group.position.set(x, 0, z);
+            roomGroup.add(group);
+        }
+
+        // ─── Add Standard Door on Small Room Far-Right 10′ Wall ───────
+        function addStandardDoorOnShortWall(l, w) {
+            // Small room door goes on the far-right side of the 10′ wall.
+            const doorWidth = 3;
+            const doorHeight = 7.2;
+            const x = l / 2 - 0.28;
+            const z = w / 2 - doorWidth / 2 - 0.55;
+            const group = new THREE.Group();
+
+            const doorMat = new THREE.MeshStandardMaterial({ color: 0xf8fafc, roughness: 0.55, metalness: 0.02 });
+            const frameMat = new THREE.MeshStandardMaterial({ color: 0xffffff, roughness: 0.4, metalness: 0.05 });
+            const handleMat = new THREE.MeshStandardMaterial({ color: 0xC9A84C, metalness: 0.8, roughness: 0.2 });
+            const bar = 0.12;
+
+            const panel = new THREE.Mesh(new THREE.BoxGeometry(doorWidth - 0.18, doorHeight - 0.18, 0.1), doorMat);
+            panel.position.set(0, doorHeight / 2, 0.02);
+            panel.castShadow = true;
+            group.add(panel);
+
+            [
+                { x: -doorWidth / 2, y: doorHeight / 2, sx: bar, sy: doorHeight + 0.25 },
+                { x:  doorWidth / 2, y: doorHeight / 2, sx: bar, sy: doorHeight + 0.25 },
+                { x: 0, y: doorHeight + 0.1, sx: doorWidth + 0.3, sy: bar },
+                { x: 0, y: 0.06, sx: doorWidth + 0.3, sy: bar },
+                { x: 0, y: doorHeight * 0.58, sx: doorWidth - 0.35, sy: 0.08 },
+                { x: 0, y: doorHeight * 0.32, sx: doorWidth - 0.35, sy: 0.08 },
+            ].forEach(p => {
+                const part = new THREE.Mesh(new THREE.BoxGeometry(p.sx, p.sy, 0.16), frameMat);
+                part.position.set(p.x, p.y, 0.1);
+                part.castShadow = true;
+                group.add(part);
+            });
+
+            const knob = new THREE.Mesh(new THREE.SphereGeometry(0.11, 12, 12), handleMat);
+            knob.position.set(doorWidth / 2 - 0.45, doorHeight / 2, 0.23);
+            group.add(knob);
+
+            const label = makeLabelSprite('Standard Door — far right 10′ wall', 0xffffff, '#1a1a1a');
+            label.position.set(0, doorHeight + 0.9, 0.2);
+            group.add(label);
+
+            group.rotation.y = -Math.PI / 2;
+            group.position.set(x, 0, z);
+            roomGroup.add(group);
+        }
+
+        // ─── Add Windows (29″W × 72″H) on Right Side Only ─────────────
+        function addWindowsRightSideOnly(l, w, roomKey) {
+            const windowWidth = 2.416; // 29 inches
+            const windowHeight = 6.0;  // 72 inches
+            const sillHeight = 2.5;
+
+            const frameMat = new THREE.MeshStandardMaterial({ color: 0xf0f0f0, roughness: 0.4, metalness: 0.05 });
+            const glassMat = new THREE.MeshStandardMaterial({
+                color: 0x88ccff,
+                transparent: true,
+                opacity: 0.3,
+                roughness: 0.1,
+                metalness: 0.3,
+                side: THREE.DoubleSide
+            });
+            const trimMat = new THREE.MeshStandardMaterial({ color: 0xffffff, roughness: 0.5 });
+
+            function createWindow(x, z, rotationY) {
+                const group = new THREE.Group();
+                const glass = new THREE.Mesh(new THREE.BoxGeometry(windowWidth - 0.18, windowHeight - 0.18, 0.05), glassMat);
+                glass.position.set(0, sillHeight + windowHeight / 2, 0.02);
+                group.add(glass);
+
+                const bar = 0.08;
+                const frameParts = [
+                    { x: -windowWidth / 2, y: sillHeight + windowHeight / 2, sx: bar, sy: windowHeight },
+                    { x:  windowWidth / 2, y: sillHeight + windowHeight / 2, sx: bar, sy: windowHeight },
+                    { x: 0, y: sillHeight, sx: windowWidth + bar, sy: bar },
+                    { x: 0, y: sillHeight + windowHeight, sx: windowWidth + bar, sy: bar },
+                ];
+                frameParts.forEach(p => {
+                    const part = new THREE.Mesh(new THREE.BoxGeometry(p.sx, p.sy, 0.12), frameMat);
+                    part.position.set(p.x, p.y, 0.05);
+                    group.add(part);
+                });
+
+                const sill = new THREE.Mesh(new THREE.BoxGeometry(windowWidth + 0.4, 0.12, 0.45), trimMat);
+                sill.position.set(0, sillHeight - 0.08, 0.1);
+                group.add(sill);
+
+                const topTrim = new THREE.Mesh(new THREE.BoxGeometry(windowWidth + 0.4, 0.12, 0.45), trimMat);
+                topTrim.position.set(0, sillHeight + windowHeight + 0.08, 0.1);
+                group.add(topTrim);
+
+                const mullMat = new THREE.MeshStandardMaterial({ color: 0xdddddd, roughness: 0.4 });
+                const mull = new THREE.Mesh(new THREE.BoxGeometry(0.05, windowHeight - 0.18, 0.08), mullMat);
+                mull.position.set(0, sillHeight + windowHeight / 2, 0.08);
+                group.add(mull);
+                for (let i = -1; i <= 1; i += 2) {
+                    const hMull = new THREE.Mesh(new THREE.BoxGeometry(windowWidth - 0.18, 0.05, 0.08), mullMat);
+                    hMull.position.set(0, sillHeight + windowHeight / 2 + i * windowHeight * 0.3, 0.08);
+                    group.add(hMull);
+                }
+
+                group.position.set(x, 0, z);
+                group.rotation.y = rotationY;
+                roomGroup.add(group);
+            }
+
+            // Right side only: long wall at Z = +w/2.
+            const rightZ = w / 2 - 0.05;
+            const count = roomKey === 'small' ? 3 : 4;
+            const spacing = l / (count + 1);
+            for (let i = 0; i < count; i++) {
+                const x = -l / 2 + (i + 1) * spacing;
+                createWindow(x, rightZ, Math.PI);
+            }
+        }
+
+        // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+        //  CREATE FURNITURE (NO CHAIRS)
+        // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+        function makeLabelSprite(text, bgColor = 0xffffff, textColor = '#1a1a1a') {
+            const canvas = document.createElement('canvas');
+            canvas.width = 512;
+            canvas.height = 128;
+            const ctx = canvas.getContext('2d');
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            ctx.fillStyle = typeof bgColor === 'number' ? '#' + bgColor.toString(16).padStart(6, '0') : bgColor;
+            ctx.globalAlpha = 0.92;
+            ctx.roundRect(24, 28, 464, 72, 24);
+            ctx.fill();
+            ctx.globalAlpha = 1;
+            ctx.strokeStyle = '#e0e0e0';
+            ctx.lineWidth = 3;
+            ctx.roundRect(24, 28, 464, 72, 24);
+            ctx.stroke();
+            ctx.font = '700 34px "Plus Jakarta Sans", sans-serif';
+            ctx.fillStyle = textColor;
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            ctx.fillText(text, 256, 66);
+            const texture = new THREE.CanvasTexture(canvas);
+            texture.needsUpdate = true;
+            const mat = new THREE.SpriteMaterial({ map: texture, transparent: true, depthTest: false });
+            const sprite = new THREE.Sprite(mat);
+            sprite.scale.set(5.6, 1.4, 1);
+            return sprite;
+        }
+
+        function createTableMesh(type, x, z, rotation) {
+            const def = TABLE_TYPES[type];
+            const group = new THREE.Group();
+            const color = def.color;
+            const w = def.width;
+            const d = def.depth;
+
+            const topMat = new THREE.MeshStandardMaterial({ color: color, roughness: 0.4, metalness: 0.05 });
+
+            if (type === 'round' || type === 'round4') {
+                const top = new THREE.Mesh(new THREE.CylinderGeometry(w / 2, w / 2, 0.25, 32), topMat);
+                top.position.y = 2.5;
+                top.castShadow = true;
+                group.add(top);
+                const leg = new THREE.Mesh(new THREE.CylinderGeometry(0.2, 0.3, 2.4, 12),
+                    new THREE.MeshStandardMaterial({ color: 0x2a3a5a, roughness: 0.6 }));
+                leg.position.y = 1.2;
+                leg.castShadow = true;
+                group.add(leg);
+                const base = new THREE.Mesh(new THREE.CylinderGeometry(0.6, 0.8, 0.12, 12),
+                    new THREE.MeshStandardMaterial({ color: 0x2a3a5a, roughness: 0.5 }));
+                base.position.y = 0.06;
+                base.castShadow = true;
+                group.add(base);
+
+            } else if (type === 'rect' || type === 'rect6') {
+                const top = new THREE.Mesh(new THREE.BoxGeometry(w, 0.2, d), topMat);
+                top.position.y = 2.5;
+                top.castShadow = true;
+                group.add(top);
+                const legMat = new THREE.MeshStandardMaterial({ color: 0x2a5a4a, roughness: 0.5 });
+                const legPos = [
+                    [-w / 2 + 0.4, -d / 2 + 0.4],
+                    [w / 2 - 0.4, -d / 2 + 0.4],
+                    [-w / 2 + 0.4, d / 2 - 0.4],
+                    [w / 2 - 0.4, d / 2 - 0.4]
+                ];
+                legPos.forEach(([lx, lz]) => {
+                    const leg = new THREE.Mesh(new THREE.BoxGeometry(0.15, 2.4, 0.15), legMat);
+                    leg.position.set(lx, 1.2, lz);
+                    leg.castShadow = true;
+                    group.add(leg);
+                });
+
+            } else if (type === 'cocktail') {
+                const top = new THREE.Mesh(new THREE.CylinderGeometry(w / 2, w / 2, 0.15, 24),
+                    new THREE.MeshStandardMaterial({ color: 0xf59e0b, roughness: 0.4 }));
+                top.position.y = 3.8;
+                top.castShadow = true;
+                group.add(top);
+                const leg = new THREE.Mesh(new THREE.CylinderGeometry(0.12, 0.25, 3.7, 12),
+                    new THREE.MeshStandardMaterial({ color: 0x5a4a3a, roughness: 0.6 }));
+                leg.position.y = 1.85;
+                leg.castShadow = true;
+                group.add(leg);
+                const base = new THREE.Mesh(new THREE.CylinderGeometry(0.5, 0.6, 0.08, 12),
+                    new THREE.MeshStandardMaterial({ color: 0x5a4a3a, roughness: 0.5 }));
+                base.position.y = 0.04;
+                base.castShadow = true;
+                group.add(base);
+
+            } else if (type === 'podium') {
+                const podiumBlackMat = new THREE.MeshStandardMaterial({ color: 0x111111, roughness: 0.35, metalness: 0.15 });
+                const podiumGoldMat = new THREE.MeshStandardMaterial({ color: 0xC9A84C, roughness: 0.28, metalness: 0.65 });
+                const base = new THREE.Mesh(new THREE.BoxGeometry(w, 0.3, d), podiumGoldMat);
+                base.position.y = 0.15;
+                base.castShadow = true;
+                group.add(base);
+
+                const column = new THREE.Mesh(new THREE.BoxGeometry(w * 0.72, 2.65, d * 0.72), podiumBlackMat);
+                column.position.y = 1.62;
+                column.castShadow = true;
+                group.add(column);
+
+                const frontGoldPanel = new THREE.Mesh(new THREE.BoxGeometry(w * 0.48, 1.75, 0.06), podiumGoldMat);
+                frontGoldPanel.position.set(0, 1.65, d * 0.36 + 0.035);
+                frontGoldPanel.castShadow = true;
+                group.add(frontGoldPanel);
+
+                const top = new THREE.Mesh(new THREE.BoxGeometry(w * 0.95, 0.22, d * 0.95), podiumGoldMat);
+                top.position.y = 3.03;
+                top.castShadow = true;
+                group.add(top);
+
+                const blackTopInset = new THREE.Mesh(new THREE.BoxGeometry(w * 0.72, 0.04, d * 0.72), podiumBlackMat);
+                blackTopInset.position.y = 3.16;
+                blackTopInset.castShadow = true;
+                group.add(blackTopInset);
+
+                // Microphone
+                const mic = new THREE.Mesh(new THREE.SphereGeometry(0.2, 8, 8),
+                    new THREE.MeshStandardMaterial({ color: 0x222222, metalness: 0.8, roughness: 0.2 }));
+                mic.position.set(0, 3.48, 0);
+                group.add(mic);
+                const micStick = new THREE.Mesh(new THREE.CylinderGeometry(0.02, 0.02, 0.5, 6),
+                    new THREE.MeshStandardMaterial({ color: 0xC9A84C, metalness: 0.75, roughness: 0.25 }));
+                micStick.position.set(0, 3.15, 0);
+                group.add(micStick);
+            } else if (type === 'bar') {
+                const barWoodMat = new THREE.MeshStandardMaterial({ color: 0x8b5e3c, roughness: 0.75, metalness: 0.05 });
+                const barTopMat = new THREE.MeshStandardMaterial({ color: 0x3b2a1f, roughness: 0.35, metalness: 0.1 });
+                const barTrimMat = new THREE.MeshStandardMaterial({ color: 0xC9A84C, roughness: 0.28, metalness: 0.55 });
+                const body = new THREE.Mesh(new THREE.BoxGeometry(w, 3.3, d), barWoodMat);
+                body.position.y = 1.65;
+                body.castShadow = true;
+                group.add(body);
+                const top = new THREE.Mesh(new THREE.BoxGeometry(w + 0.2, 0.22, d + 0.25), barTopMat);
+                top.position.y = 3.42;
+                top.castShadow = true;
+                group.add(top);
+                const frontPanel = new THREE.Mesh(new THREE.BoxGeometry(w * 0.7, 1.4, 0.08), barTrimMat);
+                frontPanel.position.set(0, 1.75, d / 2 + 0.05);
+                frontPanel.castShadow = true;
+                group.add(frontPanel);
+            } else if (type === 'dj') {
+                const boothMat = new THREE.MeshStandardMaterial({ color: 0x374151, roughness: 0.45, metalness: 0.15 });
+                const topMatDj = new THREE.MeshStandardMaterial({ color: 0x111827, roughness: 0.3, metalness: 0.25 });
+                const accentMat = new THREE.MeshStandardMaterial({ color: 0x9ca3af, roughness: 0.25, metalness: 0.5 });
+                const body = new THREE.Mesh(new THREE.BoxGeometry(w, 3.1, d), boothMat);
+                body.position.y = 1.55;
+                body.castShadow = true;
+                group.add(body);
+                const top = new THREE.Mesh(new THREE.BoxGeometry(w + 0.1, 0.18, d + 0.12), topMatDj);
+                top.position.y = 3.18;
+                top.castShadow = true;
+                group.add(top);
+                const leftDeck = new THREE.Mesh(new THREE.CylinderGeometry(0.55, 0.55, 0.08, 24), accentMat);
+                leftDeck.rotation.x = Math.PI / 2;
+                leftDeck.position.set(-1.2, 3.3, -0.45);
+                group.add(leftDeck);
+                const rightDeck = leftDeck.clone();
+                rightDeck.position.set(1.2, 3.3, -0.45);
+                group.add(rightDeck);
+                const mixer = new THREE.Mesh(new THREE.BoxGeometry(1.2, 0.1, 0.8), accentMat);
+                mixer.position.set(0, 3.3, 0.2);
+                group.add(mixer);
+            }
+
+            const sizeLabel = makeLabelSprite(def.label, 0xffffff, '#1a1a1a');
+            sizeLabel.position.set(0, (type === 'cocktail' || type === 'bar' || type === 'dj') ? 5.0 : 3.65, 0);
+            group.add(sizeLabel);
+
+            group.position.set(x, 0, z);
+            group.rotation.y = rotation;
+            group.userData.type = type;
+            return group;
+        }
+
+        // ─── Rebuild furniture ──────────────────────────────
+        function rebuildFurniture() {
+            while (furnitureGroup.children.length) {
+                const c = furnitureGroup.children[0];
+                c.geometry?.dispose();
+                if (Array.isArray(c.material)) c.material.forEach(m => m.dispose());
+                else c.material?.dispose();
+                furnitureGroup.remove(c);
+            }
+
+            let totalTables = tablesData.length;
+            let podiumCount = 0;
+            let cocktailCount = 0;
+
+            tablesData.forEach(t => {
+                if (t.type === 'podium') podiumCount++;
+                else if (t.type === 'cocktail') cocktailCount++;
+                const mesh = createTableMesh(t.type, t.x, t.z, t.rotation);
+                mesh.userData.id = t.id;
+                mesh.userData.type = t.type;
+                furnitureGroup.add(mesh);
+            });
+
+            document.getElementById('totalTables').textContent = totalTables;
+            document.getElementById('statPodium').textContent = podiumCount;
+            document.getElementById('statCocktail').textContent = cocktailCount;
+
+            const room = ROOMS[currentRoom];
+            const area = room.w * room.l;
+            const maxTables = Math.floor(area / 12);
+            const warn = document.getElementById('warning');
+            const warnText = document.getElementById('warningText');
+            if (totalTables > maxTables) {
+                warn.classList.add('show');
+                warnText.textContent = `Too many tables (${totalTables}) – max ~${maxTables}.`;
+            } else {
+                warn.classList.remove('show');
+            }
+
+            if (selectedId !== null) {
+                selectTable(selectedId);
+            }
+        }
+
+        // ─── Select / Deselect ──────────────────────────────
+        function selectTable(id) {
+            if (selectedOutline) {
+                furnitureGroup.remove(selectedOutline);
+                selectedOutline = null;
+            }
+            selectedId = id;
+            if (id === null) return;
+
+            const target = furnitureGroup.children.find(c => c.userData.id === id);
+            if (!target) {
+                selectedId = null;
+                return;
+            }
+            const box = new THREE.Box3().setFromObject(target);
+            const size = box.getSize(new THREE.Vector3());
+            const center = box.getCenter(new THREE.Vector3());
+            const outlineMat = new THREE.LineBasicMaterial({ color: 0xC9A84C, transparent: true, opacity: 0.8 });
+            const geo = new THREE.BoxGeometry(size.x + 0.6, size.y + 0.6, size.z + 0.6);
+            const edges = new THREE.EdgesGeometry(geo);
+            const line = new THREE.LineSegments(edges, outlineMat);
+            line.position.copy(center);
+            line.position.y = size.y / 2 + 0.3;
+            selectedOutline = line;
+            furnitureGroup.add(line);
+        }
+
+        // ─── Boundary Clamping ──────────────────────────────
+        function clampPosition(x, z) {
+            const room = ROOMS[currentRoom];
+            const halfW = room.w / 2;
+            const halfL = room.l / 2;
+            const margin = 2;
+            return {
+                x: Math.max(-halfL + margin, Math.min(halfL - margin, x)),
+                z: Math.max(-halfW + margin, Math.min(halfW - margin, z))
+            };
+        }
+
+        // ─── Add table ──────────────────────────────────────
+        function addTable(type, x, z, rotation = 0) {
+            const clamped = clampPosition(x, z);
+            const snap = 2;
+            const sx = Math.round(clamped.x / snap) * snap;
+            const sz = Math.round(clamped.z / snap) * snap;
+
+            const entry = { id: nextId++, type, x: sx, z: sz, rotation };
+            tablesData.push(entry);
+            rebuildFurniture();
+            selectTable(entry.id);
+            return entry.id;
+        }
+
+        // ─── Remove table ──────────────────────────────────
+        function removeTable(id) {
+            tablesData = tablesData.filter(t => t.id !== id);
+            if (selectedId === id) selectedId = null;
+            rebuildFurniture();
+        }
+
+        // ─── Clear all ──────────────────────────────────────
+        function clearAll() {
+            if (tablesData.length === 0) return;
+            tablesData = [];
+            selectedId = null;
+            rebuildFurniture();
+        }
+
+        // ─── Quick Add ──────────────────────────────────────
+        function quickAdd(type, count) {
+            if (count <= 0) return;
+            const room = ROOMS[currentRoom];
+            const length = room.l; // X axis
+            const width = room.w;  // Z axis
+            const def = TABLE_TYPES[type];
+            const spacingX = Math.max(def.width + 3, 4);
+            const spacingZ = Math.max(def.depth + 3, 4);
+            const cols = Math.max(1, Math.floor((length - 4) / spacingX));
+            const rows = Math.max(1, Math.floor((width - 4) / spacingZ));
+            const maxFit = cols * rows;
+            const toPlace = Math.min(count, maxFit);
+            if (toPlace < count) {
+                alert(`Only ${toPlace} ${type} item(s) fit in this room with the current spacing.`);
+            }
+
+            let placed = 0;
+            for (let r = 0; r < rows && placed < toPlace; r++) {
+                for (let c = 0; c < cols && placed < toPlace; c++) {
+                    const x = -(cols - 1) * spacingX / 2 + c * spacingX;
+                    const z = -(rows - 1) * spacingZ / 2 + r * spacingZ;
+                    const clamped = clampPosition(x, z);
+                    tablesData.push({ id: nextId++, type, x: clamped.x, z: clamped.z, rotation: 0 });
+                    placed++;
+                }
+            }
+            rebuildFurniture();
+            if (tablesData.length) selectTable(tablesData[tablesData.length - 1].id);
+        }
+
+        // ─── Preset fit rules ─────────────────────────────────
+        const PRESET_MIN_ITEMS = {
+            dinner: 2,
+            banquet: 2,
+            classroom: 3,
+            theater: 4,
+            ushape: 5,
+            cocktail: 2
+        };
+
+        const PRESET_LABELS = {
+            dinner: 'Dinner',
+            banquet: 'Banquet',
+            classroom: 'Classroom',
+            theater: 'Theater',
+            ushape: 'U-Shape',
+            cocktail: 'Cocktail'
+        };
+
+        function presetLabel(presetKey) {
+            return PRESET_LABELS[presetKey] || presetKey;
+        }
+
+        function showWarningMessage(message) {
+            const warn = document.getElementById('warning');
+            const warnText = document.getElementById('warningText');
+            warnText.textContent = message;
+            warn.classList.add('show');
+        }
+
+        function clearWarningMessage() {
+            const warn = document.getElementById('warning');
+            const warnText = document.getElementById('warningText');
+            warnText.textContent = '';
+            warn.classList.remove('show');
+        }
+
+        function getFootprint(type, rotation = 0) {
+            const def = TABLE_TYPES[type];
+            const cos = Math.abs(Math.cos(rotation));
+            const sin = Math.abs(Math.sin(rotation));
+            const halfX = (def.width * cos + def.depth * sin) / 2;
+            const halfZ = (def.width * sin + def.depth * cos) / 2;
+            return { halfX, halfZ };
+        }
+
+        function generatePresetPlacements(presetKey) {
+            const room = ROOMS[currentRoom];
+            const length = room.l; // X axis
+            const width = room.w;  // Z axis
+            const placements = [];
+
+            function addGrid(type, cols, rows, spacingX, spacingZ, rotation = 0, zShift = 0) {
+                cols = Math.floor(cols);
+                rows = Math.floor(rows);
+                if (cols < 1 || rows < 1) return;
+                for (let r = 0; r < rows; r++) {
+                    for (let c = 0; c < cols; c++) {
+                        const x = -(cols - 1) * spacingX / 2 + c * spacingX;
+                        const z = -(rows - 1) * spacingZ / 2 + r * spacingZ + zShift;
+                        placements.push({ type, x, z, rot: rotation });
+                    }
+                }
+            }
+
+            switch (presetKey) {
+                case 'dinner': {
+                    addGrid('round', Math.floor((length - 4) / 8), Math.floor((width - 4) / 8), 8, 8);
+                    break;
+                }
+                case 'banquet': {
+                    addGrid('rect', Math.floor((length - 4) / 8), Math.floor((width - 4) / 5), 8, 5);
+                    break;
+                }
+                case 'classroom': {
+                    const cols = Math.floor((length - 6) / 8);
+                    const rows = Math.floor((width - 8) / 5);
+                    addGrid('rect', cols, rows, 8, 5, 0, 2.5);
+                    placements.push({ type: 'podium', x: 0, z: -width / 2 + 2.2, rot: 0 });
+                    break;
+                }
+                case 'theater': {
+                    addGrid('round', Math.floor((length - 4) / 5), Math.floor((width - 8) / 5), 5, 5, 0, 2.5);
+                    placements.push({ type: 'podium', x: 0, z: -width / 2 + 2.2, rot: 0 });
+                    break;
+                }
+                case 'ushape': {
+                    const legRows = Math.floor((width - 8) / 4);
+                    if (legRows < 2) break;
+                    const sideX = length / 2 - 5;
+                    const zStart = -width / 2 + 6;
+                    for (let i = 0; i < legRows; i++) {
+                        const z = zStart + i * 4;
+                        placements.push({ type: 'rect', x: -sideX, z, rot: Math.PI / 2 });
+                        placements.push({ type: 'rect', x:  sideX, z, rot: Math.PI / 2 });
+                    }
+                    const bottomCols = Math.floor((length - 12) / 8);
+                    const bottomZ = zStart + legRows * 4;
+                    for (let c = 0; c < bottomCols; c++) {
+                        const x = -(bottomCols - 1) * 8 / 2 + c * 8;
+                        placements.push({ type: 'rect', x, z: bottomZ, rot: 0 });
+                    }
+                    placements.push({ type: 'podium', x: 0, z: -width / 2 + 2.2, rot: 0 });
+                    break;
+                }
+                case 'cocktail': {
+                    addGrid('cocktail', Math.floor((length - 4) / 6), Math.floor((width - 4) / 6), 6, 6);
+                    break;
+                }
+                default:
+                    break;
+            }
+
+            return placements;
+        }
+
+        function validatePresetFit(presetKey, placements) {
+            const minItems = PRESET_MIN_ITEMS[presetKey] || 1;
+            if (placements.length < minItems) {
+                return {
+                    ok: false,
+                    reason: `Not enough floor space for a useful ${presetLabel(presetKey)} setup.`
+                };
+            }
+
+            const room = ROOMS[currentRoom];
+            const halfLength = room.l / 2;
+            const halfWidth = room.w / 2;
+            const clearance = 0.65;
+
+            for (const item of placements) {
+                const fp = getFootprint(item.type, item.rot || 0);
+                const left = item.x - fp.halfX - clearance;
+                const right = item.x + fp.halfX + clearance;
+                const back = item.z - fp.halfZ - clearance;
+                const front = item.z + fp.halfZ + clearance;
+                if (left < -halfLength || right > halfLength || back < -halfWidth || front > halfWidth) {
+                    return {
+                        ok: false,
+                        reason: `${TABLE_TYPES[item.type].label} would cross the room boundary.`
+                    };
+                }
+            }
+
+            return { ok: true, reason: 'Fits this room.' };
+        }
+
+        function updatePresetAvailability() {
+            document.querySelectorAll('.preset-btn').forEach(btn => {
+                const placements = generatePresetPlacements(btn.dataset.preset);
+                const result = validatePresetFit(btn.dataset.preset, placements);
+                btn.classList.toggle('disabled', !result.ok);
+                btn.setAttribute('aria-disabled', result.ok ? 'false' : 'true');
+                btn.title = result.ok
+                    ? `${presetLabel(btn.dataset.preset)} fits the ${ROOMS[currentRoom].label} room.`
+                    : `${presetLabel(btn.dataset.preset)} does not fit the ${ROOMS[currentRoom].label} room. ${result.reason}`;
+            });
+        }
+
+        // ─── Presets ────────────────────────────────────────
+        function loadPreset(presetKey) {
+            const placements = generatePresetPlacements(presetKey);
+            const fit = validatePresetFit(presetKey, placements);
+            if (!fit.ok) {
+                selectedPreset = null;
+                document.querySelectorAll('.preset-btn').forEach(b => b.classList.remove('active'));
+                showWarningMessage(`${presetLabel(presetKey)} layout does not fit the ${ROOMS[currentRoom].label} room. ${fit.reason}`);
+                return;
+            }
+
+            clearWarningMessage();
+            selectedPreset = presetKey;
+            document.querySelectorAll('.preset-btn').forEach(b =>
+                b.classList.toggle('active', b.dataset.preset === presetKey)
+            );
+
+            tablesData = placements.map(p => ({
+                id: nextId++,
+                type: p.type,
+                x: p.x,
+                z: p.z,
+                rotation: p.rot || 0
+            }));
+            selectedId = null;
+            rebuildFurniture();
+            if (tablesData.length) selectTable(tablesData[0].id);
+        }
+
+        // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+        //  DRAG & DROP
+        // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+        function startPaletteDrag(type, e) {
+            isDraggingPalette = true;
+            dragType = type;
+            ghostDiv = document.createElement('div');
+            ghostDiv.style.position = 'fixed';
+            ghostDiv.style.pointerEvents = 'none';
+            ghostDiv.style.zIndex = 1000;
+            ghostDiv.style.width = '30px';
+            ghostDiv.style.height = '30px';
+            ghostDiv.style.borderRadius = '50%';
+            ghostDiv.style.background = '#' + TABLE_TYPES[type].color.toString(16).padStart(6, '0');
+            ghostDiv.style.border = '2px solid #1a1a1a';
+            ghostDiv.style.opacity = '0.7';
+            ghostDiv.style.transform = 'translate(-50%, -50%)';
+            ghostDiv.style.boxShadow = '0 0 20px rgba(0,0,0,0.1)';
+            document.body.appendChild(ghostDiv);
+            onPointerMovePalette(e);
+        }
+
+        function onPointerMovePalette(e) {
+            if (!isDraggingPalette || !ghostDiv) return;
+            ghostDiv.style.left = e.clientX + 'px';
+            ghostDiv.style.top = e.clientY + 'px';
+        }
+
+        function endPaletteDrag(e) {
+            if (!isDraggingPalette) return;
+            isDraggingPalette = false;
+            if (ghostDiv) {
+                ghostDiv.remove();
+                ghostDiv = null;
+            }
+            const rect = renderer.domElement.getBoundingClientRect();
+            const insideCanvas = e.clientX >= rect.left && e.clientX <= rect.right && e.clientY >= rect.top && e.clientY <= rect.bottom;
+            if (!insideCanvas) {
+                dragType = null;
+                return;
+            }
+            const x = ((e.clientX - rect.left) / rect.width) * 2 - 1;
+            const y = -((e.clientY - rect.top) / rect.height) * 2 + 1;
+            pointer.set(x, y);
+            raycaster.setFromCamera(pointer, camera);
+            const plane = new THREE.Plane(new THREE.Vector3(0, 1, 0), 0);
+            const intersect = new THREE.Vector3();
+            if (raycaster.ray.intersectPlane(plane, intersect)) {
+                addTable(dragType, intersect.x, intersect.z, 0);
+            }
+            dragType = null;
+        }
+
+        // ─── Click to select / Drag existing table ──────────
+        function onPointerDown(e) {
+            const rect = renderer.domElement.getBoundingClientRect();
+            const x = ((e.clientX - rect.left) / rect.width) * 2 - 1;
+            const y = -((e.clientY - rect.top) / rect.height) * 2 + 1;
+            pointer.set(x, y);
+
+            raycaster.setFromCamera(pointer, camera);
+            const intersects = raycaster.intersectObjects(furnitureGroup.children, true);
+            const hit = intersects
+                .map(i => {
+                    let obj = i.object;
+                    while (obj && obj !== furnitureGroup && !obj.userData?.id) obj = obj.parent;
+                    return obj?.userData?.id ? obj : null;
+                })
+                .find(Boolean);
+            if (hit) {
+                const id = hit.userData.id;
+                selectTable(id);
+                isDraggingTable = true;
+                dragTableId = id;
+                controls.enabled = false;
+                const tableEntry = tablesData.find(t => t.id === id);
+                if (tableEntry) {
+                    const worldPos = new THREE.Vector3(tableEntry.x, 0, tableEntry.z);
+                    const plane = new THREE.Plane(new THREE.Vector3(0, 1, 0), 0);
+                    const intersectPt = new THREE.Vector3();
+                    if (raycaster.ray.intersectPlane(plane, intersectPt)) {
+                        dragOffset.copy(worldPos).sub(intersectPt);
+                    }
+                }
+                return;
+            }
+            if (selectedId !== null) {
+                selectTable(null);
+            }
+        }
+
+        function onPointerMove(e) {
+            if (isDraggingPalette) {
+                onPointerMovePalette(e);
+                return;
+            }
+            if (isDraggingTable && dragTableId !== null) {
+                const rect = renderer.domElement.getBoundingClientRect();
+                const x = ((e.clientX - rect.left) / rect.width) * 2 - 1;
+                const y = -((e.clientY - rect.top) / rect.height) * 2 + 1;
+                pointer.set(x, y);
+                raycaster.setFromCamera(pointer, camera);
+                const plane = new THREE.Plane(new THREE.Vector3(0, 1, 0), 0);
+                const intersect = new THREE.Vector3();
+                raycaster.ray.intersectPlane(plane, intersect);
+                if (intersect) {
+                    let px = intersect.x + dragOffset.x;
+                    let pz = intersect.z + dragOffset.z;
+                    const clamped = clampPosition(px, pz);
+                    const snap = 2;
+                    px = Math.round(clamped.x / snap) * snap;
+                    pz = Math.round(clamped.z / snap) * snap;
+                    const entry = tablesData.find(t => t.id === dragTableId);
+                    if (entry) {
+                        entry.x = px;
+                        entry.z = pz;
+                        rebuildFurniture();
+                        selectTable(dragTableId);
+                    }
+                }
+                return;
+            }
+        }
+
+        function onPointerUp(e) {
+            if (isDraggingPalette) {
+                endPaletteDrag(e);
+                return;
+            }
+            if (isDraggingTable) {
+                isDraggingTable = false;
+                dragTableId = null;
+                controls.enabled = true;
+                return;
+            }
+        }
+
+        // ─── Mouse wheel for rotation ──────────────────────
+        function onWheel(e) {
+            if (selectedId === null) return;
+            const delta = e.deltaY > 0 ? 1 : -1;
+            const entry = tablesData.find(t => t.id === selectedId);
+            if (entry) {
+                entry.rotation += delta * (Math.PI / 12);
+                rebuildFurniture();
+                selectTable(selectedId);
+                e.preventDefault();
+            }
+        }
+
+        // ─── Register events ──────────────────────────────
+        const canvas = renderer.domElement;
+        canvas.addEventListener('pointerdown', onPointerDown);
+        window.addEventListener('pointermove', onPointerMove);
+        window.addEventListener('pointerup', onPointerUp);
+        window.addEventListener('pointercancel', onPointerUp);
+        canvas.addEventListener('wheel', onWheel, { passive: false });
+
+        // ─── Palette events ────────────────────────────────
+        document.querySelectorAll('.palette-item').forEach(el => {
+            el.addEventListener('pointerdown', (e) => {
+                startPaletteDrag(el.dataset.type, e);
+                e.preventDefault();
+            });
+        });
+
+        // ─── Quick Add buttons ──────────────────────────────
+        document.querySelectorAll('.quick-row button').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const type = btn.dataset.type;
+                const input = btn.parentElement.querySelector('input[type="number"]');
+                const count = parseInt(input.value) || 0;
+                if (count > 0) quickAdd(type, count);
+            });
+        });
+
+        // ─── UI buttons ──────────────────────────────────────
+        document.getElementById('rotateBtn').addEventListener('click', () => {
+            if (selectedId === null) return;
+            const entry = tablesData.find(t => t.id === selectedId);
+            if (entry) {
+                entry.rotation += Math.PI / 12;
+                rebuildFurniture();
+                selectTable(selectedId);
+            }
+        });
+
+        document.getElementById('deleteSelectedBtn').addEventListener('click', () => {
+            if (selectedId === null) return;
+            removeTable(selectedId);
+        });
+
+        document.getElementById('resetBtn').addEventListener('click', () => {
+            if (selectedPreset) loadPreset(selectedPreset);
+            else clearAll();
+        });
+
+        document.getElementById('clearBtn').addEventListener('click', clearAll);
+
+        // Edit view selector
+        document.querySelectorAll('#viewSelector button').forEach(btn => {
+            btn.addEventListener('click', () => {
+                applyEditMode(btn.dataset.view);
+            });
+        });
+
+        // Room selector
+        document.querySelectorAll('#roomSelector button').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('#roomSelector button').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                currentRoom = btn.dataset.room;
+                const room = ROOMS[currentRoom];
+                document.getElementById('roomArea').textContent = room.area;
+                document.getElementById('roomWidth').textContent = room.w;
+                document.getElementById('roomLength').textContent = room.l;
+                tablesData = [];
+                selectedId = null;
+                buildRoom(currentRoom);
+                rebuildFurniture();
+                document.querySelectorAll('.preset-btn').forEach(b => b.classList.remove('active'));
+                selectedPreset = null;
+                clearWarningMessage();
+                updatePresetAvailability();
+            });
+        });
+
+        // Preset buttons
+        document.querySelectorAll('.preset-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                loadPreset(btn.dataset.preset);
+            });
+        });
+
+        // Delete key removes the selected item. Ignore while typing in form fields.
+        window.addEventListener('keydown', (e) => {
+            const tag = document.activeElement?.tagName?.toLowerCase();
+            const isTyping = tag === 'input' || tag === 'textarea' || document.activeElement?.isContentEditable;
+            if (isTyping) return;
+            if ((e.key === 'Delete' || e.key === 'Backspace') && selectedId !== null) {
+                e.preventDefault();
+                removeTable(selectedId);
+            }
+        });
+
+        // ─── Resize ──────────────────────────────────────────
+        function resize() {
+            const w = viewport.clientWidth;
+            const h = viewport.clientHeight;
+            camera.aspect = w / h;
+            camera.updateProjectionMatrix();
+            renderer.setSize(w, h);
+            if (editMode === '2d') applyEditMode('2d');
+        }
+        window.addEventListener('resize', resize);
+
+        // ─── Animation ──────────────────────────────────────
+        function animate() {
+            requestAnimationFrame(animate);
+            controls.update();
+            renderer.render(scene, camera);
+        }
+
+        // ─── Init: Start Blank ──────────────────────────────
+        buildRoom('large');
+        rebuildFurniture();
+        updatePresetAvailability();
+        animate();
+
+        console.log('🏛️ Event Space BDA Room-Corrected 3D Planner ready.');
+        console.log('ℹ️ Large room: French doors on a 26′ wall. Small room: standard door far-right on the 10′ wall. Windows only on the right side.');
+        console.log('ℹ️ Furniture size labels added to drag buttons and quick-add controls; furniture sizes and quick add are in accordions; drag-to-add buttons are square; incompatible presets are blocked; bar and DJ booth are included; 2D/3D edit modes are available.');
+        console.log('ℹ️ Fixed axis mapping: X = room length, Z = room width.');
+        console.log('ℹ️ Quick-add values default to 0.');
+    </script>
+</body>
+</html>

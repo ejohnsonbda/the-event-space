@@ -1,0 +1,620 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>The Event Space — Bermuda</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { background: #FFFFFF; color: #0A0A0A; font-family: 'Plus Jakarta Sans', sans-serif; -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+    input, select, textarea, button { font-family: inherit; }
+    a { text-decoration: none; color: inherit; }
+    ::placeholder { color: #B0B0B0; }
+
+    @keyframes shimmerGold {
+      0%   { background-position: 0% center; }
+      100% { background-position: 300% center; }
+    }
+    @keyframes scrollPulse {
+      0%, 100% { opacity: 0.25; transform: translateY(0); }
+      50%       { opacity: 0.7;  transform: translateY(6px); }
+    }
+
+    /* ── NAV ── */
+    #main-nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 64px; height: 72px;
+      background: rgba(255,255,255,0.97);
+      backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+      border-bottom: 1px solid #E8E8E8;
+    }
+    #nav-links { display: flex; align-items: center; gap: 44px; }
+    #nav-links a { font-size: 10px; font-weight: 600; letter-spacing: 0.16em; text-transform: uppercase; color: #9A9A9A; transition: color 0.2s; }
+    #nav-links a:hover { color: #0A0A0A; }
+    #nav-book { display: inline-flex; align-items: center; padding: 11px 28px; background: #0A0A0A; color: #FFFFFF; font-size: 10px; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; border-radius: 2px; transition: background 0.2s, color 0.2s; flex-shrink: 0; }
+    #nav-book:hover { background: #C9A84C; color: #0A0A0A; }
+
+    /* ── HAMBURGER ── */
+    #hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 8px; background: none; border: none; }
+    #hamburger span { display: block; width: 22px; height: 2px; background: #0A0A0A; border-radius: 2px; transition: all 0.25s; }
+    #mobile-menu { display: none; position: fixed; top: 72px; left: 0; right: 0; z-index: 998; background: rgba(255,255,255,0.98); backdrop-filter: blur(20px); border-bottom: 1px solid #E8E8E8; padding: 28px 28px 32px; flex-direction: column; gap: 0; }
+    #mobile-menu.open { display: flex; }
+    #mobile-menu a { display: block; padding: 16px 0; font-size: 13px; font-weight: 600; letter-spacing: 0.16em; text-transform: uppercase; color: #5A5A5A; border-bottom: 1px solid #F5F5F5; }
+    #mobile-menu a:last-child { border-bottom: none; }
+    #mobile-menu .mob-book { margin-top: 20px; padding: 15px 28px; background: #0A0A0A; color: #FFFFFF !important; text-align: center; border-radius: 2px; }
+
+    /* ── BUTTONS ── */
+    .btn-dark { display: inline-flex; align-items: center; gap: 10px; padding: 14px 32px; background: #0A0A0A; color: #FFFFFF; font-size: 10px; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; border-radius: 2px; transition: background 0.2s, color 0.2s; }
+    .btn-dark:hover { background: #C9A84C; color: #0A0A0A; }
+    .btn-text-link { font-size: 11px; font-weight: 600; color: #9A9A9A; letter-spacing: 0.1em; border-bottom: 1px solid #E0E0E0; padding-bottom: 3px; transition: color 0.2s, border-color 0.2s; }
+    .btn-text-link:hover { color: #0A0A0A; border-color: #0A0A0A; }
+    .btn-hero-primary { padding: 17px 48px; background: #0A0A0A; color: #FFFFFF; font-size: 11px; font-weight: 700; letter-spacing: 0.22em; text-transform: uppercase; border-radius: 2px; transition: background 0.25s, color 0.25s; }
+    .btn-hero-primary:hover { background: #C9A84C; color: #0A0A0A; }
+    .btn-hero-ghost { padding: 17px 36px; border: 1px solid #D4D4D4; color: #0A0A0A; font-size: 11px; font-weight: 700; letter-spacing: 0.22em; text-transform: uppercase; border-radius: 2px; transition: border-color 0.25s; }
+    .btn-hero-ghost:hover { border-color: #0A0A0A; }
+    .btn-occasions { padding: 14px 32px; background: #0A0A0A; color: #FFFFFF; font-size: 10px; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; border-radius: 2px; flex-shrink: 0; transition: background 0.2s, color 0.2s; }
+    .btn-occasions:hover { background: #C9A84C; color: #0A0A0A; }
+    .btn-submit { width: 100%; padding: 16px; background: #0A0A0A; color: #FFFFFF; font-size: 11px; font-weight: 700; letter-spacing: 0.22em; text-transform: uppercase; border: none; border-radius: 2px; cursor: pointer; transition: background 0.25s, color 0.25s; }
+    .btn-submit:hover { background: #C9A84C; color: #0A0A0A; }
+
+    /* ── CARDS ── */
+    .space-card { background: #FFFFFF; border: 1px solid #EBEBEB; overflow: hidden; transition: border-color 0.3s, box-shadow 0.3s; }
+    .space-card:hover { border-color: #C9A84C; box-shadow: 0 8px 40px rgba(201,168,76,0.12); }
+
+    /* ── OCCASIONS ── */
+    .occasion-cell { padding: 36px 28px; background: #FFFFFF; transition: background 0.3s; }
+    .occasion-cell:hover { background: #FAFAF8; }
+
+    /* ── GALLERY ── */
+    .gallery-cell { position: relative; overflow: hidden; cursor: pointer; transition: filter 0.3s; }
+    .gallery-cell:hover { filter: brightness(0.95); }
+
+    /* ── FOOTER LINKS ── */
+    .footer-link { font-size: 14px; color: #4A4A4A; transition: color 0.2s; }
+    .footer-link:hover { color: #C9A84C; }
+
+    /* ── TYPE SCALE ── */
+    .hero-h1 { font-family: 'Cormorant Garamond', serif; font-size: 118px; font-weight: 300; line-height: 0.92; letter-spacing: -0.035em; color: #0A0A0A; }
+    .section-h2 { font-family: 'Cormorant Garamond', serif; font-size: 58px; font-weight: 400; line-height: 1.02; letter-spacing: -0.02em; }
+
+    /* ── RESPONSIVE 900px ── */
+    @media (max-width: 900px) {
+      #nav-links  { display: none !important; }
+      #nav-book   { display: none !important; }
+      #hamburger  { display: flex !important; }
+      #main-nav   { padding: 0 32px; }
+
+      #hero-section   { padding: 0 32px 72px !important; min-height: 100svh !important; }
+      #hero-label     { display: none !important; }
+      .hero-h1        { font-size: 66px !important; letter-spacing: -0.03em !important; }
+      #hero-eyebrow   { margin-bottom: 20px !important; }
+      #hero-ctas      { flex-direction: column !important; align-items: stretch !important; gap: 12px !important; margin-top: 36px !important; }
+      #hero-ctas a    { text-align: center !important; }
+
+      #stats-grid { grid-template-columns: repeat(2, 1fr) !important; }
+
+      #about-section   { padding: 72px 32px !important; }
+      #about-grid      { grid-template-columns: 1fr !important; gap: 0 !important; }
+      #about-image-col { height: 360px !important; margin-top: 48px !important; }
+
+      #spaces-section { padding: 72px 32px !important; }
+      #spaces-header  { grid-template-columns: 1fr !important; gap: 16px !important; margin-bottom: 40px !important; }
+      #spaces-header > div:last-child { padding-top: 0 !important; }
+      #spaces-grid    { grid-template-columns: 1fr !important; }
+
+      #occasions-section { padding: 72px 32px !important; }
+      #occasions-header  { flex-direction: column !important; align-items: flex-start !important; gap: 24px !important; margin-bottom: 40px !important; }
+      #occasions-grid    { grid-template-columns: repeat(2, 1fr) !important; }
+      .section-h2        { font-size: 40px !important; }
+
+      #gallery-section { padding: 72px 32px !important; }
+      #gallery-grid    { grid-template-columns: 1fr 1fr !important; grid-template-rows: 200px 200px 200px !important; }
+      #gallery-large   { grid-row: auto !important; }
+
+      #contact-section { padding: 72px 32px !important; }
+      #contact-grid    { grid-template-columns: 1fr !important; gap: 48px !important; }
+
+      #footer-section { padding: 48px 32px 32px !important; }
+      #footer-grid    { grid-template-columns: 1fr 1fr !important; gap: 36px !important; }
+      #footer-bottom  { flex-direction: column !important; gap: 8px !important; text-align: center !important; }
+
+      .div-padding { padding: 0 32px !important; }
+    }
+
+    @media (max-width: 540px) {
+      #main-nav { padding: 0 20px !important; }
+      .hero-h1  { font-size: 48px !important; }
+      #hero-section { padding-left: 20px !important; padding-right: 20px !important; }
+
+      #about-section, #spaces-section, #occasions-section,
+      #gallery-section, #contact-section { padding-left: 20px !important; padding-right: 20px !important; }
+      .div-padding { padding: 0 20px !important; }
+
+      #occasions-grid { grid-template-columns: 1fr !important; }
+      #gallery-grid   { grid-template-columns: 1fr !important; grid-template-rows: auto !important; }
+      #gallery-large  { height: 260px !important; }
+      #footer-grid    { grid-template-columns: 1fr !important; }
+      #footer-section { padding-left: 20px !important; padding-right: 20px !important; }
+      .section-h2     { font-size: 34px !important; }
+
+      #mobile-menu { padding-left: 20px; padding-right: 20px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ── NAV ──────────────────────────────────────────────────────── -->
+  <nav id="main-nav">
+    <div style="display:flex;flex-direction:column;gap:1px;flex-shrink:0;">
+      <span style="font-family:'Cormorant Garamond',serif;font-size:17px;font-weight:600;color:#0A0A0A;letter-spacing:0.13em;text-transform:uppercase;">The Event Space</span>
+      <span style="font-size:8px;font-weight:600;color:#C9A84C;letter-spacing:0.38em;text-transform:uppercase;">Bermuda</span>
+    </div>
+    <div id="nav-links">
+      <a href="#about">About</a>
+      <a href="spaces.dc.html">Our Rooms</a>
+      <a href="#occasions">Events</a>
+      <a href="#gallery">Gallery</a>
+      <a href="#contact">Contact</a>
+    </div>
+    <a id="nav-book" href="#contact">Book Now</a>
+    <button id="hamburger" aria-label="Open menu">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+
+  <!-- Mobile Menu -->
+  <div id="mobile-menu">
+    <a href="#about">About</a>
+    <a href="#spaces">The Space</a>
+    <a href="#occasions">Events</a>
+    <a href="#gallery">Gallery</a>
+    <a href="#contact">Contact</a>
+    <a href="#contact" class="mob-book">Book Now</a>
+  </div>
+
+  <!-- ── HERO ──────────────────────────────────────────────────────── -->
+  <section id="hero-section" style="position:relative;min-height:100vh;display:flex;flex-direction:column;justify-content:flex-end;overflow:hidden;background:#FFFFFF;padding:0 64px 88px;">
+    <video id="hero-vid" autoplay muted loop playsinline style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0.28;pointer-events:none;">
+      <source src="images/hero-video.mp4" type="video/mp4">
+    </video>
+    <div style="position:absolute;inset:0;background:linear-gradient(to bottom,rgba(255,255,255,0.22) 0%,rgba(255,255,255,0.08) 50%,rgba(255,255,255,0.7) 100%);pointer-events:none;"></div>
+
+    <div id="hero-label" style="position:absolute;top:106px;right:64px;text-align:right;">
+      <div style="font-size:9px;font-weight:700;letter-spacing:0.3em;text-transform:uppercase;color:#C9A84C;margin-bottom:6px;">Boutique Venue</div>
+      <div style="font-size:12px;color:#9A9A9A;letter-spacing:0.06em;">Hamilton, Bermuda</div>
+    </div>
+
+    <div style="position:relative;max-width:1200px;">
+      <div id="hero-eyebrow" style="font-size:10px;font-weight:700;letter-spacing:0.36em;text-transform:uppercase;color:#9A9A9A;margin-bottom:32px;display:flex;align-items:center;gap:16px;">
+        <div style="width:40px;height:1px;background:#C9A84C;flex-shrink:0;"></div>
+        Est. in Bermuda
+      </div>
+      <h1 class="hero-h1" style="margin-bottom:0;">One Space.</h1>
+      <h1 class="hero-h1" style="font-weight:400;line-height:0.95;letter-spacing:-0.03em;font-style:italic;background:linear-gradient(110deg,#7a5c10 0%,#C9A84C 25%,#F0D060 50%,#C9A84C 75%,#7a5c10 100%);background-size:250% auto;-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;animation:shimmerGold 5s linear infinite;">Endless</h1>
+      <h1 class="hero-h1" style="line-height:0.95;">Possibilities.</h1>
+    </div>
+
+    <div id="hero-ctas" style="position:relative;display:flex;align-items:flex-end;justify-content:space-between;margin-top:56px;">
+      <p style="font-size:16px;font-weight:400;line-height:1.7;color:#6B6B6B;max-width:420px;letter-spacing:0.01em;">A stylish boutique venue in the heart of Bermuda — where your vision becomes an unforgettable reality.</p>
+      <div style="display:flex;align-items:center;gap:14px;flex-shrink:0;">
+        <a href="#contact" class="btn-hero-primary">Plan Your Event</a>
+        <a href="#spaces" class="btn-hero-ghost">Explore →</a>
+      </div>
+    </div>
+
+    <div style="position:absolute;bottom:44px;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:10px;">
+      <div style="width:1px;height:44px;background:linear-gradient(to bottom,#C9A84C,transparent);animation:scrollPulse 2s ease-in-out infinite;"></div>
+    </div>
+  </section>
+
+  <!-- ── STATS BAND ─────────────────────────────────────────────────── -->
+  <div style="background:#0A0A0A;padding:0 64px;">
+    <div id="stats-grid" style="max-width:1200px;margin:0 auto;display:grid;grid-template-columns:repeat(4,1fr);">
+      <div style="text-align:center;padding:52px 24px;border-right:1px solid rgba(255,255,255,0.06);">
+        <div style="font-family:'Cormorant Garamond',serif;font-size:52px;font-weight:300;color:#C9A84C;line-height:1;margin-bottom:10px;">1</div>
+        <div style="font-size:10px;font-weight:600;letter-spacing:0.22em;text-transform:uppercase;color:#4A4A4A;">Boutique Space</div>
+      </div>
+      <div style="text-align:center;padding:52px 24px;border-right:1px solid rgba(255,255,255,0.06);">
+        <div style="font-family:'Cormorant Garamond',serif;font-size:52px;font-weight:300;color:#C9A84C;line-height:1;margin-bottom:10px;">8<span style="font-size:32px;">+</span></div>
+        <div style="font-size:10px;font-weight:600;letter-spacing:0.22em;text-transform:uppercase;color:#4A4A4A;">Event Types</div>
+      </div>
+      <div style="text-align:center;padding:52px 24px;border-right:1px solid rgba(255,255,255,0.06);">
+        <div style="font-family:'Cormorant Garamond',serif;font-size:32px;font-weight:300;color:#C8C8C8;line-height:1.5;margin-bottom:10px;font-style:italic;">Flexible</div>
+        <div style="font-size:10px;font-weight:600;letter-spacing:0.22em;text-transform:uppercase;color:#4A4A4A;">Packages</div>
+      </div>
+      <div style="text-align:center;padding:52px 24px;">
+        <div style="font-family:'Cormorant Garamond',serif;font-size:32px;font-weight:300;color:#C8C8C8;line-height:1.5;margin-bottom:10px;font-style:italic;">Bermuda's<br>Own</div>
+        <div style="font-size:10px;font-weight:600;letter-spacing:0.22em;text-transform:uppercase;color:#4A4A4A;">Boutique Venue</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── ABOUT ──────────────────────────────────────────────────────── -->
+  <section id="about" style="padding:128px 64px;background:#FFFFFF;">
+    <div id="about-section" style="max-width:1200px;margin:0 auto;">
+      <div id="about-grid" style="display:grid;grid-template-columns:1fr 1fr;gap:96px;align-items:center;">
+        <div>
+          <div style="display:flex;align-items:center;gap:14px;margin-bottom:32px;">
+            <div style="width:24px;height:1px;background:#C9A84C;"></div>
+            <span style="font-size:9px;font-weight:700;letter-spacing:0.36em;text-transform:uppercase;color:#C9A84C;">The Event Space BDA</span>
+          </div>
+          <h2 class="section-h2" style="color:#0A0A0A;margin-bottom:32px;">We Are The Space.<br>You Are The<br><span style="font-style:italic;color:#C9A84C;">Possibility.</span></h2>
+          <p style="font-size:16px;line-height:1.8;color:#6B6B6B;margin-bottom:20px;">A stylish boutique venue in the heart of Bermuda, designed to bring your vision to life. Whatever you're celebrating, we provide the perfect setting — you bring the magic.</p>
+          <p style="font-size:16px;line-height:1.8;color:#6B6B6B;margin-bottom:52px;">From intimate baby showers to corporate meetings and milestone birthdays, we offer flexible packages that create unforgettable experiences.</p>
+          <div style="display:flex;align-items:center;gap:32px;flex-wrap:wrap;">
+            <a href="#contact" class="btn-dark">Start Planning</a>
+            <a href="#spaces" class="btn-text-link">View the Space →</a>
+          </div>
+        </div>
+        <div id="about-image-col" style="position:relative;height:560px;">
+          <div style="position:absolute;top:0;left:0;right:32px;bottom:48px;overflow:hidden;border-radius:2px;">
+            <img src="images/event-baby-shower.png" style="width:100%;height:100%;object-fit:cover;display:block;" alt="Event styling at The Event Space">
+            <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(255,255,255,0.3) 0%,transparent 40%);"></div>
+          </div>
+          <div style="position:absolute;bottom:0;right:0;width:180px;background:#C9A84C;padding:26px 22px;border-radius:2px;">
+            <div style="font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:500;color:#0A0A0A;line-height:1.4;font-style:italic;">"One Space.<br>Endless<br>Possibilities."</div>
+          </div>
+          <div style="position:absolute;top:-16px;right:16px;width:88px;height:88px;border:1px solid #D4D4D4;border-radius:2px;pointer-events:none;"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── THIN DIVIDER ──────────────────────────────────────────────── -->
+  <div class="div-padding" style="padding:0 64px;">
+    <div style="max-width:1200px;margin:0 auto;height:1px;background:#F0F0F0;"></div>
+  </div>
+
+  <!-- ── THE SPACE ──────────────────────────────────────────────────── -->
+  <section id="spaces" style="padding:128px 64px;background:#FAFAF8;">
+    <div id="spaces-section" style="max-width:1200px;margin:0 auto;">
+      <div id="spaces-header" style="display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:start;margin-bottom:72px;">
+        <div>
+          <div style="display:flex;align-items:center;gap:14px;margin-bottom:24px;">
+            <div style="width:24px;height:1px;background:#C9A84C;"></div>
+            <span style="font-size:9px;font-weight:700;letter-spacing:0.36em;text-transform:uppercase;color:#C9A84C;">The Space</span>
+          </div>
+          <h2 class="section-h2" style="color:#0A0A0A;">One Venue.<br><span style="font-style:italic;">Infinite</span><br>Transformations.</h2>
+        </div>
+        <div style="padding-top:80px;">
+          <p style="font-size:16px;color:#6B6B6B;line-height:1.8;">Our boutique space transforms completely to match your vision — from elegant ceremonial settings to vibrant neon parties to polished corporate environments.</p>
+        </div>
+      </div>
+
+      <div id="spaces-grid" style="display:grid;grid-template-columns:repeat(3,1fr);gap:2px;">
+        <!-- Card I -->
+        <div class="space-card">
+          <div style="height:280px;overflow:hidden;position:relative;">
+            <img src="images/event-wedding1.png" style="width:100%;height:100%;object-fit:cover;display:block;" alt="Wedding &amp; Ceremony Setup">
+            <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(255,255,255,0.9) 0%,transparent 50%);"></div>
+            <div style="position:absolute;top:18px;right:18px;padding:5px 12px;background:#0A0A0A;border-radius:2px;">
+              <span style="font-size:9px;font-weight:700;letter-spacing:0.18em;text-transform:uppercase;color:#C9A84C;">Ceremony</span>
+            </div>
+          </div>
+          <div style="padding:32px 30px;">
+            <div style="width:32px;height:1px;background:#C9A84C;margin-bottom:18px;"></div>
+            <div style="font-size:9px;font-weight:700;letter-spacing:0.26em;text-transform:uppercase;color:#B0B0B0;margin-bottom:10px;">I. Ceremony &amp; Reception</div>
+            <h3 style="font-family:'Cormorant Garamond',serif;font-size:26px;font-weight:500;color:#0A0A0A;margin-bottom:14px;line-height:1.2;">Elegant, Romantic &amp; Unforgettable</h3>
+            <p style="font-size:14px;line-height:1.72;color:#7A7A7A;margin-bottom:22px;">Lush florals, chiavari chairs, and custom neon signs create the perfect romantic atmosphere for your wedding, bridal shower, or anniversary.</p>
+            <div style="display:flex;flex-wrap:wrap;gap:8px;">
+              <span style="padding:5px 12px;background:#F5F5F5;border-radius:2px;font-size:11px;color:#5A5A5A;font-weight:500;">Weddings</span>
+              <span style="padding:5px 12px;background:#F5F5F5;border-radius:2px;font-size:11px;color:#5A5A5A;font-weight:500;">Bridal Showers</span>
+              <span style="padding:5px 12px;background:#F5F5F5;border-radius:2px;font-size:11px;color:#5A5A5A;font-weight:500;">Anniversaries</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card II -->
+        <div class="space-card">
+          <div style="height:280px;overflow:hidden;position:relative;">
+            <img src="images/event-glow1.png" style="width:100%;height:100%;object-fit:cover;display:block;" alt="Glow Party Setup">
+            <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(255,255,255,0.9) 0%,transparent 50%);"></div>
+            <div style="position:absolute;top:18px;right:18px;padding:5px 12px;background:#0A0A0A;border-radius:2px;">
+              <span style="font-size:9px;font-weight:700;letter-spacing:0.18em;text-transform:uppercase;color:#C9A84C;">Party</span>
+            </div>
+          </div>
+          <div style="padding:32px 30px;">
+            <div style="width:32px;height:1px;background:#C9A84C;margin-bottom:18px;"></div>
+            <div style="font-size:9px;font-weight:700;letter-spacing:0.26em;text-transform:uppercase;color:#B0B0B0;margin-bottom:10px;">II. Party &amp; Celebration</div>
+            <h3 style="font-family:'Cormorant Garamond',serif;font-size:26px;font-weight:500;color:#0A0A0A;margin-bottom:14px;line-height:1.2;">Energetic, Vibrant &amp; Spectacular</h3>
+            <p style="font-size:14px;line-height:1.72;color:#7A7A7A;margin-bottom:22px;">From neon glow parties to glamorous birthday bashes — custom lighting, neon signs, and bespoke décor that brings the energy to life.</p>
+            <div style="display:flex;flex-wrap:wrap;gap:8px;">
+              <span style="padding:5px 12px;background:#F5F5F5;border-radius:2px;font-size:11px;color:#5A5A5A;font-weight:500;">Birthdays</span>
+              <span style="padding:5px 12px;background:#F5F5F5;border-radius:2px;font-size:11px;color:#5A5A5A;font-weight:500;">Baby Showers</span>
+              <span style="padding:5px 12px;background:#F5F5F5;border-radius:2px;font-size:11px;color:#5A5A5A;font-weight:500;">Glow Parties</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card III -->
+        <div class="space-card">
+          <div style="height:280px;overflow:hidden;position:relative;">
+            <img src="images/event-seminar.png" style="width:100%;height:100%;object-fit:cover;display:block;" alt="Corporate Setup">
+            <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(255,255,255,0.9) 0%,transparent 50%);"></div>
+            <div style="position:absolute;top:18px;right:18px;padding:5px 12px;background:#0A0A0A;border-radius:2px;">
+              <span style="font-size:9px;font-weight:700;letter-spacing:0.18em;text-transform:uppercase;color:#C9A84C;">Corporate</span>
+            </div>
+          </div>
+          <div style="padding:32px 30px;">
+            <div style="width:32px;height:1px;background:#C9A84C;margin-bottom:18px;"></div>
+            <div style="font-size:9px;font-weight:700;letter-spacing:0.26em;text-transform:uppercase;color:#B0B0B0;margin-bottom:10px;">III. Corporate &amp; Professional</div>
+            <h3 style="font-family:'Cormorant Garamond',serif;font-size:26px;font-weight:500;color:#0A0A0A;margin-bottom:14px;line-height:1.2;">Polished, Professional &amp; Purposeful</h3>
+            <p style="font-size:14px;line-height:1.72;color:#7A7A7A;margin-bottom:22px;">Full projection, boardroom or theatre seating, and professional-grade AV for presentations, workshops, and executive events.</p>
+            <div style="display:flex;flex-wrap:wrap;gap:8px;">
+              <span style="padding:5px 12px;background:#F5F5F5;border-radius:2px;font-size:11px;color:#5A5A5A;font-weight:500;">Seminars</span>
+              <span style="padding:5px 12px;background:#F5F5F5;border-radius:2px;font-size:11px;color:#5A5A5A;font-weight:500;">Workshops</span>
+              <span style="padding:5px 12px;background:#F5F5F5;border-radius:2px;font-size:11px;color:#5A5A5A;font-weight:500;">Networking</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── OCCASIONS ─────────────────────────────────────────────────── -->
+  <section id="occasions" style="padding:128px 64px;background:#FFFFFF;">
+    <div id="occasions-section" style="max-width:1200px;margin:0 auto;">
+      <div id="occasions-header" style="display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:72px;">
+        <div>
+          <div style="display:flex;align-items:center;gap:14px;margin-bottom:24px;">
+            <div style="width:24px;height:1px;background:#C9A84C;"></div>
+            <span style="font-size:9px;font-weight:700;letter-spacing:0.36em;text-transform:uppercase;color:#C9A84C;">Occasions</span>
+          </div>
+          <h2 class="section-h2" style="color:#0A0A0A;">Every Celebration,<br><span style="font-style:italic;">Perfected.</span></h2>
+        </div>
+        <a href="#contact" class="btn-occasions">Book Your Event</a>
+      </div>
+
+      <div id="occasions-grid" style="display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:#F0F0F0;border:1px solid #F0F0F0;">
+        <div class="occasion-cell">
+          <div style="font-family:'Cormorant Garamond',serif;font-size:40px;font-weight:300;color:#F0F0F0;line-height:1;margin-bottom:16px;">01</div>
+          <div style="width:24px;height:1px;background:#C9A84C;margin-bottom:14px;"></div>
+          <h3 style="font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:500;color:#0A0A0A;margin-bottom:8px;line-height:1.2;">Birthdays</h3>
+          <p style="font-size:13px;line-height:1.7;color:#7A7A7A;">Milestone celebrations made extraordinary.</p>
+        </div>
+        <div class="occasion-cell">
+          <div style="font-family:'Cormorant Garamond',serif;font-size:40px;font-weight:300;color:#F0F0F0;line-height:1;margin-bottom:16px;">02</div>
+          <div style="width:24px;height:1px;background:#C9A84C;margin-bottom:14px;"></div>
+          <h3 style="font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:500;color:#0A0A0A;margin-bottom:8px;line-height:1.2;">Baby Showers</h3>
+          <p style="font-size:13px;line-height:1.7;color:#7A7A7A;">Welcoming new arrivals in beautiful style.</p>
+        </div>
+        <div class="occasion-cell">
+          <div style="font-family:'Cormorant Garamond',serif;font-size:40px;font-weight:300;color:#F0F0F0;line-height:1;margin-bottom:16px;">03</div>
+          <div style="width:24px;height:1px;background:#C9A84C;margin-bottom:14px;"></div>
+          <h3 style="font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:500;color:#0A0A0A;margin-bottom:8px;line-height:1.2;">Bridal Showers</h3>
+          <p style="font-size:13px;line-height:1.7;color:#7A7A7A;">The perfect pre-wedding celebration.</p>
+        </div>
+        <div class="occasion-cell">
+          <div style="font-family:'Cormorant Garamond',serif;font-size:40px;font-weight:300;color:#F0F0F0;line-height:1;margin-bottom:16px;">04</div>
+          <div style="width:24px;height:1px;background:#C9A84C;margin-bottom:14px;"></div>
+          <h3 style="font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:500;color:#0A0A0A;margin-bottom:8px;line-height:1.2;">Corporate Meetings</h3>
+          <p style="font-size:13px;line-height:1.7;color:#7A7A7A;">Professional AV and flexible layouts.</p>
+        </div>
+        <div class="occasion-cell">
+          <div style="font-family:'Cormorant Garamond',serif;font-size:40px;font-weight:300;color:#F0F0F0;line-height:1;margin-bottom:16px;">05</div>
+          <div style="width:24px;height:1px;background:#C9A84C;margin-bottom:14px;"></div>
+          <h3 style="font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:500;color:#0A0A0A;margin-bottom:8px;line-height:1.2;">Networking</h3>
+          <p style="font-size:13px;line-height:1.7;color:#7A7A7A;">Bermuda's professional community connects here.</p>
+        </div>
+        <div class="occasion-cell">
+          <div style="font-family:'Cormorant Garamond',serif;font-size:40px;font-weight:300;color:#F0F0F0;line-height:1;margin-bottom:16px;">06</div>
+          <div style="width:24px;height:1px;background:#C9A84C;margin-bottom:14px;"></div>
+          <h3 style="font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:500;color:#0A0A0A;margin-bottom:8px;line-height:1.2;">Workshops</h3>
+          <p style="font-size:13px;line-height:1.7;color:#7A7A7A;">Creative classes and seminars, expertly hosted.</p>
+        </div>
+        <div class="occasion-cell">
+          <div style="font-family:'Cormorant Garamond',serif;font-size:40px;font-weight:300;color:#F0F0F0;line-height:1;margin-bottom:16px;">07</div>
+          <div style="width:24px;height:1px;background:#C9A84C;margin-bottom:14px;"></div>
+          <h3 style="font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:500;color:#0A0A0A;margin-bottom:8px;line-height:1.2;">Private Dinners</h3>
+          <p style="font-size:13px;line-height:1.7;color:#7A7A7A;">Intimate dining with bespoke menus.</p>
+        </div>
+        <div style="padding:36px 28px;background:#0A0A0A;display:flex;flex-direction:column;justify-content:space-between;">
+          <div style="font-family:'Cormorant Garamond',serif;font-size:40px;font-weight:300;color:rgba(201,168,76,0.2);line-height:1;margin-bottom:16px;">+</div>
+          <div>
+            <div style="width:24px;height:1px;background:#C9A84C;margin-bottom:14px;"></div>
+            <h3 style="font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:500;color:#FFFFFF;margin-bottom:8px;line-height:1.2;">Something Else?</h3>
+            <p style="font-size:13px;line-height:1.7;color:#6B6B6B;margin-bottom:18px;">Have a unique idea? Let's talk.</p>
+            <a href="#contact" style="font-size:10px;font-weight:700;color:#C9A84C;letter-spacing:0.16em;text-transform:uppercase;">Get in Touch →</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── GALLERY ────────────────────────────────────────────────────── -->
+  <section id="gallery" style="padding:128px 64px;background:#FAFAF8;">
+    <div id="gallery-section" style="max-width:1200px;margin:0 auto;">
+      <div style="text-align:center;margin-bottom:72px;">
+        <div style="display:inline-flex;align-items:center;gap:14px;margin-bottom:22px;">
+          <div style="width:24px;height:1px;background:#C9A84C;"></div>
+          <span style="font-size:9px;font-weight:700;letter-spacing:0.36em;text-transform:uppercase;color:#C9A84C;">Gallery</span>
+          <div style="width:24px;height:1px;background:#C9A84C;"></div>
+        </div>
+        <h2 class="section-h2" style="color:#0A0A0A;">Glimpses of the <span style="font-style:italic;">Extraordinary</span></h2>
+      </div>
+
+      <div id="gallery-grid" style="display:grid;grid-template-columns:repeat(3,1fr);grid-template-rows:300px 300px;gap:3px;">
+        <!-- Large left cell -->
+        <div id="gallery-large" class="gallery-cell" style="grid-row:1/3;">
+          <img src="images/event-wedding1.png" style="width:100%;height:100%;object-fit:cover;display:block;" alt="Wedding at The Event Space">
+          <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(255,255,255,0.88) 0%,transparent 45%);"></div>
+          <div style="position:absolute;bottom:28px;left:28px;right:28px;">
+            <div style="width:20px;height:1px;background:#C9A84C;margin-bottom:8px;"></div>
+            <div style="font-size:9px;font-weight:700;letter-spacing:0.26em;text-transform:uppercase;color:#C9A84C;margin-bottom:5px;">Wedding</div>
+            <div style="font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:400;color:#0A0A0A;font-style:italic;line-height:1.3;">Wedding Ceremony</div>
+          </div>
+        </div>
+        <!-- Top right -->
+        <div class="gallery-cell">
+          <img src="images/event-baby-shower.png" style="width:100%;height:100%;object-fit:cover;display:block;" alt="Baby Shower">
+          <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(255,255,255,0.82) 0%,transparent 50%);"></div>
+          <div style="position:absolute;bottom:20px;left:22px;font-family:'Cormorant Garamond',serif;font-size:16px;color:#0A0A0A;font-style:italic;">Baby Shower</div>
+        </div>
+        <!-- Top far right -->
+        <div class="gallery-cell">
+          <img src="images/event-glow1.png" style="width:100%;height:100%;object-fit:cover;display:block;" alt="Glow Party">
+          <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(255,255,255,0.82) 0%,transparent 50%);"></div>
+          <div style="position:absolute;bottom:20px;left:22px;font-family:'Cormorant Garamond',serif;font-size:16px;color:#0A0A0A;font-style:italic;">Glow Party</div>
+        </div>
+        <!-- Bottom right -->
+        <div class="gallery-cell">
+          <img src="images/event-seminar.png" style="width:100%;height:100%;object-fit:cover;display:block;" alt="Corporate Seminar">
+          <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(255,255,255,0.82) 0%,transparent 50%);"></div>
+          <div style="position:absolute;bottom:20px;left:22px;font-family:'Cormorant Garamond',serif;font-size:16px;color:#0A0A0A;font-style:italic;">Corporate Seminar</div>
+        </div>
+        <!-- Bottom far right -->
+        <div class="gallery-cell">
+          <img src="images/event-glow2.png" style="width:100%;height:100%;object-fit:cover;display:block;" alt="Celebration Night">
+          <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(255,255,255,0.82) 0%,transparent 50%);"></div>
+          <div style="position:absolute;bottom:20px;left:22px;font-family:'Cormorant Garamond',serif;font-size:16px;color:#0A0A0A;font-style:italic;">Celebration Night</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── CONTACT ───────────────────────────────────────────────────── -->
+  <section id="contact" style="padding:128px 64px;background:#FFFFFF;">
+    <div id="contact-section" style="max-width:1200px;margin:0 auto;">
+      <div id="contact-grid" style="display:grid;grid-template-columns:1fr 1fr;gap:96px;align-items:start;">
+        <div>
+          <div style="display:flex;align-items:center;gap:14px;margin-bottom:32px;">
+            <div style="width:24px;height:1px;background:#C9A84C;"></div>
+            <span style="font-size:9px;font-weight:700;letter-spacing:0.36em;text-transform:uppercase;color:#C9A84C;">Get In Touch</span>
+          </div>
+          <h2 class="section-h2" style="color:#0A0A0A;margin-bottom:28px;">Begin Planning<br>Your <span style="font-style:italic;color:#C9A84C;">Event</span></h2>
+          <p style="font-size:16px;line-height:1.8;color:#6B6B6B;margin-bottom:48px;">Our team is ready to help you create an unforgettable experience. Reach out to discuss your event, date, and the possibilities we can bring to life together.</p>
+          <div style="display:flex;flex-direction:column;gap:0;">
+            <div style="display:flex;align-items:center;gap:20px;padding:20px 0;border-bottom:1px solid #F0F0F0;">
+              <div style="width:10px;height:10px;background:#C9A84C;border-radius:50%;flex-shrink:0;"></div>
+              <div>
+                <div style="font-size:9px;font-weight:700;letter-spacing:0.22em;text-transform:uppercase;color:#B0B0B0;margin-bottom:3px;">Location</div>
+                <div style="font-size:15px;font-weight:500;color:#0A0A0A;">Hamilton, Bermuda</div>
+              </div>
+            </div>
+            <div style="display:flex;align-items:center;gap:20px;padding:20px 0;border-bottom:1px solid #F0F0F0;">
+              <div style="width:10px;height:10px;background:#C9A84C;border-radius:50%;flex-shrink:0;"></div>
+              <div>
+                <div style="font-size:9px;font-weight:700;letter-spacing:0.22em;text-transform:uppercase;color:#B0B0B0;margin-bottom:3px;">Email</div>
+                <div style="font-size:15px;font-weight:500;color:#0A0A0A;">info@eventspacebda.com</div>
+              </div>
+            </div>
+            <div style="display:flex;align-items:center;gap:20px;padding:20px 0;">
+              <div style="width:10px;height:10px;background:#C9A84C;border-radius:50%;flex-shrink:0;"></div>
+              <div>
+                <div style="font-size:9px;font-weight:700;letter-spacing:0.22em;text-transform:uppercase;color:#B0B0B0;margin-bottom:3px;">Website</div>
+                <div style="font-size:15px;font-weight:500;color:#0A0A0A;">eventspacebda.com</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div style="background:#FAFAF8;border:1px solid #EBEBEB;padding:48px 40px;">
+          <h3 style="font-family:'Cormorant Garamond',serif;font-size:30px;font-weight:500;color:#0A0A0A;margin-bottom:32px;">Send an Enquiry</h3>
+          <form style="display:flex;flex-direction:column;gap:18px;">
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;">
+              <div>
+                <label style="display:block;font-size:9px;font-weight:700;letter-spacing:0.22em;text-transform:uppercase;color:#B0B0B0;margin-bottom:7px;">First Name</label>
+                <input type="text" placeholder="First name" style="width:100%;padding:13px 14px;background:#FFFFFF;border:1px solid #E0E0E0;border-radius:2px;color:#0A0A0A;font-size:14px;outline:none;">
+              </div>
+              <div>
+                <label style="display:block;font-size:9px;font-weight:700;letter-spacing:0.22em;text-transform:uppercase;color:#B0B0B0;margin-bottom:7px;">Last Name</label>
+                <input type="text" placeholder="Last name" style="width:100%;padding:13px 14px;background:#FFFFFF;border:1px solid #E0E0E0;border-radius:2px;color:#0A0A0A;font-size:14px;outline:none;">
+              </div>
+            </div>
+            <div>
+              <label style="display:block;font-size:9px;font-weight:700;letter-spacing:0.22em;text-transform:uppercase;color:#B0B0B0;margin-bottom:7px;">Email Address</label>
+              <input type="email" placeholder="your@email.com" style="width:100%;padding:13px 14px;background:#FFFFFF;border:1px solid #E0E0E0;border-radius:2px;color:#0A0A0A;font-size:14px;outline:none;">
+            </div>
+            <div>
+              <label style="display:block;font-size:9px;font-weight:700;letter-spacing:0.22em;text-transform:uppercase;color:#B0B0B0;margin-bottom:7px;">Event Type</label>
+              <select style="width:100%;padding:13px 14px;background:#FFFFFF;border:1px solid #E0E0E0;border-radius:2px;color:#6B6B6B;font-size:14px;outline:none;appearance:none;-webkit-appearance:none;">
+                <option>Select an occasion…</option>
+                <option>Birthday Celebration</option>
+                <option>Baby Shower</option>
+                <option>Bridal Shower</option>
+                <option>Corporate Meeting</option>
+                <option>Networking Event</option>
+                <option>Workshop / Seminar</option>
+                <option>Private Dinner</option>
+                <option>Other</option>
+              </select>
+            </div>
+            <div>
+              <label style="display:block;font-size:9px;font-weight:700;letter-spacing:0.22em;text-transform:uppercase;color:#B0B0B0;margin-bottom:7px;">Preferred Date</label>
+              <input type="date" style="width:100%;padding:13px 14px;background:#FFFFFF;border:1px solid #E0E0E0;border-radius:2px;color:#6B6B6B;font-size:14px;outline:none;">
+            </div>
+            <div>
+              <label style="display:block;font-size:9px;font-weight:700;letter-spacing:0.22em;text-transform:uppercase;color:#B0B0B0;margin-bottom:7px;">Your Vision</label>
+              <textarea rows="4" placeholder="Tell us about your event idea…" style="width:100%;padding:13px 14px;background:#FFFFFF;border:1px solid #E0E0E0;border-radius:2px;color:#0A0A0A;font-size:14px;outline:none;resize:vertical;"></textarea>
+            </div>
+            <button type="submit" class="btn-submit">Send Enquiry</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── FOOTER ─────────────────────────────────────────────────────── -->
+  <footer style="background:#0A0A0A;border-top:1px solid rgba(255,255,255,0.04);">
+    <div id="footer-section" style="max-width:1200px;margin:0 auto;padding:60px 64px 40px;">
+      <div id="footer-grid" style="display:grid;grid-template-columns:1.6fr 1fr 1fr 1fr;gap:60px;padding-bottom:48px;border-bottom:1px solid rgba(255,255,255,0.06);">
+        <div>
+          <div style="font-family:'Cormorant Garamond',serif;font-size:18px;font-weight:600;color:#FFFFFF;letter-spacing:0.13em;text-transform:uppercase;margin-bottom:3px;">The Event Space</div>
+          <div style="font-size:8px;font-weight:600;color:#C9A84C;letter-spacing:0.38em;text-transform:uppercase;margin-bottom:18px;">Bermuda</div>
+          <p style="font-size:14px;line-height:1.72;color:#4A4A4A;max-width:220px;">One space. Endless possibilities. Bermuda's boutique event venue.</p>
+        </div>
+        <div>
+          <div style="font-size:9px;font-weight:700;letter-spacing:0.22em;text-transform:uppercase;color:#C9A84C;margin-bottom:18px;">The Space</div>
+          <div style="display:flex;flex-direction:column;gap:12px;">
+            <a href="spaces.dc.html" class="footer-link">The Grand Room</a>
+            <a href="spaces.dc.html" class="footer-link">The Studio</a>
+            <a href="spaces.dc.html#planner" class="footer-link">3D Planner</a>
+            <a href="spaces.dc.html#designers" class="footer-link">Designer Catalog</a>
+          </div>
+        </div>
+        <div>
+          <div style="font-size:9px;font-weight:700;letter-spacing:0.22em;text-transform:uppercase;color:#C9A84C;margin-bottom:18px;">Events</div>
+          <div style="display:flex;flex-direction:column;gap:12px;">
+            <a href="#occasions" class="footer-link">Birthdays</a>
+            <a href="#occasions" class="footer-link">Baby &amp; Bridal Showers</a>
+            <a href="#occasions" class="footer-link">Corporate</a>
+            <a href="#occasions" class="footer-link">Workshops</a>
+          </div>
+        </div>
+        <div>
+          <div style="font-size:9px;font-weight:700;letter-spacing:0.22em;text-transform:uppercase;color:#C9A84C;margin-bottom:18px;">Contact</div>
+          <div style="display:flex;flex-direction:column;gap:12px;">
+            <div style="font-size:14px;color:#4A4A4A;">Hamilton, Bermuda</div>
+            <div style="font-size:14px;color:#4A4A4A;">info@eventspacebda.com</div>
+          </div>
+        </div>
+      </div>
+      <div id="footer-bottom" style="display:flex;align-items:center;justify-content:space-between;padding-top:28px;">
+        <div style="font-size:12px;color:#2A2A2A;">© 2025 The Event Space BDA. All rights reserved.</div>
+        <div style="font-size:13px;font-style:italic;font-family:'Cormorant Garamond',serif;color:#3A3A3A;">We Are The Space. You Are The Possibility.</div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Ensure video is muted (works around browser autoplay quirks)
+    const vid = document.getElementById('hero-vid');
+    if (vid) { vid.muted = true; vid.volume = 0; }
+
+    // Mobile menu toggle
+    const hamburger = document.getElementById('hamburger');
+    const mobileMenu = document.getElementById('mobile-menu');
+    hamburger.addEventListener('click', () => {
+      mobileMenu.classList.toggle('open');
+    });
+    mobileMenu.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', () => mobileMenu.classList.remove('open'));
+    });
+  </script>
+</body>
+</html>

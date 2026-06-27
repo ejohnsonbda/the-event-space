@@ -1,0 +1,593 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Our Rooms — The Event Space Bermuda</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+  <style>
+    /* ── Rooms-page specifics ── */
+    .rooms-hero { padding-top: 72px; background: #FAFAF8; border-bottom: 1px solid #F0F0F0; overflow: hidden; position: relative; }
+    .rooms-hero__glow { position: absolute; inset: 0; background: radial-gradient(ellipse 60% 80% at 80% 50%, rgba(201,168,76,0.05) 0%, transparent 65%); pointer-events: none; }
+    .rooms-hero__inner { max-width: 1200px; margin: 0 auto; padding: 88px 64px 80px; display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; }
+    .rooms-hero__eyebrow { display: flex; align-items: center; gap: 14px; margin-bottom: 28px; }
+    .rooms-hero__eyebrow-line { width: 24px; height: 1px; background: #C9A84C; }
+    .rooms-hero__eyebrow-text { font-size: 9px; font-weight: 700; letter-spacing: 0.36em; text-transform: uppercase; color: #C9A84C; }
+    .rooms-hero__h1 { font-family: 'Cormorant Garamond', serif; font-size: 72px; font-weight: 400; line-height: 0.96; letter-spacing: -0.025em; color: #0A0A0A; margin-bottom: 10px; }
+    .rooms-hero__h1--shimmer { font-style: italic; background: linear-gradient(110deg, #7a5c10 0%, #C9A84C 25%, #F0D060 50%, #C9A84C 75%, #7a5c10 100%); background-size: 250% auto; -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; animation: shimmerGold 5s linear infinite; }
+    .rooms-hero__body { font-size: 16px; line-height: 1.8; color: #6B6B6B; margin-top: 32px; margin-bottom: 44px; max-width: 420px; }
+    .rooms-hero__ctas { display: flex; gap: 14px; flex-wrap: wrap; }
+    .btn--rooms-primary { padding: 15px 36px; background: #0A0A0A; color: #FFFFFF; font-size: 10px; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; border-radius: 2px; transition: background 0.2s, color 0.2s; }
+    .btn--rooms-primary:hover { background: #C9A84C; color: #0A0A0A; }
+    .btn--rooms-ghost { padding: 15px 36px; border: 1px solid #D4D4D4; color: #0A0A0A; font-size: 10px; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; border-radius: 2px; transition: border-color 0.2s; }
+    .btn--rooms-ghost:hover { border-color: #0A0A0A; }
+    .rooms-hero__cards { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    .room-card-dark { background: #0A0A0A; padding: 32px 26px; border-radius: 3px; position: relative; overflow: hidden; }
+    .room-card-dark__corner { position: absolute; top: 0; right: 0; width: 60px; height: 60px; background: linear-gradient(135deg, transparent 50%, rgba(201,168,76,0.15) 100%); }
+    .room-card-light { background: #FFFFFF; border: 1px solid #E8E8E8; padding: 32px 26px; border-radius: 3px; position: relative; overflow: hidden; }
+    .room-card-light__corner { position: absolute; top: 0; right: 0; width: 60px; height: 60px; background: linear-gradient(135deg, transparent 50%, rgba(201,168,76,0.08) 100%); }
+    .room-card__num { font-family: 'Cormorant Garamond', serif; font-size: 40px; font-weight: 300; line-height: 1; margin-bottom: 20px; }
+    .room-card__num--dark { color: rgba(201,168,76,0.18); }
+    .room-card__num--light { color: #F0F0F0; }
+    .room-card__line { width: 24px; height: 1px; background: #C9A84C; margin-bottom: 14px; }
+    .room-card__label { font-size: 9px; font-weight: 700; letter-spacing: 0.22em; text-transform: uppercase; color: #C9A84C; margin-bottom: 8px; }
+    .room-card__dims { font-family: 'Cormorant Garamond', serif; font-size: 24px; font-weight: 400; line-height: 1.2; margin-bottom: 8px; }
+    .room-card__dims--dark { color: #FFFFFF; }
+    .room-card__dims--light { color: #0A0A0A; }
+    .room-card__sub--dark { font-size: 12px; color: #4A4A4A; }
+    .room-card__sub--light { font-size: 12px; color: #9A9A9A; }
+    .room-card-quote { grid-column: 1 / -1; background: #C9A84C; padding: 18px 26px; border-radius: 3px; display: flex; align-items: center; justify-content: space-between; }
+    .room-card-quote__text { font-family: 'Cormorant Garamond', serif; font-size: 15px; font-style: italic; color: #0A0A0A; font-weight: 500; }
+    .room-card-quote__line { width: 32px; height: 1px; background: rgba(8,8,8,0.3); flex-shrink: 0; }
+
+    /* ── Rooms grid ── */
+    .rooms-section { padding: 112px 64px; background: #FFFFFF; }
+    .rooms-section__inner { max-width: 1200px; margin: 0 auto; }
+    .rooms-section__header { text-align: center; margin-bottom: 72px; }
+    .rooms-section__eyebrow { display: inline-flex; align-items: center; gap: 14px; margin-bottom: 20px; }
+    .rooms-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 3px; }
+    .room-panel { background: #FAFAF8; border: 1px solid #EBEBEB; overflow: hidden; }
+    .room-panel__hero { height: 320px; position: relative; overflow: hidden; }
+    .room-panel__hero--dark { background: linear-gradient(150deg, #1c1208 0%, #2e2009 38%, #402d12 66%, #201408 100%); }
+    .room-panel__hero--mid { background: #0A0A0A; }
+    .room-panel__img { width: 100%; height: 100%; object-fit: cover; display: block; opacity: 0.7; }
+    .room-panel__img-fade { position: absolute; inset: 0; background: linear-gradient(to top, rgba(250,250,248,0.95) 0%, transparent 50%); }
+    .room-panel__badges { position: absolute; top: 20px; left: 20px; display: flex; gap: 8px; }
+    .badge--dark { padding: 5px 14px; background: #0A0A0A; color: #C9A84C; font-size: 9px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; border-radius: 2px; }
+    .badge--gold { padding: 5px 14px; background: #C9A84C; color: #0A0A0A; font-size: 9px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; border-radius: 2px; }
+    .badge--white { padding: 5px 14px; background: rgba(255,255,255,0.9); color: #0A0A0A; font-size: 9px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; border-radius: 2px; }
+    .room-panel__dims { position: absolute; bottom: 0; left: 0; right: 0; padding: 28px 32px; font-family: 'Cormorant Garamond', serif; font-size: 44px; font-weight: 300; color: #0A0A0A; line-height: 1; letter-spacing: -0.02em; }
+    .room-panel__body { padding: 36px 32px; }
+    .room-panel__desc { font-size: 15px; line-height: 1.8; color: #6B6B6B; margin-bottom: 32px; }
+    .specs-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; margin-bottom: 32px; border: 1px solid #F0F0F0; }
+    .spec-cell { padding: 18px 16px; background: #FFFFFF; text-align: center; }
+    .spec-cell + .spec-cell { border-left: 1px solid #F0F0F0; }
+    .spec-cell:last-child { border-right: none; }
+    .spec-cell__num { font-family: 'Cormorant Garamond', serif; font-size: 30px; font-weight: 400; color: #C9A84C; line-height: 1; margin-bottom: 5px; }
+    .spec-cell__label { font-size: 9px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: #B0B0B0; }
+    .room-features { display: flex; flex-direction: column; gap: 10px; margin-bottom: 32px; }
+    .room-feature { display: flex; align-items: center; gap: 12px; font-size: 13px; color: #5A5A5A; }
+    .room-feature__dot { width: 6px; height: 6px; background: #C9A84C; border-radius: 50%; flex-shrink: 0; }
+    .room-tags { display: flex; flex-wrap: wrap; gap: 8px; }
+    .room-tag { padding: 5px 13px; background: #F5F5F5; border-radius: 2px; font-size: 11px; color: #5A5A5A; font-weight: 600; }
+
+    /* ── 3D Planner ── */
+    .planner-section { padding: 112px 64px; background: #0A0A0A; }
+    .planner-section__inner { max-width: 1200px; margin: 0 auto; }
+    .planner-section__header { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: center; margin-bottom: 56px; }
+    .planner-section__h2 { font-family: 'Cormorant Garamond', serif; font-size: 52px; font-weight: 400; color: #FFFFFF; line-height: 1.02; letter-spacing: -0.02em; margin-bottom: 20px; }
+    .planner-section__h2 em { font-style: italic; color: #C9A84C; }
+    .planner-section__body { font-size: 15px; line-height: 1.8; color: #4A4A4A; }
+    .planner-features { display: flex; flex-direction: column; gap: 20px; }
+    .planner-feature { display: flex; align-items: flex-start; gap: 18px; padding: 20px 22px; background: rgba(255,255,255,0.03); border: 1px solid rgba(201,168,76,0.12); border-radius: 2px; }
+    .planner-feature__icon { width: 32px; height: 32px; background: rgba(201,168,76,0.1); border: 1px solid rgba(201,168,76,0.25); border-radius: 2px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; font-size: 14px; }
+    .planner-feature__title { font-size: 11px; font-weight: 700; color: #FFFFFF; margin-bottom: 4px; letter-spacing: 0.04em; }
+    .planner-feature__desc { font-size: 13px; color: #4A4A4A; line-height: 1.6; }
+    .planner-toolbar { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; }
+    .planner-hint { font-size: 11px; color: #3A3A3A; letter-spacing: 0.06em; }
+    .btn--fullscreen { display: inline-flex; align-items: center; gap: 8px; padding: 9px 20px; background: rgba(255,255,255,0.06); border: 1px solid rgba(201,168,76,0.3); border-radius: 2px; color: #C9A84C; font-size: 10px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; cursor: pointer; transition: background 0.2s, border-color 0.2s; font-family: 'Plus Jakarta Sans', sans-serif; }
+    .btn--fullscreen:hover { background: rgba(201,168,76,0.1); border-color: #C9A84C; }
+    .planner-wrap { height: 680px; border: 1px solid rgba(201,168,76,0.14); border-radius: 3px; overflow: hidden; box-shadow: 0 24px 80px rgba(0,0,0,0.4); transition: all 0.35s cubic-bezier(0.22,1,0.36,1); }
+    .planner-wrap iframe { width: 100%; height: 100%; border: none; display: block; }
+
+    /* ── Designer Catalog ── */
+    .designers-section { padding: 112px 64px; background: #FFFFFF; }
+    .designers-section__inner { max-width: 1200px; margin: 0 auto; }
+    .designers-section__header { display: flex; align-items: flex-end; justify-content: space-between; margin-bottom: 72px; gap: 32px; flex-wrap: wrap; }
+    .designers-section__h2 { font-family: 'Cormorant Garamond', serif; font-size: 56px; font-weight: 400; color: #0A0A0A; line-height: 1.02; letter-spacing: -0.02em; }
+    .designers-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; }
+    .designer-card { background: #FAFAF8; border: 1px solid #EBEBEB; overflow: hidden; transition: border-color 0.3s, box-shadow 0.3s; }
+    .designer-card:hover { border-color: #C9A84C; box-shadow: 0 8px 40px rgba(201,168,76,0.1); }
+    .designer-card__avatar-wrap { height: 200px; display: flex; align-items: center; justify-content: center; position: relative; overflow: hidden; }
+    .designer-card__avatar-wrap--rose { background: linear-gradient(145deg, #f9e8e8 0%, #f5d5d0 40%, #e8c4c4 100%); }
+    .designer-card__avatar-wrap--green { background: linear-gradient(145deg, #e8ede8 0%, #d0dbd0 40%, #b8cbb8 100%); }
+    .designer-card__avatar-wrap--purple { background: linear-gradient(145deg, #e8e4f0 0%, #d5cfe0 40%, #c0b8d4 100%); }
+    .designer-card__avatar-wrap--slate { background: linear-gradient(145deg, #e8ecf0 0%, #ccd4dc 40%, #b0bcc8 100%); }
+    .designer-card__avatar-wrap--sand { background: linear-gradient(145deg, #f0ede8 0%, #e0d8cc 40%, #ccc0b0 100%); }
+    .designer-card__avatar { width: 88px; height: 88px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-family: 'Cormorant Garamond', serif; font-size: 36px; font-weight: 400; color: #FFFFFF; }
+    .designer-card__avatar--rose { background: linear-gradient(145deg, #e8a090, #c97070); box-shadow: 0 8px 24px rgba(180,80,80,0.3); }
+    .designer-card__avatar--green { background: linear-gradient(145deg, #608060, #3a5a3a); box-shadow: 0 8px 24px rgba(60,100,60,0.3); }
+    .designer-card__avatar--purple { background: linear-gradient(145deg, #8070a8, #503880); box-shadow: 0 8px 24px rgba(80,50,130,0.3); }
+    .designer-card__avatar--slate { background: linear-gradient(145deg, #506878, #304858); box-shadow: 0 8px 24px rgba(40,60,80,0.3); }
+    .designer-card__avatar--sand { background: linear-gradient(145deg, #b09070, #806040); box-shadow: 0 8px 24px rgba(100,70,30,0.3); }
+    .designer-card__status { position: absolute; top: 16px; right: 16px; padding: 4px 12px; background: rgba(255,255,255,0.9); border-radius: 2px; font-size: 9px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; }
+    .designer-card__status--avail { color: #2A7A4A; }
+    .designer-card__status--request { color: #8A7A00; }
+    .designer-card__body { padding: 28px 26px; }
+    .designer-card__style { font-size: 9px; font-weight: 700; letter-spacing: 0.22em; text-transform: uppercase; color: #C9A84C; margin-bottom: 6px; }
+    .designer-card__name { font-family: 'Cormorant Garamond', serif; font-size: 26px; font-weight: 500; color: #0A0A0A; margin-bottom: 10px; line-height: 1.2; }
+    .designer-card__bio { font-size: 13px; line-height: 1.7; color: #7A7A7A; margin-bottom: 20px; }
+    .designer-card__tags { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 24px; }
+    .designer-tag { padding: 4px 11px; border-radius: 2px; font-size: 10px; font-weight: 600; }
+    .designer-tag--rose { background: #FFF0F0; color: #9A3030; }
+    .designer-tag--green { background: #F0F5F0; color: #2A5A2A; }
+    .designer-tag--purple { background: #F5F0FF; color: #5A2A9A; }
+    .designer-tag--slate { background: #F0F2F5; color: #2A3A5A; }
+    .designer-tag--sand { background: #F5F2EE; color: #6A4A20; }
+    .btn--designer { display: block; text-align: center; padding: 12px; background: #0A0A0A; color: #FFFFFF; font-size: 10px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; border-radius: 2px; transition: background 0.2s, color 0.2s; }
+    .btn--designer:hover { background: #C9A84C; color: #0A0A0A; }
+    .designer-cta-card { background: #C9A84C; overflow: hidden; display: flex; flex-direction: column; justify-content: space-between; padding: 36px 30px; position: relative; }
+    .designer-cta-card__circle1 { position: absolute; top: -30px; right: -30px; width: 120px; height: 120px; border: 1px solid rgba(8,8,8,0.1); border-radius: 50%; }
+    .designer-cta-card__circle2 { position: absolute; bottom: -20px; left: -20px; width: 80px; height: 80px; border: 1px solid rgba(8,8,8,0.08); border-radius: 50%; }
+    .designer-cta-card__plus { font-family: 'Cormorant Garamond', serif; font-size: 52px; font-weight: 300; color: rgba(8,8,8,0.12); line-height: 1; margin-bottom: 20px; }
+    .designer-cta-card__line { width: 24px; height: 1px; background: rgba(8,8,8,0.3); margin-bottom: 16px; }
+    .designer-cta-card__h3 { font-family: 'Cormorant Garamond', serif; font-size: 28px; font-weight: 500; color: #0A0A0A; margin-bottom: 14px; line-height: 1.2; }
+    .designer-cta-card__body { font-size: 14px; line-height: 1.7; color: rgba(8,8,8,0.65); margin-bottom: 24px; }
+    .btn--designer-cta { display: block; text-align: center; padding: 14px; background: #0A0A0A; color: #FFFFFF; font-size: 10px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; border-radius: 2px; transition: opacity 0.2s; }
+    .btn--designer-cta:hover { opacity: 0.8; }
+
+    /* ── CTA band ── */
+    .cta-band { background: #0A0A0A; padding: 72px 64px; }
+    .cta-band__inner { max-width: 1200px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; gap: 48px; flex-wrap: wrap; }
+    .cta-band__h2 { font-family: 'Cormorant Garamond', serif; font-size: 44px; font-weight: 400; color: #FFFFFF; line-height: 1.1; letter-spacing: -0.015em; margin-bottom: 10px; }
+    .cta-band__h2 em { font-style: italic; color: #C9A84C; }
+    .cta-band__sub { font-size: 15px; color: #4A4A4A; line-height: 1.7; }
+    .cta-band__btns { display: flex; gap: 14px; flex-shrink: 0; flex-wrap: wrap; }
+    .btn--cta-gold { padding: 17px 44px; background: linear-gradient(135deg, #7a5c10 0%, #C9A84C 45%, #E8C96A 75%, #C9A84C 100%); color: #0A0A0A; font-size: 11px; font-weight: 800; letter-spacing: 0.22em; text-transform: uppercase; border-radius: 2px; box-shadow: 0 8px 36px rgba(201,168,76,0.28); transition: opacity 0.2s; }
+    .btn--cta-gold:hover { opacity: 0.85; }
+    .btn--cta-outline { padding: 17px 44px; border: 1px solid rgba(201,168,76,0.3); color: #C9A84C; font-size: 11px; font-weight: 700; letter-spacing: 0.22em; text-transform: uppercase; border-radius: 2px; transition: border-color 0.2s; }
+    .btn--cta-outline:hover { border-color: #C9A84C; }
+
+    /* ── Rooms footer (simplified) ── */
+    .rooms-footer { background: #050505; border-top: 1px solid rgba(255,255,255,0.04); padding: 40px 64px; }
+    .rooms-footer__inner { max-width: 1200px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px; }
+    .rooms-footer__brand-name { font-family: 'Cormorant Garamond', serif; font-size: 16px; font-weight: 600; color: #FFFFFF; letter-spacing: 0.13em; text-transform: uppercase; margin-bottom: 2px; }
+    .rooms-footer__brand-sub { font-size: 8px; font-weight: 600; color: #C9A84C; letter-spacing: 0.38em; text-transform: uppercase; }
+    .rooms-footer__copy { font-size: 12px; color: #2A2A2A; }
+    .rooms-footer__motto { font-size: 13px; font-style: italic; font-family: 'Cormorant Garamond', serif; color: #3A3A3A; }
+
+    /* ── Responsive ── */
+    @media (max-width: 900px) {
+      .rooms-hero__inner { grid-template-columns: 1fr; padding: 64px 28px 56px; gap: 48px; }
+      .rooms-hero__h1 { font-size: 52px; }
+      .rooms-grid { grid-template-columns: 1fr; }
+      .specs-grid { grid-template-columns: 1fr 1fr; }
+      .designers-grid { grid-template-columns: repeat(2, 1fr); }
+      .rooms-section, .planner-section, .designers-section, .cta-band { padding: 72px 28px; }
+      .planner-section__header { grid-template-columns: 1fr; gap: 36px; }
+      .planner-wrap { height: 560px; }
+      .designers-section__header { flex-direction: column; align-items: flex-start; }
+      .rooms-footer { padding: 32px 28px; }
+    }
+    @media (max-width: 540px) {
+      .rooms-hero__h1 { font-size: 38px; }
+      .designers-grid { grid-template-columns: 1fr; }
+      .specs-grid { grid-template-columns: 1fr; }
+      .rooms-section, .planner-section, .designers-section, .cta-band { padding: 56px 20px; }
+      .planner-wrap { height: 480px; }
+      .rooms-hero__cards { grid-template-columns: 1fr; }
+      .cta-band__btns { flex-direction: column; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ── NAV ── -->
+  <nav class="nav">
+    <a href="index.html" class="nav__brand">
+      <span class="nav__brand-name">The Event Space</span>
+      <span class="nav__brand-sub">Bermuda</span>
+    </a>
+    <div class="nav__links">
+      <a href="index.html#about">About</a>
+      <a href="rooms.html" class="nav__link--active">Our Rooms</a>
+      <a href="index.html#occasions">Events</a>
+      <a href="index.html#gallery">Gallery</a>
+      <a href="index.html#contact">Contact</a>
+    </div>
+    <a class="nav__book" href="index.html#contact">Book Now</a>
+    <button class="nav__hamburger" aria-label="Open menu">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+
+  <!-- Mobile Menu -->
+  <div class="mobile-menu">
+    <a href="index.html#about">About</a>
+    <a href="rooms.html">Our Rooms</a>
+    <a href="index.html#occasions">Events</a>
+    <a href="index.html#gallery">Gallery</a>
+    <a href="index.html#contact">Contact</a>
+    <a href="index.html#contact" class="mobile-menu__book">Book Now</a>
+  </div>
+
+  <!-- ── HERO ── -->
+  <section class="rooms-hero">
+    <div class="rooms-hero__glow"></div>
+    <div class="rooms-hero__inner">
+      <div>
+        <div class="rooms-hero__eyebrow">
+          <div class="rooms-hero__eyebrow-line"></div>
+          <span class="rooms-hero__eyebrow-text">Design Your Space</span>
+        </div>
+        <h1 class="rooms-hero__h1">Two Rooms.</h1>
+        <h1 class="rooms-hero__h1 rooms-hero__h1--shimmer">Your Vision.</h1>
+        <p class="rooms-hero__body">Choose your room, plan your layout with our interactive 3D planner, and select a designer from our curated catalog — all before the big day.</p>
+        <div class="rooms-hero__ctas">
+          <a href="#planner" class="btn btn--rooms-primary">Open 3D Planner</a>
+          <a href="#designers" class="btn btn--rooms-ghost">Browse Designers</a>
+        </div>
+      </div>
+      <div class="rooms-hero__cards">
+        <div class="room-card-dark">
+          <div class="room-card-dark__corner"></div>
+          <div class="room-card__num room-card__num--dark">01</div>
+          <div class="room-card__line"></div>
+          <div class="room-card__label">The Grand Room</div>
+          <div class="room-card__dims room-card__dims--dark">36′ × 26′</div>
+          <div class="room-card__sub--dark">936 sq ft · Up to 80 guests</div>
+        </div>
+        <div class="room-card-light">
+          <div class="room-card-light__corner"></div>
+          <div class="room-card__num room-card__num--light">02</div>
+          <div class="room-card__line"></div>
+          <div class="room-card__label">The Studio</div>
+          <div class="room-card__dims room-card__dims--light">33′ × 10′</div>
+          <div class="room-card__sub--light">330 sq ft · Up to 30 guests</div>
+        </div>
+        <div class="room-card-quote">
+          <div class="room-card-quote__text">"We are the space. You are the possibility."</div>
+          <div class="room-card-quote__line"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── TWO ROOMS ── -->
+  <section id="rooms" class="rooms-section">
+    <div class="rooms-section__inner">
+      <div class="rooms-section__header">
+        <div class="rooms-section__eyebrow">
+          <div class="rooms-hero__eyebrow-line"></div>
+          <span class="rooms-hero__eyebrow-text">The Rooms</span>
+          <div class="rooms-hero__eyebrow-line"></div>
+        </div>
+        <h2 class="section-h2" style="color:#0A0A0A;">Two Distinct Spaces.<br><span style="font-style:italic;">Both Unforgettable.</span></h2>
+      </div>
+
+      <div class="rooms-grid">
+
+        <!-- Grand Room -->
+        <div class="room-panel">
+          <div class="room-panel__hero room-panel__hero--dark">
+            <img src="images/event-wedding1.png" class="room-panel__img" alt="The Grand Room">
+            <div class="room-panel__img-fade"></div>
+            <div class="room-panel__badges">
+              <span class="badge--dark">The Grand Room</span>
+              <span class="badge--white">936 sq ft</span>
+            </div>
+            <div class="room-panel__dims">36′ × 26′</div>
+          </div>
+          <div class="room-panel__body">
+            <p class="room-panel__desc">Our largest and most versatile space — featuring soaring ceilings, elegant French doors on the 26′ wall, and four oversized windows flooding the room with natural light. Ideal for weddings, galas, large corporate events, and every occasion that deserves a grand stage.</p>
+            <div class="specs-grid">
+              <div class="spec-cell">
+                <div class="spec-cell__num">80</div>
+                <div class="spec-cell__label">Max Guests</div>
+              </div>
+              <div class="spec-cell">
+                <div class="spec-cell__num">936</div>
+                <div class="spec-cell__label">Square Feet</div>
+              </div>
+              <div class="spec-cell">
+                <div class="spec-cell__num">6</div>
+                <div class="spec-cell__label">Layout Presets</div>
+              </div>
+            </div>
+            <div class="room-features">
+              <div class="room-feature"><div class="room-feature__dot"></div>French doors on the 26′ wall — dramatic grand entrance</div>
+              <div class="room-feature"><div class="room-feature__dot"></div>4 large windows (29″×72″) on the right wall — natural light</div>
+              <div class="room-feature"><div class="room-feature__dot"></div>Supports: Dinner, Banquet, Classroom, Theater, U-Shape, Cocktail</div>
+              <div class="room-feature"><div class="room-feature__dot"></div>Full AV system, custom lighting, dance floor capability</div>
+            </div>
+            <div class="room-tags">
+              <span class="room-tag">Weddings</span>
+              <span class="room-tag">Corporate Galas</span>
+              <span class="room-tag">Birthday Parties</span>
+              <span class="room-tag">Award Nights</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- The Studio -->
+        <div class="room-panel">
+          <div class="room-panel__hero room-panel__hero--mid">
+            <img src="images/event-baby-shower.png" class="room-panel__img" alt="The Studio">
+            <div class="room-panel__img-fade"></div>
+            <div class="room-panel__badges">
+              <span class="badge--gold">The Studio</span>
+              <span class="badge--white">330 sq ft</span>
+            </div>
+            <div class="room-panel__dims">33′ × 10′</div>
+          </div>
+          <div class="room-panel__body">
+            <p class="room-panel__desc">An intimate and chic studio space perfect for smaller celebrations, workshops, and private dining. Featuring a standard door on the far-right of the 10′ wall and three beautiful windows. Every detail feels considered — this is the room for occasions where closeness matters.</p>
+            <div class="specs-grid">
+              <div class="spec-cell">
+                <div class="spec-cell__num">30</div>
+                <div class="spec-cell__label">Max Guests</div>
+              </div>
+              <div class="spec-cell">
+                <div class="spec-cell__num">330</div>
+                <div class="spec-cell__label">Square Feet</div>
+              </div>
+              <div class="spec-cell">
+                <div class="spec-cell__num">3</div>
+                <div class="spec-cell__label">Windows</div>
+              </div>
+            </div>
+            <div class="room-features">
+              <div class="room-feature"><div class="room-feature__dot"></div>Standard door on far-right of the 10′ wall</div>
+              <div class="room-feature"><div class="room-feature__dot"></div>3 windows (29″×72″) on the right wall — warm natural light</div>
+              <div class="room-feature"><div class="room-feature__dot"></div>Intimate layout — ideal for Cocktail, Dinner or Classroom setup</div>
+              <div class="room-feature"><div class="room-feature__dot"></div>Projector, surround sound, and ambient lighting included</div>
+            </div>
+            <div class="room-tags">
+              <span class="room-tag">Baby Showers</span>
+              <span class="room-tag">Private Dinners</span>
+              <span class="room-tag">Workshops</span>
+              <span class="room-tag">Bridal Showers</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ── 3D PLANNER ── -->
+  <section id="planner" class="planner-section">
+    <div class="planner-section__inner">
+      <div class="planner-section__header">
+        <div>
+          <div class="rooms-hero__eyebrow">
+            <div class="rooms-hero__eyebrow-line"></div>
+            <span class="rooms-hero__eyebrow-text">Interactive Planner</span>
+          </div>
+          <h2 class="planner-section__h2">Plan Your Layout<br>in <em>Real Time</em></h2>
+          <p class="planner-section__body">Use our 3D room planner to arrange tables, a bar, DJ booth, podium, and more — before you book. Switch between rooms, try preset layouts, or build your own from scratch.</p>
+        </div>
+        <div class="planner-features">
+          <div class="planner-feature">
+            <div class="planner-feature__icon">🪑</div>
+            <div>
+              <div class="planner-feature__title">Drag &amp; Drop Furniture</div>
+              <div class="planner-feature__desc">Round tables, banquet tables, cocktail tables, bar, podium, DJ booth.</div>
+            </div>
+          </div>
+          <div class="planner-feature">
+            <div class="planner-feature__icon">🏛️</div>
+            <div>
+              <div class="planner-feature__title">Two Accurate Rooms</div>
+              <div class="planner-feature__desc">Real dimensions — Grand Room (36′×26′) and Studio (33′×10′) with correct doors and windows.</div>
+            </div>
+          </div>
+          <div class="planner-feature">
+            <div class="planner-feature__icon">📐</div>
+            <div>
+              <div class="planner-feature__title">6 Preset Layouts + Free Mode</div>
+              <div class="planner-feature__desc">Dinner, Banquet, Classroom, Theater, U-Shape, Cocktail — or design your own.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="planner-toolbar">
+        <div class="planner-hint">Switch rooms · Drag furniture · Scroll to zoom · Click to select · Delete removes</div>
+        <button id="planner-fs-btn" class="btn--fullscreen" aria-label="Toggle fullscreen">
+          <svg id="fs-icon-expand" width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M1 5V1H5M9 1H13V5M13 9V13H9M5 13H1V9" stroke="#C9A84C" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <svg id="fs-icon-compress" width="14" height="14" viewBox="0 0 14 14" fill="none" style="display:none;"><path d="M5 1V5H1M13 5H9V1M9 13V9H13M1 9H5V13" stroke="#C9A84C" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <span id="fs-label">Full Screen</span>
+        </button>
+      </div>
+      <div id="planner-wrap" class="planner-wrap">
+        <iframe src="space-planner.html" title="Event Space 3D Room Planner"></iframe>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── DESIGNER CATALOG ── -->
+  <section id="designers" class="designers-section">
+    <div class="designers-section__inner">
+      <div class="designers-section__header">
+        <div>
+          <div class="rooms-hero__eyebrow">
+            <div class="rooms-hero__eyebrow-line"></div>
+            <span class="rooms-hero__eyebrow-text">Designer Catalog</span>
+          </div>
+          <h2 class="designers-section__h2">Our Curated<br><span style="font-style:italic;">Design Team</span></h2>
+        </div>
+        <div style="max-width:360px;">
+          <p style="font-size:15px;line-height:1.8;color:#6B6B6B;">Each designer brings a distinct aesthetic to life. Browse their styles below and request your favourite — we'll connect you for a complimentary consultation.</p>
+        </div>
+      </div>
+
+      <div class="designers-grid">
+
+        <!-- Amara Johnson -->
+        <div class="designer-card">
+          <div class="designer-card__avatar-wrap designer-card__avatar-wrap--rose">
+            <div class="designer-card__avatar designer-card__avatar--rose">A</div>
+            <div class="designer-card__status designer-card__status--avail">Available</div>
+          </div>
+          <div class="designer-card__body">
+            <div class="designer-card__style">Romantic · Floral</div>
+            <h3 class="designer-card__name">Amara Johnson</h3>
+            <p class="designer-card__bio">Soft blush palettes, cascading florals, candlelight, and gold accents define Amara's signature look. Specialises in weddings and bridal showers.</p>
+            <div class="designer-card__tags">
+              <span class="designer-tag designer-tag--rose">Weddings</span>
+              <span class="designer-tag designer-tag--rose">Bridal Showers</span>
+              <span class="designer-tag designer-tag--rose">Anniversaries</span>
+            </div>
+            <a href="index.html#contact" class="btn--designer">Request Amara</a>
+          </div>
+        </div>
+
+        <!-- Celeste Burrows -->
+        <div class="designer-card">
+          <div class="designer-card__avatar-wrap designer-card__avatar-wrap--green">
+            <div class="designer-card__avatar designer-card__avatar--green">C</div>
+            <div class="designer-card__status designer-card__status--avail">Available</div>
+          </div>
+          <div class="designer-card__body">
+            <div class="designer-card__style">Tropical · Botanical</div>
+            <h3 class="designer-card__name">Celeste Burrows</h3>
+            <p class="designer-card__bio">Drawing on Bermuda's lush landscape, Celeste creates immersive tropical environments with bold botanicals, tropical palettes, and natural textures.</p>
+            <div class="designer-card__tags">
+              <span class="designer-tag designer-tag--green">Baby Showers</span>
+              <span class="designer-tag designer-tag--green">Garden Parties</span>
+              <span class="designer-tag designer-tag--green">Birthdays</span>
+            </div>
+            <a href="index.html#contact" class="btn--designer">Request Celeste</a>
+          </div>
+        </div>
+
+        <!-- Sofia Vidal -->
+        <div class="designer-card">
+          <div class="designer-card__avatar-wrap designer-card__avatar-wrap--purple">
+            <div class="designer-card__avatar designer-card__avatar--purple">S</div>
+            <div class="designer-card__status designer-card__status--avail">Available</div>
+          </div>
+          <div class="designer-card__body">
+            <div class="designer-card__style">Glam · Crystal · Gold</div>
+            <h3 class="designer-card__name">Sofia Vidal</h3>
+            <p class="designer-card__bio">Pure glamour — crystal chandeliers, mirror surfaces, gold metallic accents and statement centrepieces. Sofia transforms spaces into elegant evening affairs.</p>
+            <div class="designer-card__tags">
+              <span class="designer-tag designer-tag--purple">Galas</span>
+              <span class="designer-tag designer-tag--purple">Award Nights</span>
+              <span class="designer-tag designer-tag--purple">Milestone Birthdays</span>
+            </div>
+            <a href="index.html#contact" class="btn--designer">Request Sofia</a>
+          </div>
+        </div>
+
+        <!-- James Pemberton -->
+        <div class="designer-card">
+          <div class="designer-card__avatar-wrap designer-card__avatar-wrap--slate">
+            <div class="designer-card__avatar designer-card__avatar--slate">J</div>
+            <div class="designer-card__status designer-card__status--request">On Request</div>
+          </div>
+          <div class="designer-card__body">
+            <div class="designer-card__style">Corporate · Sleek</div>
+            <h3 class="designer-card__name">James Pemberton</h3>
+            <p class="designer-card__bio">Clean lines, corporate brand alignment, and elevated professional staging. James brings boardroom precision to every event — from seminars to product launches.</p>
+            <div class="designer-card__tags">
+              <span class="designer-tag designer-tag--slate">Seminars</span>
+              <span class="designer-tag designer-tag--slate">Networking</span>
+              <span class="designer-tag designer-tag--slate">Launches</span>
+            </div>
+            <a href="index.html#contact" class="btn--designer">Request James</a>
+          </div>
+        </div>
+
+        <!-- Nadia Osei -->
+        <div class="designer-card">
+          <div class="designer-card__avatar-wrap designer-card__avatar-wrap--sand">
+            <div class="designer-card__avatar designer-card__avatar--sand">N</div>
+            <div class="designer-card__status designer-card__status--avail">Available</div>
+          </div>
+          <div class="designer-card__body">
+            <div class="designer-card__style">Minimalist · Earthy</div>
+            <h3 class="designer-card__name">Nadia Osei</h3>
+            <p class="designer-card__bio">A master of restraint. Nadia works with neutral palettes, raw textures, and intentional negative space to create spaces that feel effortlessly refined.</p>
+            <div class="designer-card__tags">
+              <span class="designer-tag designer-tag--sand">Private Dinners</span>
+              <span class="designer-tag designer-tag--sand">Workshops</span>
+              <span class="designer-tag designer-tag--sand">Intimate Events</span>
+            </div>
+            <a href="index.html#contact" class="btn--designer">Request Nadia</a>
+          </div>
+        </div>
+
+        <!-- Bring Your Own Designer -->
+        <div class="designer-cta-card">
+          <div class="designer-cta-card__circle1"></div>
+          <div class="designer-cta-card__circle2"></div>
+          <div style="position:relative;">
+            <div class="designer-cta-card__plus">+</div>
+            <div class="designer-cta-card__line"></div>
+            <h3 class="designer-cta-card__h3">Have Your Own Designer?</h3>
+            <p class="designer-cta-card__body">Bring your own decorator or stylist — we work with all external vendors. Just let us know and we'll coordinate the details.</p>
+          </div>
+          <a href="index.html#contact" class="btn--designer-cta">Get in Touch →</a>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ── CTA BAND ── -->
+  <div class="cta-band">
+    <div class="cta-band__inner">
+      <div>
+        <h2 class="cta-band__h2">Ready to plan your<br><em>perfect event?</em></h2>
+        <p class="cta-band__sub">Use the planner above, choose a designer, then reach out — we'll take it from there.</p>
+      </div>
+      <div class="cta-band__btns">
+        <a href="index.html#contact" class="btn--cta-gold">Book Your Event</a>
+        <a href="index.html" class="btn--cta-outline">Back to Main Site</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── FOOTER ── -->
+  <footer class="rooms-footer">
+    <div class="rooms-footer__inner">
+      <div>
+        <div class="rooms-footer__brand-name">The Event Space</div>
+        <div class="rooms-footer__brand-sub">Bermuda</div>
+      </div>
+      <div class="rooms-footer__copy">© 2025 The Event Space BDA. All rights reserved.</div>
+      <div class="rooms-footer__motto">We Are The Space. You Are The Possibility.</div>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const fsBtn = document.getElementById('planner-fs-btn');
+      const wrap = document.getElementById('planner-wrap');
+      const iconExpand = document.getElementById('fs-icon-expand');
+      const iconCompress = document.getElementById('fs-icon-compress');
+      const fsLabel = document.getElementById('fs-label');
+
+      fsBtn.addEventListener('click', () => {
+        if (!document.fullscreenElement) {
+          wrap.requestFullscreen && wrap.requestFullscreen();
+        } else {
+          document.exitFullscreen && document.exitFullscreen();
+        }
+      });
+
+      document.addEventListener('fullscreenchange', () => {
+        const isFs = !!document.fullscreenElement;
+        iconExpand.style.display = isFs ? 'none' : 'block';
+        iconCompress.style.display = isFs ? 'block' : 'none';
+        fsLabel.textContent = isFs ? 'Exit Full Screen' : 'Full Screen';
+      });
+    });
+  </script>
+</body>
+</html>

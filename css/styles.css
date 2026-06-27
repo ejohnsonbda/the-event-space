@@ -81,6 +81,7 @@ img { display: block; }
   transition: color 0.2s;
 }
 .nav__links a:hover { color: #0A0A0A; }
+.nav__link--active { color: #0A0A0A !important; border-bottom: 1.5px solid #C9A84C; padding-bottom: 2px; }
 .nav__book {
   display: inline-flex;
   align-items: center;

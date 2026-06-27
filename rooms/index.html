@@ -7,7 +7,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="../css/styles.css">
   <style>
     /* ── Rooms-page specifics ── */
     .rooms-hero { padding-top: 72px; background: #FAFAF8; border-bottom: 1px solid #F0F0F0; overflow: hidden; position: relative; }
@@ -212,18 +212,18 @@
 
   <!-- ── NAV ── -->
   <nav class="nav">
-    <a href="index.html" class="nav__brand">
+    <a href="../index.html" class="nav__brand">
       <span class="nav__brand-name">The Event Space</span>
       <span class="nav__brand-sub">Bermuda</span>
     </a>
     <div class="nav__links">
-      <a href="index.html#about">About</a>
-      <a href="rooms.html" class="nav__link--active">Our Rooms</a>
-      <a href="index.html#occasions">Events</a>
-      <a href="index.html#gallery">Gallery</a>
-      <a href="index.html#contact">Contact</a>
+      <a href="../index.html#about">About</a>
+      <a href="./" class="nav__link--active">Our Rooms</a>
+      <a href="../index.html#occasions">Events</a>
+      <a href="../index.html#gallery">Gallery</a>
+      <a href="../index.html#contact">Contact</a>
     </div>
-    <a class="nav__book" href="index.html#contact">Book Now</a>
+    <a class="nav__book" href="../index.html#contact">Book Now</a>
     <button class="nav__hamburger" aria-label="Open menu">
       <span></span><span></span><span></span>
     </button>
@@ -231,12 +231,12 @@
 
   <!-- Mobile Menu -->
   <div class="mobile-menu">
-    <a href="index.html#about">About</a>
-    <a href="rooms.html">Our Rooms</a>
-    <a href="index.html#occasions">Events</a>
-    <a href="index.html#gallery">Gallery</a>
-    <a href="index.html#contact">Contact</a>
-    <a href="index.html#contact" class="mobile-menu__book">Book Now</a>
+    <a href="../index.html#about">About</a>
+    <a href="./">Our Rooms</a>
+    <a href="../index.html#occasions">Events</a>
+    <a href="../index.html#gallery">Gallery</a>
+    <a href="../index.html#contact">Contact</a>
+    <a href="../index.html#contact" class="mobile-menu__book">Book Now</a>
   </div>
 
   <!-- ── HERO ── -->
@@ -298,7 +298,7 @@
         <!-- Grand Room -->
         <div class="room-panel">
           <div class="room-panel__hero room-panel__hero--dark">
-            <img src="images/event-wedding1.png" class="room-panel__img" alt="The Grand Room">
+            <img src="../images/event-wedding1.png" class="room-panel__img" alt="The Grand Room">
             <div class="room-panel__img-fade"></div>
             <div class="room-panel__badges">
               <span class="badge--dark">The Grand Room</span>
@@ -331,7 +331,7 @@
         <!-- The Studio -->
         <div class="room-panel">
           <div class="room-panel__hero room-panel__hero--mid">
-            <img src="images/event-baby-shower.png" class="room-panel__img" alt="The Studio">
+            <img src="../images/event-baby-shower.png" class="room-panel__img" alt="The Studio">
             <div class="room-panel__img-fade"></div>
             <div class="room-panel__badges">
               <span class="badge--gold">The Studio</span>
@@ -410,7 +410,7 @@
         </button>
       </div>
       <div id="planner-wrap" class="planner-wrap">
-        <iframe src="space-planner.html" title="Event Space 3D Room Planner"></iframe>
+        <iframe src="../space-planner.html" title="Event Space 3D Room Planner"></iframe>
       </div>
     </div>
   </section>
@@ -445,8 +445,8 @@
         <p class="cta-band__sub">Use the planner above, choose a designer, then reach out — we'll take it from there.</p>
       </div>
       <div class="cta-band__btns">
-        <a href="index.html#contact" class="btn--cta-gold">Book Your Event</a>
-        <a href="index.html" class="btn--cta-outline">Back to Main Site</a>
+        <a href="../index.html#contact" class="btn--cta-gold">Book Your Event</a>
+        <a href="../index.html" class="btn--cta-outline">Back to Main Site</a>
       </div>
     </div>
   </div>
@@ -463,7 +463,7 @@
     </div>
   </footer>
 
-  <script src="js/main.js"></script>
+  <script src="../js/main.js"></script>
   <script>
     const COLOR_CONFIG = {
       rose:   { wrap: 'designer-card__avatar-wrap--rose',   avatar: 'designer-card__avatar--rose',   tag: 'designer-tag--rose'   },
@@ -478,7 +478,7 @@
       let designers = [];
 
       try {
-        const res = await fetch('designers/designers.json');
+        const res = await fetch('../designers/designers.json');
         const data = await res.json();
         designers = data.designers;
       } catch (e) {
@@ -505,7 +505,7 @@
             </div>
             <div class="designer-card__actions">
               <button class="btn--portfolio">View Portfolio</button>
-              <a href="index.html#contact" class="btn--designer">Request ${firstName}</a>
+              <a href="../index.html#contact" class="btn--designer">Request ${firstName}</a>
             </div>
           </div>
         `;
@@ -525,7 +525,7 @@
           <h3 class="designer-cta-card__h3">Have Your Own Designer?</h3>
           <p class="designer-cta-card__body">Bring your own decorator or stylist — we work with all external vendors. Just let us know and we'll coordinate the details.</p>
         </div>
-        <a href="index.html#contact" class="btn--designer-cta">Get in Touch →</a>
+        <a href="../index.html#contact" class="btn--designer-cta">Get in Touch →</a>
       `;
       grid.appendChild(ctaCard);
     }

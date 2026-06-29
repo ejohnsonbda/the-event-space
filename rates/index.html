@@ -1,0 +1,648 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Rates & Pricing — The Event Space Bermuda</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/styles.css">
+  <style>
+    /* ── Hero ── */
+    .rates-hero { padding-top: 72px; background: #FAFAF8; border-bottom: 1px solid #F0F0F0; position: relative; overflow: hidden; }
+    .rates-hero__glow { position: absolute; inset: 0; background: radial-gradient(ellipse 60% 80% at 80% 50%, rgba(201,168,76,0.05) 0%, transparent 65%); pointer-events: none; }
+    .rates-hero__inner { max-width: 1200px; margin: 0 auto; padding: 88px 64px 80px; display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; }
+    .rates-hero__eyebrow { display: flex; align-items: center; gap: 14px; margin-bottom: 28px; }
+    .rates-hero__eyebrow-line { width: 24px; height: 1px; background: #C9A84C; }
+    .rates-hero__eyebrow-text { font-size: 9px; font-weight: 700; letter-spacing: 0.36em; text-transform: uppercase; color: #C9A84C; }
+    .rates-hero__h1 { font-family: 'Cormorant Garamond', serif; font-size: 72px; font-weight: 400; line-height: 0.96; letter-spacing: -0.025em; color: #0A0A0A; margin-bottom: 10px; }
+    .rates-hero__h1--shimmer { font-style: italic; background: linear-gradient(110deg, #7a5c10 0%, #C9A84C 25%, #F0D060 50%, #C9A84C 75%, #7a5c10 100%); background-size: 250% auto; -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; animation: shimmerGold 5s linear infinite; }
+    .rates-hero__body { font-size: 16px; line-height: 1.8; color: #6B6B6B; margin-top: 32px; margin-bottom: 44px; max-width: 420px; }
+    .rates-hero__ctas { display: flex; gap: 14px; flex-wrap: wrap; }
+    .btn--rates-primary { padding: 15px 36px; background: #0A0A0A; color: #FFFFFF; font-size: 10px; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; border-radius: 2px; transition: background 0.2s, color 0.2s; display: inline-block; }
+    .btn--rates-primary:hover { background: #C9A84C; color: #0A0A0A; }
+    .btn--rates-ghost { padding: 15px 36px; border: 1px solid #D4D4D4; color: #0A0A0A; font-size: 10px; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; border-radius: 2px; transition: border-color 0.2s; display: inline-block; }
+    .btn--rates-ghost:hover { border-color: #0A0A0A; }
+
+    /* Quick reference card */
+    .rates-hero__ref { background: #0A0A0A; border-radius: 3px; padding: 36px 32px; position: relative; overflow: hidden; }
+    .rates-hero__ref-corner { position: absolute; top: 0; right: 0; width: 80px; height: 80px; background: linear-gradient(135deg, transparent 50%, rgba(201,168,76,0.12) 100%); }
+    .rates-hero__ref-title { font-size: 9px; font-weight: 700; letter-spacing: 0.3em; text-transform: uppercase; color: #C9A84C; margin-bottom: 28px; }
+    .ref-row { display: flex; align-items: baseline; justify-content: space-between; padding: 16px 0; border-bottom: 1px solid rgba(255,255,255,0.06); gap: 16px; }
+    .ref-row:last-child { border-bottom: none; padding-bottom: 0; }
+    .ref-row__label { font-size: 12px; color: #6A6A6A; flex: 1; }
+    .ref-row__price { font-family: 'Cormorant Garamond', serif; font-size: 26px; font-weight: 400; color: #C9A84C; line-height: 1; white-space: nowrap; }
+    .ref-row__price span { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 10px; font-weight: 600; color: #4A4A4A; letter-spacing: 0.08em; margin-left: 4px; }
+
+    /* ── Section shell ── */
+    .rates-section { padding: 100px 64px; }
+    .rates-section--white { background: #FFFFFF; }
+    .rates-section--warm  { background: #FAFAF8; }
+    .rates-section--dark  { background: #0A0A0A; }
+    .rates-section__inner { max-width: 1200px; margin: 0 auto; }
+    .rates-section__header { margin-bottom: 64px; }
+    .rates-eyebrow { display: flex; align-items: center; gap: 14px; margin-bottom: 20px; }
+    .rates-eyebrow__line { width: 24px; height: 1px; background: #C9A84C; }
+    .rates-eyebrow__text { font-size: 9px; font-weight: 700; letter-spacing: 0.36em; text-transform: uppercase; color: #C9A84C; }
+    .rates-h2 { font-family: 'Cormorant Garamond', serif; font-size: 52px; font-weight: 400; line-height: 1.02; letter-spacing: -0.02em; color: #0A0A0A; }
+    .rates-h2--light { color: #FFFFFF; }
+    .rates-h2 em { font-style: italic; color: #C9A84C; }
+    .rates-section__note { font-size: 14px; color: #9A9A9A; margin-top: 12px; line-height: 1.7; }
+    .rates-section__note--light { color: #4A4A4A; }
+
+    /* ── Hourly pricing cards ── */
+    .hourly-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; }
+    .price-card { background: #FAFAF8; border: 1px solid #EBEBEB; padding: 40px 32px; position: relative; overflow: hidden; display: flex; flex-direction: column; transition: border-color 0.3s, box-shadow 0.3s; }
+    .price-card:hover { border-color: #C9A84C; box-shadow: 0 8px 40px rgba(201,168,76,0.08); }
+    .price-card--dark { background: #0A0A0A; border-color: transparent; }
+    .price-card--dark:hover { border-color: rgba(201,168,76,0.4); box-shadow: 0 8px 40px rgba(0,0,0,0.3); }
+    .price-card__corner { position: absolute; top: 0; right: 0; width: 60px; height: 60px; background: linear-gradient(135deg, transparent 50%, rgba(201,168,76,0.08) 100%); }
+    .price-card--dark .price-card__corner { background: linear-gradient(135deg, transparent 50%, rgba(201,168,76,0.15) 100%); }
+    .price-card__badge { display: inline-block; padding: 4px 12px; background: #F5F5F5; border-radius: 2px; font-size: 9px; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: #5A5A5A; margin-bottom: 28px; align-self: flex-start; }
+    .price-card--dark .price-card__badge { background: rgba(201,168,76,0.12); color: #C9A84C; }
+    .price-card__name { font-family: 'Cormorant Garamond', serif; font-size: 26px; font-weight: 500; color: #0A0A0A; margin-bottom: 24px; line-height: 1.2; }
+    .price-card--dark .price-card__name { color: #FFFFFF; }
+    .price-card__rate { font-family: 'Cormorant Garamond', serif; font-size: 64px; font-weight: 300; color: #C9A84C; line-height: 1; margin-bottom: 4px; letter-spacing: -0.02em; }
+    .price-card__unit { font-size: 10px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: #B0B0B0; margin-bottom: 28px; }
+    .price-card--dark .price-card__unit { color: #5A5A5A; }
+    .price-card__divider { width: 32px; height: 1px; background: #EBEBEB; margin-bottom: 24px; }
+    .price-card--dark .price-card__divider { background: rgba(255,255,255,0.08); }
+    .price-card__details { display: flex; flex-direction: column; gap: 10px; flex: 1; }
+    .price-card__detail { display: flex; align-items: flex-start; gap: 10px; font-size: 13px; color: #6B6B6B; line-height: 1.5; }
+    .price-card--dark .price-card__detail { color: #5A5A5A; }
+    .price-card__dot { width: 5px; height: 5px; background: #C9A84C; border-radius: 50%; flex-shrink: 0; margin-top: 5px; }
+    .price-card__cta { margin-top: 32px; display: block; text-align: center; padding: 13px; background: #0A0A0A; color: #FFFFFF; font-size: 10px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; border-radius: 2px; transition: background 0.2s, color 0.2s; }
+    .price-card__cta:hover { background: #C9A84C; color: #0A0A0A; }
+    .price-card--dark .price-card__cta { background: rgba(201,168,76,0.15); border: 1px solid rgba(201,168,76,0.3); color: #C9A84C; }
+    .price-card--dark .price-card__cta:hover { background: #C9A84C; color: #0A0A0A; border-color: #C9A84C; }
+
+    /* ── Package cards (2-column) ── */
+    .packages-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2px; }
+    .package-card { background: #FFFFFF; border: 1px solid #EBEBEB; padding: 44px 40px; position: relative; overflow: hidden; display: flex; flex-direction: column; transition: border-color 0.3s, box-shadow 0.3s; }
+    .package-card:hover { border-color: #C9A84C; box-shadow: 0 8px 40px rgba(201,168,76,0.08); }
+    .package-card__num { font-family: 'Cormorant Garamond', serif; font-size: 52px; font-weight: 300; color: #F0F0F0; line-height: 1; margin-bottom: 8px; }
+    .package-card__label { font-size: 9px; font-weight: 700; letter-spacing: 0.3em; text-transform: uppercase; color: #C9A84C; margin-bottom: 16px; }
+    .package-card__name { font-family: 'Cormorant Garamond', serif; font-size: 30px; font-weight: 500; color: #0A0A0A; line-height: 1.2; margin-bottom: 6px; }
+    .package-card__duration { font-size: 11px; color: #9A9A9A; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 28px; }
+    .package-card__price { font-family: 'Cormorant Garamond', serif; font-size: 72px; font-weight: 300; color: #C9A84C; line-height: 1; letter-spacing: -0.02em; margin-bottom: 8px; }
+    .package-card__price-note { font-size: 10px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: #B0B0B0; margin-bottom: 32px; }
+    .package-card__divider { width: 32px; height: 1px; background: #EBEBEB; margin-bottom: 24px; }
+    .package-card__includes { display: flex; flex-direction: column; gap: 10px; flex: 1; margin-bottom: 32px; }
+    .package-card__include { display: flex; align-items: flex-start; gap: 10px; font-size: 13px; color: #6B6B6B; line-height: 1.5; }
+    .package-card__dot { width: 5px; height: 5px; background: #C9A84C; border-radius: 50%; flex-shrink: 0; margin-top: 5px; }
+    .package-card__cta { display: block; text-align: center; padding: 13px; background: #0A0A0A; color: #FFFFFF; font-size: 10px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; border-radius: 2px; transition: background 0.2s, color 0.2s; margin-top: auto; }
+    .package-card__cta:hover { background: #C9A84C; color: #0A0A0A; }
+
+    /* Wedding banner card */
+    .wedding-card { background: linear-gradient(135deg, #0a0a0a 0%, #1a1206 50%, #0a0a0a 100%); border: 1px solid rgba(201,168,76,0.2); padding: 56px 64px; position: relative; overflow: hidden; display: grid; grid-template-columns: 1fr auto; gap: 64px; align-items: center; margin-top: 3px; }
+    .wedding-card__glow { position: absolute; inset: 0; background: radial-gradient(ellipse 60% 100% at 30% 50%, rgba(201,168,76,0.07) 0%, transparent 65%); pointer-events: none; }
+    .wedding-card__eyebrow { display: flex; align-items: center; gap: 14px; margin-bottom: 20px; }
+    .wedding-card__tag { font-size: 9px; font-weight: 700; letter-spacing: 0.3em; text-transform: uppercase; color: #C9A84C; }
+    .wedding-card__name { font-family: 'Cormorant Garamond', serif; font-size: 44px; font-weight: 400; color: #FFFFFF; line-height: 1.05; letter-spacing: -0.02em; margin-bottom: 16px; }
+    .wedding-card__name em { font-style: italic; color: #C9A84C; }
+    .wedding-card__desc { font-size: 14px; color: #5A5A5A; line-height: 1.8; max-width: 480px; }
+    .wedding-card__price-col { text-align: right; flex-shrink: 0; }
+    .wedding-card__from { font-size: 9px; font-weight: 700; letter-spacing: 0.22em; text-transform: uppercase; color: #6A6A6A; margin-bottom: 4px; }
+    .wedding-card__price { font-family: 'Cormorant Garamond', serif; font-size: 80px; font-weight: 300; color: #C9A84C; line-height: 0.9; letter-spacing: -0.03em; }
+    .wedding-card__price-note { font-size: 10px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: #4A4A4A; margin-top: 8px; margin-bottom: 32px; }
+    .wedding-card__cta { display: inline-block; padding: 15px 40px; background: linear-gradient(135deg, #7a5c10 0%, #C9A84C 50%, #E8C96A 75%, #C9A84C 100%); color: #0A0A0A; font-size: 10px; font-weight: 800; letter-spacing: 0.22em; text-transform: uppercase; border-radius: 2px; box-shadow: 0 8px 32px rgba(201,168,76,0.2); transition: opacity 0.2s; }
+    .wedding-card__cta:hover { opacity: 0.85; }
+
+    /* ── What's Included ── */
+    .included-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; }
+    .included-item { padding: 36px 32px; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.05); display: flex; align-items: flex-start; gap: 20px; transition: background 0.25s; }
+    .included-item:hover { background: rgba(201,168,76,0.04); }
+    .included-item__icon { width: 36px; height: 36px; background: rgba(201,168,76,0.1); border: 1px solid rgba(201,168,76,0.2); border-radius: 2px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; }
+    .included-item__dot { width: 8px; height: 8px; background: #C9A84C; border-radius: 50%; }
+    .included-item__title { font-size: 12px; font-weight: 700; color: #FFFFFF; letter-spacing: 0.06em; margin-bottom: 5px; }
+    .included-item__desc { font-size: 13px; color: #4A4A4A; line-height: 1.6; }
+
+    /* ── Add-Ons ── */
+    .addons-table { width: 100%; border-collapse: collapse; }
+    .addons-table thead tr { border-bottom: 2px solid #EBEBEB; }
+    .addons-table thead th { font-size: 9px; font-weight: 700; letter-spacing: 0.24em; text-transform: uppercase; color: #C9A84C; padding: 0 0 16px; text-align: left; }
+    .addons-table thead th:last-child { text-align: right; }
+    .addons-table tbody tr { border-bottom: 1px solid #F5F5F5; transition: background 0.15s; }
+    .addons-table tbody tr:last-child { border-bottom: none; }
+    .addons-table tbody tr:hover { background: #FAFAF8; }
+    .addons-table tbody td { padding: 20px 0; vertical-align: middle; }
+    .addons-table__name { font-size: 14px; font-weight: 600; color: #0A0A0A; }
+    .addons-table__desc { font-size: 12px; color: #9A9A9A; margin-top: 3px; }
+    .addons-table__price { text-align: right; }
+    .addons-table__price-val { font-family: 'Cormorant Garamond', serif; font-size: 22px; font-weight: 400; color: #C9A84C; line-height: 1; }
+    .addons-table__price-note { font-size: 10px; color: #B0B0B0; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; margin-top: 2px; }
+
+    /* ── Notes banner ── */
+    .notes-band { background: #F5F0E8; border-top: 1px solid #EAE0CC; border-bottom: 1px solid #EAE0CC; padding: 44px 64px; }
+    .notes-band__inner { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: auto 1fr; gap: 48px; align-items: start; }
+    .notes-band__icon { width: 40px; height: 40px; background: rgba(201,168,76,0.15); border: 1px solid rgba(201,168,76,0.3); border-radius: 2px; display: flex; align-items: center; justify-content: center; font-size: 16px; flex-shrink: 0; margin-top: 2px; }
+    .notes-band__title { font-size: 11px; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: #8A6A10; margin-bottom: 14px; }
+    .notes-band__list { display: flex; flex-direction: column; gap: 8px; }
+    .notes-band__note { font-size: 13px; color: #6A5020; line-height: 1.6; display: flex; align-items: flex-start; gap: 10px; }
+    .notes-band__note::before { content: ''; width: 4px; height: 4px; background: #C9A84C; border-radius: 50%; flex-shrink: 0; margin-top: 7px; }
+
+    /* ── CTA Band ── */
+    .cta-band { background: #0A0A0A; padding: 80px 64px; }
+    .cta-band__inner { max-width: 1200px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; gap: 48px; flex-wrap: wrap; }
+    .cta-band__h2 { font-family: 'Cormorant Garamond', serif; font-size: 44px; font-weight: 400; color: #FFFFFF; line-height: 1.1; letter-spacing: -0.015em; margin-bottom: 10px; }
+    .cta-band__h2 em { font-style: italic; color: #C9A84C; }
+    .cta-band__sub { font-size: 15px; color: #4A4A4A; line-height: 1.7; max-width: 400px; }
+    .cta-band__btns { display: flex; gap: 14px; flex-shrink: 0; flex-wrap: wrap; }
+    .btn--cta-gold { padding: 17px 44px; background: linear-gradient(135deg, #7a5c10 0%, #C9A84C 45%, #E8C96A 75%, #C9A84C 100%); color: #0A0A0A; font-size: 11px; font-weight: 800; letter-spacing: 0.22em; text-transform: uppercase; border-radius: 2px; box-shadow: 0 8px 36px rgba(201,168,76,0.28); transition: opacity 0.2s; display: inline-block; }
+    .btn--cta-gold:hover { opacity: 0.85; }
+    .btn--cta-outline { padding: 17px 44px; border: 1px solid rgba(201,168,76,0.3); color: #C9A84C; font-size: 11px; font-weight: 700; letter-spacing: 0.22em; text-transform: uppercase; border-radius: 2px; transition: border-color 0.2s; display: inline-block; }
+    .btn--cta-outline:hover { border-color: #C9A84C; }
+
+    /* ── Footer ── */
+    .rates-footer { background: #050505; border-top: 1px solid rgba(255,255,255,0.04); padding: 40px 64px; }
+    .rates-footer__inner { max-width: 1200px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px; }
+    .rates-footer__brand-name { font-family: 'Cormorant Garamond', serif; font-size: 16px; font-weight: 600; color: #FFFFFF; letter-spacing: 0.13em; text-transform: uppercase; margin-bottom: 2px; }
+    .rates-footer__brand-sub { font-size: 8px; font-weight: 600; color: #C9A84C; letter-spacing: 0.38em; text-transform: uppercase; }
+    .rates-footer__copy { font-size: 12px; color: #2A2A2A; }
+    .rates-footer__motto { font-size: 13px; font-style: italic; font-family: 'Cormorant Garamond', serif; color: #3A3A3A; }
+
+    /* ── Responsive ── */
+    @media (max-width: 900px) {
+      .rates-hero__inner { grid-template-columns: 1fr; padding: 64px 28px 56px; gap: 40px; }
+      .rates-hero__h1 { font-size: 52px; }
+      .hourly-grid { grid-template-columns: 1fr; }
+      .packages-grid { grid-template-columns: 1fr; }
+      .included-grid { grid-template-columns: 1fr 1fr; }
+      .wedding-card { grid-template-columns: 1fr; padding: 40px 28px; gap: 32px; }
+      .wedding-card__price-col { text-align: left; }
+      .rates-section { padding: 72px 28px; }
+      .notes-band { padding: 36px 28px; }
+      .notes-band__inner { grid-template-columns: 1fr; gap: 20px; }
+      .cta-band { padding: 64px 28px; }
+      .rates-footer { padding: 32px 28px; }
+    }
+    @media (max-width: 540px) {
+      .rates-hero__h1 { font-size: 38px; }
+      .included-grid { grid-template-columns: 1fr; }
+      .wedding-card__price { font-size: 60px; }
+      .package-card__price { font-size: 56px; }
+      .rates-section { padding: 56px 20px; }
+      .cta-band__btns { flex-direction: column; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ── NAV ── -->
+  <nav class="nav">
+    <a href="../index.html" class="nav__brand">
+      <span class="nav__brand-name">The Event Space</span>
+      <span class="nav__brand-sub">Bermuda</span>
+    </a>
+    <div class="nav__links">
+      <a href="../index.html#about">About</a>
+      <a href="../rooms/">Our Rooms</a>
+      <a href="../index.html#occasions">Events</a>
+      <a href="../index.html#gallery">Gallery</a>
+      <a href="./index.html" class="nav__link--active">Rates</a>
+      <a href="../index.html#contact">Contact</a>
+    </div>
+    <a class="nav__book" href="../index.html#contact">Book Now</a>
+    <button class="nav__hamburger" aria-label="Open menu">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+
+  <!-- Mobile Menu -->
+  <div class="mobile-menu">
+    <a href="../index.html#about">About</a>
+    <a href="../rooms/">Our Rooms</a>
+    <a href="../index.html#occasions">Events</a>
+    <a href="../index.html#gallery">Gallery</a>
+    <a href="./index.html">Rates</a>
+    <a href="../index.html#contact">Contact</a>
+    <a href="../index.html#contact" class="mobile-menu__book">Book Now</a>
+  </div>
+
+  <!-- ── HERO ── -->
+  <section class="rates-hero">
+    <div class="rates-hero__glow"></div>
+    <div class="rates-hero__inner">
+      <div>
+        <div class="rates-hero__eyebrow">
+          <div class="rates-hero__eyebrow-line"></div>
+          <span class="rates-hero__eyebrow-text">Rates &amp; Pricing</span>
+        </div>
+        <h1 class="rates-hero__h1">Transparent.</h1>
+        <h1 class="rates-hero__h1 rates-hero__h1--shimmer">Flexible.</h1>
+        <h1 class="rates-hero__h1">Fair.</h1>
+        <p class="rates-hero__body">Choose an hourly rental, a curated all-inclusive package, or anything in between. Every booking includes the essentials — no hidden fees.</p>
+        <div class="rates-hero__ctas">
+          <a href="#packages" class="btn--rates-primary">View Packages</a>
+          <a href="../index.html#contact" class="btn--rates-ghost">Get a Quote</a>
+        </div>
+      </div>
+
+      <!-- Quick-reference card -->
+      <div class="rates-hero__ref">
+        <div class="rates-hero__ref-corner"></div>
+        <div class="rates-hero__ref-title">At a Glance</div>
+        <div class="ref-row">
+          <div class="ref-row__label">Main Event Space</div>
+          <div class="ref-row__price">$200<span>/ hr</span></div>
+        </div>
+        <div class="ref-row">
+          <div class="ref-row__label">Studio Only</div>
+          <div class="ref-row__price">$125<span>/ hr</span></div>
+        </div>
+        <div class="ref-row">
+          <div class="ref-row__label">Studio Add-On</div>
+          <div class="ref-row__price">+$75<span>/ hr</span></div>
+        </div>
+        <div class="ref-row">
+          <div class="ref-row__label">Decorator Packages</div>
+          <div class="ref-row__price">$1,450<span>+</span></div>
+        </div>
+        <div class="ref-row">
+          <div class="ref-row__label">Corporate (5 hrs)</div>
+          <div class="ref-row__price">$800<span>+</span></div>
+        </div>
+        <div class="ref-row">
+          <div class="ref-row__label">Intimate Wedding</div>
+          <div class="ref-row__price">$2,500<span>+</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── HOURLY RENTALS ── -->
+  <section class="rates-section rates-section--white">
+    <div class="rates-section__inner">
+      <div class="rates-section__header">
+        <div class="rates-eyebrow">
+          <div class="rates-eyebrow__line"></div>
+          <span class="rates-eyebrow__text">Hourly Rentals</span>
+        </div>
+        <h2 class="rates-h2">Space Rental <em>Rates</em></h2>
+        <p class="rates-section__note">All hourly rentals require a 2-hour minimum. Pay only for the time you need.</p>
+      </div>
+
+      <div class="hourly-grid">
+
+        <!-- Main Event Space -->
+        <div class="price-card price-card--dark">
+          <div class="price-card__corner"></div>
+          <div class="price-card__badge">Canvas Package</div>
+          <div class="price-card__name">The Grand Room</div>
+          <div class="price-card__rate">$200</div>
+          <div class="price-card__unit">per hour</div>
+          <div class="price-card__divider"></div>
+          <div class="price-card__details">
+            <div class="price-card__detail"><div class="price-card__dot"></div>2-hour minimum booking</div>
+            <div class="price-card__detail"><div class="price-card__dot"></div>936 sq ft — up to 80 guests</div>
+            <div class="price-card__detail"><div class="price-card__dot"></div>Tables, chairs &amp; flexible layout included</div>
+            <div class="price-card__detail"><div class="price-card__dot"></div>AV system, Wi-Fi, and speakers included</div>
+            <div class="price-card__detail"><div class="price-card__dot"></div>Cleaning included</div>
+          </div>
+          <a href="../index.html#contact" class="price-card__cta">Book the Grand Room</a>
+        </div>
+
+        <!-- Studio Add-On -->
+        <div class="price-card">
+          <div class="price-card__corner"></div>
+          <div class="price-card__badge">Add-On</div>
+          <div class="price-card__name">Studio Add-On</div>
+          <div class="price-card__rate">+$75</div>
+          <div class="price-card__unit">per hour · with Grand Room</div>
+          <div class="price-card__divider"></div>
+          <div class="price-card__details">
+            <div class="price-card__detail"><div class="price-card__dot"></div>Attached to the Main Event Space booking</div>
+            <div class="price-card__detail"><div class="price-card__dot"></div>330 sq ft — up to 30 guests</div>
+            <div class="price-card__detail"><div class="price-card__dot"></div>Ideal for catering prep, bridal suites, or breakout areas</div>
+            <div class="price-card__detail"><div class="price-card__dot"></div>Must be booked alongside the Grand Room</div>
+          </div>
+          <a href="../index.html#contact" class="price-card__cta">Add the Studio</a>
+        </div>
+
+        <!-- Studio Only -->
+        <div class="price-card">
+          <div class="price-card__corner"></div>
+          <div class="price-card__badge">Studio Only</div>
+          <div class="price-card__name">The Studio</div>
+          <div class="price-card__rate">$125</div>
+          <div class="price-card__unit">per hour</div>
+          <div class="price-card__divider"></div>
+          <div class="price-card__details">
+            <div class="price-card__detail"><div class="price-card__dot"></div>2-hour minimum booking</div>
+            <div class="price-card__detail"><div class="price-card__dot"></div>330 sq ft — up to 30 guests</div>
+            <div class="price-card__detail"><div class="price-card__dot"></div>3 windows — warm natural light</div>
+            <div class="price-card__detail"><div class="price-card__dot"></div>Projector, surround sound &amp; ambient lighting</div>
+            <div class="price-card__detail"><div class="price-card__dot"></div>Tables, chairs &amp; cleaning included</div>
+          </div>
+          <a href="../index.html#contact" class="price-card__cta">Book the Studio</a>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ── DECORATOR & CORPORATE PACKAGES ── -->
+  <section id="packages" class="rates-section rates-section--warm">
+    <div class="rates-section__inner">
+      <div class="rates-section__header">
+        <div class="rates-eyebrow">
+          <div class="rates-eyebrow__line"></div>
+          <span class="rates-eyebrow__text">Curated Packages</span>
+        </div>
+        <h2 class="rates-h2">More <em>Than a Room</em></h2>
+        <p class="rates-section__note">All-inclusive packages that take the planning off your plate.</p>
+      </div>
+
+      <div class="packages-grid">
+
+        <!-- Decorator 6hr -->
+        <div class="package-card">
+          <div class="package-card__num">01</div>
+          <div class="package-card__label">Main Space · In-House Decorator</div>
+          <div class="package-card__name">The Six-Hour Package</div>
+          <div class="package-card__duration">6 hours · Grand Room</div>
+          <div class="package-card__price">$1,450</div>
+          <div class="package-card__price-note">All inclusive</div>
+          <div class="package-card__divider"></div>
+          <div class="package-card__includes">
+            <div class="package-card__include"><div class="package-card__dot"></div>6 hours of Grand Room access</div>
+            <div class="package-card__include"><div class="package-card__dot"></div>In-house decorator — setup &amp; styling included</div>
+            <div class="package-card__include"><div class="package-card__dot"></div>Tables, chairs, flexible layout</div>
+            <div class="package-card__include"><div class="package-card__dot"></div>AV, Wi-Fi, speakers &amp; cleaning</div>
+            <div class="package-card__include"><div class="package-card__dot"></div>Decorator consult prior to event</div>
+          </div>
+          <a href="../index.html#contact" class="package-card__cta">Enquire About This Package</a>
+        </div>
+
+        <!-- Decorator 12hr -->
+        <div class="package-card">
+          <div class="package-card__num">02</div>
+          <div class="package-card__label">Main Space · In-House Decorator</div>
+          <div class="package-card__name">The Full-Day Package</div>
+          <div class="package-card__duration">12 hours · Grand Room</div>
+          <div class="package-card__price">$1,850</div>
+          <div class="package-card__price-note">All inclusive</div>
+          <div class="package-card__divider"></div>
+          <div class="package-card__includes">
+            <div class="package-card__include"><div class="package-card__dot"></div>12 hours of Grand Room access</div>
+            <div class="package-card__include"><div class="package-card__dot"></div>In-house decorator — full setup &amp; styling</div>
+            <div class="package-card__include"><div class="package-card__dot"></div>Tables, chairs, flexible layout</div>
+            <div class="package-card__include"><div class="package-card__dot"></div>AV, Wi-Fi, speakers &amp; cleaning</div>
+            <div class="package-card__include"><div class="package-card__dot"></div>Priority decorator consult &amp; design plan</div>
+          </div>
+          <a href="../index.html#contact" class="package-card__cta">Enquire About This Package</a>
+        </div>
+
+        <!-- Corporate Weekday -->
+        <div class="package-card">
+          <div class="package-card__num">03</div>
+          <div class="package-card__label">Corporate Event · 5-Hour Rental</div>
+          <div class="package-card__name">Weekday Corporate</div>
+          <div class="package-card__duration">5 hours · Weekday</div>
+          <div class="package-card__price" style="font-size:56px;">$800<span style="font-size:20px;color:#C9A84C;">+</span></div>
+          <div class="package-card__price-note">Starting rate</div>
+          <div class="package-card__divider"></div>
+          <div class="package-card__includes">
+            <div class="package-card__include"><div class="package-card__dot"></div>5-hour Grand Room rental (weekday)</div>
+            <div class="package-card__include"><div class="package-card__dot"></div>Professional AV &amp; projection setup</div>
+            <div class="package-card__include"><div class="package-card__dot"></div>Classroom or theater seating configurations</div>
+            <div class="package-card__include"><div class="package-card__dot"></div>Wi-Fi, speakers &amp; cleaning</div>
+            <div class="package-card__include"><div class="package-card__dot"></div>Contact us for exact quote based on requirements</div>
+          </div>
+          <a href="../index.html#contact" class="package-card__cta">Get a Corporate Quote</a>
+        </div>
+
+        <!-- Corporate Weekend -->
+        <div class="package-card">
+          <div class="package-card__num">04</div>
+          <div class="package-card__label">Corporate Event · 5-Hour Rental</div>
+          <div class="package-card__name">Weekend Corporate</div>
+          <div class="package-card__duration">5 hours · Weekend</div>
+          <div class="package-card__price" style="font-size:56px;">$1,200<span style="font-size:18px;color:#C9A84C;">+</span></div>
+          <div class="package-card__price-note">Starting rate</div>
+          <div class="package-card__divider"></div>
+          <div class="package-card__includes">
+            <div class="package-card__include"><div class="package-card__dot"></div>5-hour Grand Room rental (weekend)</div>
+            <div class="package-card__include"><div class="package-card__dot"></div>Professional AV &amp; projection setup</div>
+            <div class="package-card__include"><div class="package-card__dot"></div>Classroom or theater seating configurations</div>
+            <div class="package-card__include"><div class="package-card__dot"></div>Wi-Fi, speakers &amp; cleaning</div>
+            <div class="package-card__include"><div class="package-card__dot"></div>Contact us for exact quote based on requirements</div>
+          </div>
+          <a href="../index.html#contact" class="package-card__cta">Get a Corporate Quote</a>
+        </div>
+
+      </div>
+
+      <!-- Intimate Wedding banner -->
+      <div class="wedding-card">
+        <div class="wedding-card__glow"></div>
+        <div>
+          <div class="wedding-card__eyebrow">
+            <div class="rates-hero__eyebrow-line"></div>
+            <span class="wedding-card__tag">Special Package</span>
+          </div>
+          <div class="wedding-card__name">Intimate Wedding<br><em>Package</em></div>
+          <p class="wedding-card__desc">All-day access to The Event Space — the perfect setting for an intimate, unforgettable ceremony and reception. Includes full venue access, tables, chairs, AV, Wi-Fi, and cleaning. Decorator and catering available as add-ons.</p>
+        </div>
+        <div class="wedding-card__price-col">
+          <div class="wedding-card__from">Starting from</div>
+          <div class="wedding-card__price">$2,500</div>
+          <div class="wedding-card__price-note">All-day access</div>
+          <a href="../index.html#contact" class="wedding-card__cta">Plan Your Wedding</a>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ── WHAT'S INCLUDED ── -->
+  <section class="rates-section rates-section--dark">
+    <div class="rates-section__inner">
+      <div class="rates-section__header">
+        <div class="rates-eyebrow">
+          <div class="rates-eyebrow__line"></div>
+          <span class="rates-eyebrow__text">Included in All Rentals</span>
+        </div>
+        <h2 class="rates-h2 rates-h2--light">Everything You Need. <em>Nothing Extra.</em></h2>
+        <p class="rates-section__note rates-section__note--light">Every booking — from an hourly rental to a full-day package — comes with the following at no additional cost.</p>
+      </div>
+
+      <div class="included-grid">
+        <div class="included-item">
+          <div class="included-item__icon"><div class="included-item__dot"></div></div>
+          <div>
+            <div class="included-item__title">Venue Access</div>
+            <div class="included-item__desc">Full access to your booked space for your reserved duration.</div>
+          </div>
+        </div>
+        <div class="included-item">
+          <div class="included-item__icon"><div class="included-item__dot"></div></div>
+          <div>
+            <div class="included-item__title">Tables &amp; Chairs</div>
+            <div class="included-item__desc">A complete selection of tables and chairs for your guest count.</div>
+          </div>
+        </div>
+        <div class="included-item">
+          <div class="included-item__icon"><div class="included-item__dot"></div></div>
+          <div>
+            <div class="included-item__title">Flexible Layouts</div>
+            <div class="included-item__desc">Dinner, Banquet, Classroom, Theater, U-Shape, Cocktail — your choice.</div>
+          </div>
+        </div>
+        <div class="included-item">
+          <div class="included-item__icon"><div class="included-item__dot"></div></div>
+          <div>
+            <div class="included-item__title">Wi-Fi</div>
+            <div class="included-item__desc">High-speed wireless internet throughout the venue.</div>
+          </div>
+        </div>
+        <div class="included-item">
+          <div class="included-item__icon"><div class="included-item__dot"></div></div>
+          <div>
+            <div class="included-item__title">Speakers &amp; AV Access</div>
+            <div class="included-item__desc">Built-in speaker system and AV connections for presentations or music.</div>
+          </div>
+        </div>
+        <div class="included-item">
+          <div class="included-item__icon"><div class="included-item__dot"></div></div>
+          <div>
+            <div class="included-item__title">Cleaning</div>
+            <div class="included-item__desc">Post-event cleaning is handled by our team — always included.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── OPTIONAL ADD-ONS ── -->
+  <section class="rates-section rates-section--white">
+    <div class="rates-section__inner">
+      <div class="rates-section__header">
+        <div class="rates-eyebrow">
+          <div class="rates-eyebrow__line"></div>
+          <span class="rates-eyebrow__text">Optional Add-Ons</span>
+        </div>
+        <h2 class="rates-h2">Enhance Your <em>Experience</em></h2>
+        <p class="rates-section__note">Add any of the following to your booking. Prices requiring a quote are bespoke to your event size and requirements.</p>
+      </div>
+
+      <table class="addons-table">
+        <thead>
+          <tr>
+            <th>Add-On</th>
+            <th style="text-align:right;">Price</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>
+              <div class="addons-table__name">In-House Decorating</div>
+              <div class="addons-table__desc">Full setup and styling by one of our curated in-house designers</div>
+            </td>
+            <td class="addons-table__price">
+              <div class="addons-table__price-val">Quote</div>
+              <div class="addons-table__price-note">Based on your vision</div>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <div class="addons-table__name">Fruit Platters</div>
+              <div class="addons-table__desc">Fresh seasonal fruit, beautifully arranged and presented</div>
+            </td>
+            <td class="addons-table__price">
+              <div class="addons-table__price-val">Quote</div>
+              <div class="addons-table__price-note">Based on guest count</div>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <div class="addons-table__name">Vegetable Platters</div>
+              <div class="addons-table__desc">Fresh vegetable crudités with dips and garnishes</div>
+            </td>
+            <td class="addons-table__price">
+              <div class="addons-table__price-val">Quote</div>
+              <div class="addons-table__price-note">Based on guest count</div>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <div class="addons-table__name">Sandwich Platters</div>
+              <div class="addons-table__desc">Assorted finger sandwiches and wraps for events with catering</div>
+            </td>
+            <td class="addons-table__price">
+              <div class="addons-table__price-val">Quote</div>
+              <div class="addons-table__price-note">Based on guest count</div>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <div class="addons-table__name">Additional Setup Time</div>
+              <div class="addons-table__desc">Extra time before your event for setup and preparation</div>
+            </td>
+            <td class="addons-table__price">
+              <div class="addons-table__price-val">Per Hr</div>
+              <div class="addons-table__price-note">If applicable</div>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <div class="addons-table__name">Additional Cleanup Time</div>
+              <div class="addons-table__desc">Extended post-event cleanup beyond the standard included service</div>
+            </td>
+            <td class="addons-table__price">
+              <div class="addons-table__price-val">$150</div>
+              <div class="addons-table__price-note">If applicable</div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- ── NOTES ── -->
+  <div class="notes-band">
+    <div class="notes-band__inner">
+      <div class="notes-band__icon">📋</div>
+      <div>
+        <div class="notes-band__title">Booking Notes</div>
+        <div class="notes-band__list">
+          <div class="notes-band__note">All hourly rentals require a minimum 2-hour booking.</div>
+          <div class="notes-band__note">The Studio Add-On ($75/hr) must be booked alongside the Main Event Space and cannot be reserved independently at this rate.</div>
+          <div class="notes-band__note">Corporate package pricing is a starting rate — final cost depends on event size, AV requirements, and configuration. Please contact us for a tailored quote.</div>
+          <div class="notes-band__note">Add-on catering (platters) and decorator pricing are quoted individually based on your event details.</div>
+          <div class="notes-band__note">All rates are in Bermuda dollars (BMD). A deposit is required to secure your date.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── CTA ── -->
+  <div class="cta-band">
+    <div class="cta-band__inner">
+      <div>
+        <h2 class="cta-band__h2">Ready to secure<br>your <em>date?</em></h2>
+        <p class="cta-band__sub">Send us an enquiry and we'll put together a personalised quote for your event.</p>
+      </div>
+      <div class="cta-band__btns">
+        <a href="../index.html#contact" class="btn--cta-gold">Send an Enquiry</a>
+        <a href="../rooms/" class="btn--cta-outline">View Our Rooms</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── FOOTER ── -->
+  <footer class="rates-footer">
+    <div class="rates-footer__inner">
+      <div>
+        <div class="rates-footer__brand-name">The Event Space</div>
+        <div class="rates-footer__brand-sub">Bermuda</div>
+      </div>
+      <div class="rates-footer__copy">© 2025 The Event Space BDA. All rights reserved.</div>
+      <div class="rates-footer__motto">We Are The Space. You Are The Possibility.</div>
+    </div>
+  </footer>
+
+  <script src="../js/main.js"></script>
+</body>
+</html>
